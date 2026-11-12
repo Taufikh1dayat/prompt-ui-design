@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { X, GitPullRequest, Copy } from 'lucide-react';
 
 interface SubmitModalProps {
@@ -12,6 +12,20 @@ export const SubmitModal: React.FC<SubmitModalProps> = ({
   onClose,
   onTriggerToast,
 }) => {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const sampleTemplate = `---
@@ -43,15 +57,21 @@ Brief description of the UI problem and solution.
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div onClick={onClose} className="fixed inset-0 bg-black/80 backdrop-blur-sm" />
-      <div className="relative w-full max-w-xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-6 z-10">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="submit-modal-title"
+        className="relative w-full max-w-xl bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl p-6 z-10"
+      >
         <div className="flex items-center justify-between pb-4 border-b border-zinc-800">
           <div className="flex items-center gap-2">
             <GitPullRequest className="w-5 h-5 text-violet-400" />
-            <h3 className="text-lg font-bold text-white">Submit a UI Prompt Spec</h3>
+            <h3 id="submit-modal-title" className="text-lg font-bold text-white">Submit a UI Prompt Spec</h3>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800"
+            aria-label="Close modal"
+            className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition focus-visible:ring-2 focus-visible:ring-zinc-400"
           >
             <X className="w-5 h-5" />
           </button>

@@ -6,7 +6,7 @@ export const PROMPTS_DATA: UIPrompt[] = [
     id: 'button-showcase-matrix',
     slug: 'interactive-button-matrix-micro-ui',
     title: 'Button Archetypes & Micro-Interactions',
-    category: 'Buttons & Controls',
+    category: 'Buttons',
     style: 'Buttons & Micro-UI',
     targetTool: 'v0.dev / Claude',
     difficulty: 'Intermediate',
@@ -75,7 +75,7 @@ clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 cal
     id: 'cinematic-hero',
     slug: 'cinematic-atmospheric-hero',
     title: 'Cinematic Atmospheric Hero Section',
-    category: 'Hero & Landing',
+    category: 'Landing',
     style: 'Cinematic Editorial',
     targetTool: 'v0.dev / Claude',
     difficulty: 'Advanced',
@@ -202,7 +202,7 @@ Glass is an intentional focal material applied exclusively to the hero card. The
     id: 'kanban-sprint-board',
     slug: 'agile-kanban-sprint-board',
     title: 'Agile Sprint Board & Task Pipeline',
-    category: 'SaaS',
+    category: 'Dashboard',
     style: 'Developer Native',
     targetTool: 'v0.dev / Claude',
     difficulty: 'Intermediate',
@@ -284,40 +284,90 @@ Universal upload component supporting drag events, file validation, and real-tim
   /* 7. NOTIFICATION FLYOUT */
   {
     id: 'notification-center',
-    slug: 'notification-center-activity-flyout',
-    title: 'Notification Center & Activity Flyout',
+    slug: 'linear-activity-inbox-notification-flyout',
+    title: 'Linear-Style Activity Inbox & Notification Flyout',
     category: 'Dashboard',
     style: 'Developer Native',
     targetTool: 'v0.dev / Claude',
     difficulty: 'Intermediate',
-    summary: 'Frosted glass notification panel with unread indicator dots, time-ago metadata, category filters (All, Mentions, System), and 1-click mark-as-read.',
-    tags: ['Notifications', 'Flyout', 'Activity', 'Dropdown', 'Realtime'],
-    copyCount: 1110,
+    summary: 'Keyboard-first activity triage inbox inspired by Linear and Raycast: inky obsidian canvas, 1px hairline borders, integration event badges (GitHub PR, Vercel deploy, Linear issues), and hotkey navigation (J/K/E).',
+    tags: ['Linear Inbox', 'Raycast', 'Notifications', 'Activity Feed', 'Keyboard First', 'Triage'],
+    copyCount: 1640,
     previewId: 'notification-center',
     fontStack: 'Plus Jakarta Sans, Geist Mono',
     colorPalette: [
-      { name: 'Panel Dark', hex: '#121215', usage: 'Flyout surface' },
-      { name: 'Unread Violet', hex: '#a78bfa', usage: 'Active unread dot indicator' },
-      { name: 'Divider Line', hex: '#27272a', usage: 'Notification item separation' },
+      { name: 'Obsidian Surface', hex: '#090A0E', usage: 'Flyout base canvas' },
+      { name: 'Electric Violet', hex: '#8B5CF6', usage: 'Unread counter badge & indicator dot' },
+      { name: 'Emerald Live', hex: '#10B981', usage: 'Cloud deployment & merged PR status' },
+      { name: 'Amber Priority', hex: '#F59E0B', usage: 'High-urgency issue priority tag' },
+      { name: 'Hairline Border', hex: 'rgba(255, 255, 255, 0.1)', usage: '1px crisp border separation' },
     ],
     antiSlopChecks: [
-      'R-17: Realistic activity event copy and RFC-3339 relative time formatting',
-      'R-24: Every notification item links to an explicit target entity'
+      'R-05: Actionable triage inbox queue rather than passive decorative notification stream',
+      'R-17: Realistic developer activity event copy and RFC-3339 relative time formatting',
+      'R-24: Every item links to an explicit target entity (PR #142, Production Edge deploy, ENG-2041)',
+      'R-34: Keyboard navigation affordances (J/K, E, ↵) clearly exposed in footer bar'
     ],
-    quickPrompt: `Build a modern Notification Center Flyout in React and Tailwind CSS.
-Features:
-1. Header: "Notifications" with unread count badge, and a "Mark all as read" button.
-2. Segmented Filter Tabs: [ All | Mentions | System ].
-3. Notification List:
-   - Item 1 (Unread): Pulsing violet dot, user avatar, "Alex approved your pull request #128", "5m ago" with clock icon.
-   - Item 2 (Read): Subtle gray dot, "Invoice #902 paid ($420.00)", "1h ago".
-   - Item 3: "Security alert: New login from macOS in Tokyo", amber warning badge.
-4. Empty state when all cleared: "All caught up" checkmark.
-Frosted dark zinc panel with smooth transition.`,
-    markdownSpec: `# UI Specification: Notification Center Flyout
+    quickPrompt: `Build a modern, developer-grade Activity Inbox & Notification Flyout in React and Tailwind CSS inspired by Linear.app and Raycast.
 
-## 1. Overview
-Real-time activity drawer for SaaS applications with unread state tracking.`
+Layout & Styling:
+- Floating popover panel (w-full max-w-sm rounded-2xl bg-[#090A0E] text-zinc-200 border border-white/10 shadow-2xl backdrop-blur-2xl overflow-hidden).
+- Typography: Sans-serif for titles with crisp Monospace (Geist Mono) for commits, latencies, and hotkeys.
+
+1. Header Bar:
+- Left: Bell icon in violet rounded pill + "Inbox" + glowing counter pill "3 new" (bg-violet-500/20 text-violet-300 border border-violet-500/40).
+- Right: Filter pill tabs: [ All (active) | Mentions | System ].
+
+2. Notification Feed (Actionable Triage Rows):
+- Row 1 (GitHub PR Merge):
+  * Avatar initials "AR" (gradient violet) with green checkmark badge overlay.
+  * Headline: "Alex Rivera merged PR #142" with relative time "2m ago".
+  * Subtext: "feat(auth): token rotation & session guard".
+  * Unread state: Glowing violet dot indicator with hover quick actions ("View PR ↗", "Mark Read ✓").
+- Row 2 (Vercel Cloud Deployment):
+  * Minimalist black square icon with white Vercel triangle.
+  * Headline: "Edge Deploy: Production" with live pulsing green dot + "14m ago".
+  * Subtext: "api.promptui.dev • 38ms latency".
+- Row 3 (Linear Issue Assignment):
+  * Amber priority tag badge "P1".
+  * Headline: "Assigned to ENG-2041" + "1h ago".
+  * Subtext: "Audit WCAG AA color contrast on light mode".
+
+3. Footer Triage Toolbar:
+- Left: Keyboard shortcuts hint: "[J][K] Navigate", "[E] Done".
+- Right: Interactive text button: "Mark all read ✓".`,
+    markdownSpec: `# UI Specification: Linear-Style Activity Inbox & Notification Flyout
+
+## 1. Context & Design Ethos
+- **Inspiration**: Linear.app Inbox, Raycast activity flyout, and Vercel edge activity monitor.
+- **Philosophy**: Notifications are treated as an **actionable triage work queue**, not a passive stream. Every row represents an explicit entity with immediate keyboard or 1-click triage actions.
+
+## 2. Design Tokens
+- **Canvas Base**: \`#090A0E\` (Obsidian Black)
+- **Card Surface**: \`#121318\` with hover state \`#181920\`
+- **Hairline Borders**: \`rgba(255, 255, 255, 0.08)\`
+- **Active Accent**: \`#8B5CF6\` (Electric Violet, unread indicator dot)
+- **Success Accent**: \`#10B981\` (Emerald, deployment & merge signals)
+- **Warning Accent**: \`#F59E0B\` (Amber, P1 priority badge)
+- **Typography**: Plus Jakarta Sans / Geist Mono
+
+## 3. Structural Wireframe
+\`\`\`text
++-------------------------------------------------------------+
+| (🔔) Inbox [3 new]                         [All] Mentions System |
++-------------------------------------------------------------+
+| [AR✓] Alex Rivera merged PR #142                        2m ●|
+|       feat(auth): token rotation & session guard            |
++-------------------------------------------------------------+
+| [▲]   Edge Deploy: Production (●)                      14m  |
+|       api.promptui.dev • 38ms latency                       |
++-------------------------------------------------------------+
+| [P1]  Assigned to ENG-2041                              1h  |
+|       Audit WCAG AA color contrast on light mode            |
++-------------------------------------------------------------+
+| [J][K] Nav   [E] Done                       Mark all read ✓ |
++-------------------------------------------------------------+
+\`\`\``
   },
 
   /* 8. AUDIO WAVEFORM PLAYER */
@@ -367,7 +417,7 @@ Compact audio component designed for dashboards, podcast platforms, and voice me
     id: 'swiss-minimal',
     slug: 'swiss-international-editorial',
     title: 'Swiss International Typographic Layout',
-    category: 'Hero & Landing',
+    category: 'Landing',
     style: 'Swiss Minimal',
     targetTool: 'Cursor / IDE Spec',
     difficulty: 'Intermediate',
@@ -511,7 +561,7 @@ Viewport constrained to 390px (iPhone 15 Pro standard). Pure black OLED palette.
     id: 'checkout-slide-drawer',
     slug: 'ecommerce-slideover-checkout-drawer',
     title: 'Minimalist E-Commerce Cart Drawer',
-    category: 'E-Commerce',
+    category: 'Components',
     style: 'Bento Grid',
     targetTool: 'v0.dev / Claude',
     difficulty: 'Intermediate',
@@ -536,5 +586,203 @@ Features: Header with item counter, free shipping progress bar ("Add $15.00 more
 
 ## 1. Overview
 Frictionless shopping bag designed to increase Average Order Value (AOV).`
+  },
+
+  /* 14. MODERN CREATIVE DIGITAL AGENCY LANDING (TURNOVER) */
+  {
+    id: 'creative-agency-landing',
+    slug: 'modern-creative-digital-agency-landing',
+    title: 'Modern Creative Digital Agency Landing Page Design',
+    category: 'Landing',
+    style: 'Liquid Glassmorphism',
+    targetTool: 'v0.dev / Claude',
+    difficulty: 'Advanced',
+    summary: 'High-impact creative agency landing page featuring a futuristic 3D hero bust with glowing neon orange visor, helical typographic ribbon, floating frosted acrylic glass cards with connection nodes, and social proof metrics on a pristine warm-light canvas.',
+    tags: ['Agency', 'Landing Page', '3D Element', 'Frosted Glass', 'Warm Minimalist', 'Neon Orange', 'Brand Identity'],
+    copyCount: 3120,
+    previewId: 'creative-agency-landing',
+    fontStack: 'Plus Jakarta Sans, Syne, Inter',
+    colorPalette: [
+      { name: 'Warm Studio Canvas', hex: '#FAF8F5', usage: 'Main background canvas with ambient center warmth' },
+      { name: 'Laser Neon Orange', hex: '#FF5000', usage: 'Primary CTA, highlighted text & neon visor illumination' },
+      { name: 'Charcoal Onyx', hex: '#111113', usage: 'High-contrast headline and primary text' },
+      { name: 'Frosted Acrylic', hex: 'rgba(255, 255, 255, 0.72)', usage: 'Floating glassmorphic feature cards' },
+      { name: 'Cyber Slate', hex: '#334155', usage: 'Futuristic 3D mannequin sculpted shading' },
+    ],
+    antiSlopChecks: [
+      'R-01: Intentional mono-accent palette (laser orange on warm cream) avoiding generic blue/purple AI meshes',
+      'R-04: Floating cards use functional service glyphs with semantic directional links',
+      'R-09: Spacious editorial headline hierarchy with dedicated breathing room and zero clutter',
+      'R-10: Restrained frosted glass with realistic refraction borders and diffuse contact shadows',
+      'R-31: Quantified social proof metrics with authentic client and project KPIs'
+    ],
+    quickPrompt: `Build a modern, award-winning Creative Digital Agency Landing Page in React and Tailwind CSS (inspired by cutting-edge Awwwards and Turnover Agency design).
+
+### 1. Visual Theme & Canvas
+- Canvas: Warm, pristine studio off-white/cream (#FAF8F5) with a subtle radial ambient light glow at the center (#FFF3EB at 35% opacity).
+- Primary Accent: High-energy electric laser orange (#FF5000 / #FF4500) for focal branding, glowing visor, and primary CTAs.
+- Typography: Heavy modern grotesque ("Plus Jakarta Sans" or "Inter") for headlines, coupled with crisp geometric typography for labels.
+
+### 2. Header & Navigation (Sticky Backdrop)
+- Logo: "Turnover" in bold charcoal typography with a stylized upward diagonal orange arrow accent over the 'o'.
+- Nav Links: Minimalist text links (Home, Services, About, Work, Blog, Contact) with an active orange dot indicator on "Home".
+- Header CTA: Pill button "Get Started →" in vibrant orange with white bold text (hover:scale-105 active:scale-95 transition).
+
+### 3. Hero Section (Asymmetrical Split Layout)
+#### Left Column: Content & Social Proof
+- Micro-Badge: Small vibrant orange dot + "Creative Digital Agency" in tracked uppercase text (text-[11px] font-semibold text-zinc-600).
+- Headline: Massive bold typography:
+  - Line 1: "We Build Brands" (charcoal onyx #111113, font-extrabold tracking-tight text-5xl sm:text-6xl lg:text-7xl).
+  - Line 2: "That Stand Out" (vibrant laser orange #FF5000, font-extrabold).
+- Subtitle: "Turnover is a creative agency helping modern businesses grow through strategy, design, and digital experiences." (text-zinc-600 leading-relaxed max-w-lg).
+- Action Buttons (Dual CTA):
+  1. Primary Button: "Let's Work Together →" (solid vibrant orange pill, px-7 py-3.5, font-bold text-white shadow-[0_10px_25px_rgba(255,80,0,0.35)]).
+  2. Secondary Action: Glass circular play button with pulsing glow ring + "Watch Our Story (2 min)" text link.
+- Social Proof Metrics Grid (4 items in a horizontal strip):
+  - "320+" Happy Clients
+  - "5+" Years Experience
+  - "150+" Projects Completed
+  - "98%" Client Satisfaction
+
+#### Center & Right Column: 3D Art & Floating Glass Feature Cards
+- Central 3D Visual Centerpiece:
+  - Futuristic dark slate mannequin/bust featuring a glowing neon orange cybernetic visor display with illuminated text ("TURNOVER MARKETING").
+  - Soundwave-like layered horizontal fin slats sculpted on the side of the head.
+  - A 3D helical orange ribbon swirling dynamically from background to foreground with typography: "Strategy • Design • Digital • Growth".
+- Floating Frosted Acrylic Cards (Connected with subtle vector node lines):
+  1. Top-Right: Glass card "Brand Strategy" ("Turn ideas into powerful brand stories. →") with an amber briefcase icon.
+  2. Mid-Right: Glass card "Creative Design" ("Beautiful designs that make an impact. →") with a pen/leaf icon.
+  3. Lower-Right: Glass card "Digital Growth" ("More traffic. More leads. More growth. →") with an analytics bar chart icon.
+  4. Bottom-Left: Floating thumbnail card "Our Latest Work" with a neon visor project thumbnail and description ("Branding for a modern tech company. →").
+
+### 4. Interactive Details & Micro-Interactions
+- Glass cards use: bg-white/70 backdrop-blur-xl border border-white/90 shadow-[0_20px_45px_rgba(0,0,0,0.06)] rounded-2xl hover:-translate-y-1 transition-transform.
+- Bottom right: Minimalist "Scroll Down" mouse scrollwheel indicator.
+- Fully responsive layout: gracefully collapses 3D elements behind text or stacks vertically on mobile viewports.`,
+    markdownSpec: `# UI Specification: Modern Creative Digital Agency Landing Page (Turnover)
+
+## 1. Context & Architecture
+- **Purpose**: Award-winning creative digital agency landing page engineered to communicate premium brand positioning, high-impact strategy, and modern digital craft.
+- **Aesthetic Direction**: High-energy futuristic 3D focal art (neon-illuminated cyber visor bust and helical typography ribbon) set on an airy, warm studio canvas.
+- **Framework Compatibility**: React 19 + Tailwind CSS + Lucide Icons (optimized for v0, Claude Artifacts, and Cursor).
+
+## 2. Design Tokens
+- **Canvas Base**: \`#FAF8F5\` (Warm Studio Off-White)
+- **Ambient Radial Warmth**: \`radial-gradient(circle at 65% 50%, rgba(255, 80, 0, 0.08), transparent 60%)\`
+- **Primary Accent**: \`#FF5000\` (Electric Laser Orange, WCAG AA compliant on light canvas)
+- **Headline / Dark Text**: \`#111113\` (Charcoal Onyx)
+- **Secondary Body Text**: \`#52525B\` (Zinc 600)
+- **Acrylic Frosted Glass**: \`rgba(255, 255, 255, 0.72)\` with \`backdrop-blur-xl\` and \`1px solid rgba(255, 255, 255, 0.85)\`
+- **Soft Contact Shadow**: \`0 20px 40px -15px rgba(0, 0, 0, 0.07)\`
+
+## 3. Structural Wireframe & Breakdown
+\`\`\`text
++-----------------------------------------------------------------------------------+
+| [Turn↗ver]                 Home  Services  About  Work  Blog  Contact  [Get Started →] |
++-----------------------------------------------------------------------------------+
+|  ● Creative Digital Agency                                                        |
+|                                                               [Brand Strategy →]  |
+|  We Build Brands                   [ 3D Bust / Visor ]             (Glass Pill)   |
+|  That Stand Out                    [ TURNOVER MARKETING ]                         |
+|                                    [ Swirling Orange Ribbon ] [Creative Design →] |
+|  Turnover is a creative agency...  [ Strategy • Design • ]         (Glass Pill)   |
+|                                                                                   |
+|  [Let's Work Together →] (▶) Story                            [Digital Growth →]  |
+|                                                                    (Glass Pill)   |
+|  320+        5+          150+         98%                                         |
+|  Clients    Years       Projects     Satisfaction                                 |
+|                                                                                   |
+|  [Our Latest Work →]                                                  Scroll Down |
+|  (Thumbnail Pill)                                                         (Mouse) |
++-----------------------------------------------------------------------------------+
+\`\`\`
+
+## 4. Master Prompt
+See quickPrompt above for the ready-to-run prompt.`
+  },
+
+  /* 15. B2B SAAS PRICING & FEATURE COMPARISON MATRIX */
+  {
+    id: 'saas-pricing-matrix',
+    slug: 'b2b-saas-pricing-feature-matrix',
+    title: 'B2B SaaS Pricing & Feature Comparison Matrix',
+    category: 'Components',
+    style: 'Developer Native',
+    targetTool: 'v0.dev / Claude',
+    difficulty: 'Intermediate',
+    summary: 'High-conversion, zero-slop B2B SaaS pricing matrix inspired by Stripe and Linear: interactive Annual/Monthly billing toggle with exact arithmetic, 3 distinct tiers (Hobby, Team Pro, Enterprise), explicit entitlement limits, and transparent feature breakdown without arbitrary gradient cards.',
+    tags: ['Pricing', 'Billing', 'SaaS', 'Stripe', 'Linear', 'Tiers', 'Toggle', 'Anti-Slop'],
+    copyCount: 2890,
+    previewId: 'saas-pricing-matrix',
+    fontStack: 'Plus Jakarta Sans, Geist Mono',
+    colorPalette: [
+      { name: 'Obsidian Base', hex: '#090A0F', usage: 'Main background surface' },
+      { name: 'Featured Pro Card', hex: '#151722', usage: 'Highlighted tier background' },
+      { name: 'Accent Violet', hex: '#8B5CF6', usage: 'Primary CTA and pro tier border accent' },
+      { name: 'Status Emerald', hex: '#10B981', usage: 'Feature checkmarks and annual discount badge' },
+      { name: 'Hairline Border', hex: 'rgba(255, 255, 255, 0.08)', usage: '1px crisp border separation' },
+    ],
+    antiSlopChecks: [
+      'R-01: Zero rainbow multi-gradients or glowing gradient text; grounded slate surfaces with 1px hairline borders',
+      'R-04: Functional status icons only (subtle green checks for included features, muted dashes for non-entitlements)',
+      'R-08: Action buttons have purpose-driven labels ("Start Free Sandbox", "Upgrade to Team Pro", "Book Architecture Review")',
+      'R-11: Proportional radii (8px for toggles, 16px for tier containers, 10px for action buttons)',
+      'R-17: Accurate arithmetic on annual discount (Toggle calculates $24/mo -> $19/mo billed annually)',
+      'R-31: Defensible tier boundaries (explicit seat limits, API compute quotas, and audit log retentions)'
+    ],
+    quickPrompt: `Build a high-conversion, developer-grade B2B SaaS Pricing Table component in React and Tailwind CSS inspired by Stripe and Linear.
+
+Layout & Canvas:
+- Inky dark canvas (#090A0F) with a clean max-w-6xl container.
+- Header: Tracked uppercase eyebrow ("TRANSPARENT PRICING"), H2 heading ("Predictable pricing for engineering teams"), and a brief subheading.
+- Billing Toggle Switcher:
+  * Segmented pill control: "Monthly" vs "Annual (Save 20%)".
+  * Clicking the toggle smoothly re-calculates Pro price between $24/mo (Monthly) and $19/mo (Annual, with subtitle "Billed annually at $228/year").
+  * Use tabular font-mono for numbers to avoid layout jitter during state change.
+
+Three Tier Cards (3-column responsive grid on desktop, stacked on mobile):
+1. Card 1 (Hobby / $0):
+   - Description: "For solo developers building side projects."
+   - Action CTA: "Start Free Sandbox" (translucent glass button).
+   - Features: 1 developer seat, 3 active projects, 5GB bandwidth, community support. Negative items styled with subtle dash.
+2. Card 2 (Team Pro - Featured Card):
+   - Highlight: Micro-badge "MOST POPULAR" in violet border pill.
+   - 1px border-violet-500/40 with subtle violet glow.
+   - Price: $19/mo (or $24/mo) with explicit billing frequency subtext.
+   - Action CTA: "Upgrade to Team Pro" (solid vibrant violet/white button, tactile hover).
+   - Features: Up to 25 seats, unlimited projects, 100GB edge bandwidth, 90-day audit log retention, 4-hour SLA.
+3. Card 3 (Enterprise / Custom):
+   - Description: "For scaling organizations with strict compliance."
+   - Price: "Custom" (with subtext "Annual contract with tailored quotas").
+   - Action CTA: "Book Architecture Review" (outline hairline button).
+   - Features: Unlimited seats, dedicated VPC, 99.99% uptime SLA, SAML SSO / Okta, 24/7 dedicated engineer.
+
+Rules & Anti-Slop:
+- Zero purple-to-blue gradient text clips.
+- Zero decorative sparkles or trailing arrows on buttons.
+- Functional green checkmarks for included features, muted dashes for non-entitlements.
+- Include footer assurance strip: "14-day free trial on Pro • No credit card required • Cancel anytime".`,
+    markdownSpec: `# UI Specification: B2B SaaS Pricing & Feature Comparison Matrix
+
+## 1. Context & Anti-Slop Rationale
+- **Target Problem**: AI coding assistants routinely generate terrible "AI-slop" pricing pages: arbitrary glowing purple gradient cards, unreadable contrast, performative sparkle icons, and generic "Get Started" buttons with decorative trailing arrows.
+- **Real-World Foundation**: Engineered following best practices from **Stripe, Linear, Supabase, and Vercel**:
+  - Grounded inky dark canvas with 1px hairline borders (\`rgba(255, 255, 255, 0.08)\`).
+  - Strict arithmetic accuracy on billing frequencies (e.g. $24/mo monthly vs $19/mo billed annually at $228/yr).
+  - Defensible, concrete feature gating (quantified seat counts, API bandwidth limits, and audit log retention rather than vague "Unlimited Power").
+  - Explicit, purpose-driven CTA copy ("Start Free Sandbox", "Upgrade to Team Pro", "Talk with Solutions Engineering").
+
+## 2. Design Tokens
+- **Canvas Base**: \`#090A0F\`
+- **Standard Card Surface**: \`#111218\`
+- **Featured Card (Team Pro)**: \`#151722\` with a 1px border \`rgba(139, 92, 246, 0.45)\`
+- **Hairline Border**: \`rgba(255, 255, 255, 0.08)\`
+- **Accent Violet**: \`#8B5CF6\`
+- **Status Emerald**: \`#10B981\`
+- **Primary Text**: \`#FFFFFF\`
+- **Muted Text**: \`#71717A\`
+
+## 3. Master Prompt
+See quickPrompt above for the ready-to-run prompt.`
   }
 ];

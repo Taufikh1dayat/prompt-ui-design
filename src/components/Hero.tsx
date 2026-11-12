@@ -46,12 +46,12 @@ export const Hero: React.FC<HeroProps> = ({ searchQuery, onSearchChange, totalCo
         Steal battle-tested prompt architectures, exact design tokens, and structured <code className="text-zinc-800 dark:text-zinc-200 bg-black/5 dark:bg-white/10 px-1.5 py-0.5 rounded text-xs font-mono font-semibold border border-black/5 dark:border-white/10">.md</code> specs ready for v0, Claude, and Cursor.
       </p>
 
-      {/* Accessible Frosted Glass Search Input */}
+      {/* Search Input (Anti-Slop R-11: Structured 12px Radius, Zero Floating Slop) */}
       <div className="max-w-xl mx-auto mb-8">
         <label htmlFor="prompt-search-input" className="sr-only">
           Search UI Prompts
         </label>
-        <div className="relative flex items-center rounded-2xl glass-card p-1">
+        <div className="relative flex items-center rounded-xl bg-white dark:bg-[#0d0e15] border border-black/10 dark:border-white/10 shadow-xs focus-within:ring-2 focus-within:ring-zinc-400 focus-within:border-transparent transition-all p-1">
           <Search className="absolute left-4 w-4 h-4 text-zinc-400 dark:text-zinc-500 pointer-events-none" />
           <input
             id="prompt-search-input"
@@ -60,7 +60,7 @@ export const Hero: React.FC<HeroProps> = ({ searchQuery, onSearchChange, totalCo
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder={`Search across ${totalCount} production prompts (e.g. buttons, brutalism, bento)...`}
-            className="w-full pl-11 pr-24 py-3 bg-transparent text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 text-sm outline-none"
+            className="w-full pl-11 pr-24 py-2.5 bg-transparent text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 text-sm outline-none"
             aria-label={`Search across ${totalCount} UI design prompts and specs`}
           />
           <div className="absolute right-3 flex items-center gap-1.5 pointer-events-none" aria-hidden="true">
@@ -71,17 +71,17 @@ export const Hero: React.FC<HeroProps> = ({ searchQuery, onSearchChange, totalCo
         </div>
       </div>
 
-      {/* Spec Markers */}
-      <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-zinc-600 dark:text-zinc-400 font-medium">
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-btn">
+      {/* Feature Capability Markers */}
+      <div className="flex flex-wrap items-center justify-center gap-2.5 text-xs text-zinc-600 dark:text-zinc-400 font-medium">
+        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-xs">
           <Terminal className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
           <span>1-Click Copy for v0 & Claude</span>
         </div>
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-btn">
+        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-xs">
           <FileCode2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
           <span>Downloadable .md Context Files</span>
         </div>
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-btn">
+        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-xs">
           <Palette className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400" />
           <span>Design Tokens & Hex Inspection</span>
         </div>

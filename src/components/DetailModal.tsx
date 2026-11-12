@@ -84,17 +84,22 @@ export const DetailModal: React.FC<DetailModalProps> = ({
         className="fixed inset-0 bg-black/70 backdrop-blur-md transition-opacity"
       />
 
-      {/* Modal Dialog */}
-      <div className="relative w-full max-w-4xl bg-white/95 dark:bg-zinc-900/95 backdrop-blur-2xl border border-black/10 dark:border-white/15 rounded-2xl shadow-2xl overflow-hidden z-10 flex flex-col max-h-[92vh]">
+      {/* Modal Dialog (Anti-Slop R-10, R-11: Structured Solid Canvas, 12px Radius) */}
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-prompt-title"
+        className="relative w-full max-w-4xl bg-white dark:bg-[#0e0f15] border border-black/10 dark:border-white/15 rounded-xl shadow-2xl overflow-hidden z-10 flex flex-col max-h-[92vh]"
+      >
         {/* Modal Header */}
-        <div className="p-4 sm:p-5 border-b border-black/5 dark:border-white/10 flex items-start justify-between gap-4 bg-white/40 dark:bg-zinc-950/40">
+        <div className="p-4 sm:p-5 border-b border-black/5 dark:border-white/10 flex items-start justify-between gap-4 bg-zinc-50 dark:bg-zinc-900/50">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+              <span className="text-xs font-mono font-medium text-zinc-500 dark:text-zinc-400">
                 {prompt.category} • {prompt.style} • {prompt.targetTool}
               </span>
             </div>
-            <h2 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white tracking-tight">
+            <h2 id="modal-prompt-title" className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white tracking-tight">
               {prompt.title}
             </h2>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-0.5 max-w-2xl">
@@ -104,7 +109,8 @@ export const DetailModal: React.FC<DetailModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl glass-btn text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition"
+            aria-label="Close specification modal"
+            className="p-1.5 rounded-lg glass-btn text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition focus-visible:ring-2 focus-visible:ring-zinc-400"
           >
             <X className="w-5 h-5" />
           </button>
@@ -118,8 +124,8 @@ export const DetailModal: React.FC<DetailModalProps> = ({
         </div>
 
         {/* Navigation Tabs */}
-        <div className="px-4 sm:px-6 border-b border-black/5 dark:border-white/10 bg-white/40 dark:bg-zinc-900/40 backdrop-blur-md flex items-center justify-between">
-          <div className="flex items-center gap-4">
+        <div className="px-4 sm:px-6 border-b border-black/5 dark:border-white/10 bg-zinc-50/80 dark:bg-zinc-900/40 flex items-center justify-between">
+          <div className="flex items-center gap-4" role="tablist" aria-label="Specification view options">
             <button
               onClick={() => setActiveTab('prompt')}
               className={`flex items-center gap-1.5 py-3 text-xs font-semibold border-b-2 transition ${
@@ -162,7 +168,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
             {activeTab === 'markdown' && (
               <button
                 onClick={handleDownloadMarkdown}
-                className="glass-btn flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-zinc-800 dark:text-zinc-200 text-xs font-medium transition"
+                className="glass-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-zinc-800 dark:text-zinc-200 text-xs font-medium transition focus-visible:ring-2 focus-visible:ring-zinc-400"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Download .md</span>
@@ -171,7 +177,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
 
             <button
               onClick={activeTab === 'markdown' ? handleCopyMarkdown : handleCopyPrompt}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-xs font-bold shadow-md transition active:scale-95"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-xs font-bold shadow-xs transition active:scale-95 focus-visible:ring-2 focus-visible:ring-violet-400"
             >
               {(activeTab === 'markdown' ? copiedMarkdown : copiedPrompt) ? (
                 <>

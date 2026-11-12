@@ -25,6 +25,8 @@ const STYLES: DesignStyle[] = [
   'Swiss Minimal',
   'Bento Grid',
   'Developer Native',
+  'Tactile Skeuomorphic',
+  'Cyberpunk Terminal',
 ];
 
 const TOOLS: TargetTool[] = [
@@ -49,18 +51,20 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 }) => {
   return (
     <div className="sticky top-15 z-30 w-full bg-white/60 dark:bg-zinc-950/60 backdrop-blur-xl border-y border-black/5 dark:border-white/10 py-3 px-4 sm:px-6 lg:px-8 mb-8 transition-colors">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-        {/* Category Filter Pills */}
-        <div className="w-full md:w-auto flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
+      <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        {/* Category Filter Tabs */}
+        <div className="w-full md:w-auto flex items-center gap-1 overflow-x-auto pb-1 md:pb-0 scrollbar-none" role="tablist" aria-label="Prompt Categories">
           {categories.map((cat) => {
             const isActive = selectedCategory === cat;
             return (
               <button
                 key={cat}
+                role="tab"
+                aria-selected={isActive}
                 onClick={() => onSelectCategory(cat)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none ${
                   isActive
-                    ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 font-bold shadow-sm scale-[1.02]'
+                    ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 font-semibold shadow-xs'
                     : 'glass-btn text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100'
                 }`}
               >
@@ -78,7 +82,8 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             <select
               value={selectedStyle}
               onChange={(e) => onSelectStyle(e.target.value as DesignStyle)}
-              className="glass-btn text-zinc-800 dark:text-zinc-200 rounded-xl px-2.5 py-1.5 text-xs outline-none cursor-pointer font-medium"
+              aria-label="Filter by Design Aesthetic"
+              className="glass-btn text-zinc-800 dark:text-zinc-200 rounded-lg px-2.5 py-1.5 text-xs outline-none cursor-pointer font-medium focus-visible:ring-2 focus-visible:ring-zinc-400"
             >
               {STYLES.map((st) => (
                 <option key={st} value={st} className="bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-white">
@@ -94,7 +99,8 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             <select
               value={selectedTool}
               onChange={(e) => onSelectTool(e.target.value as TargetTool)}
-              className="glass-btn text-zinc-800 dark:text-zinc-200 rounded-xl px-2.5 py-1.5 text-xs outline-none cursor-pointer"
+              aria-label="Filter by Target AI Tool"
+              className="glass-btn text-zinc-800 dark:text-zinc-200 rounded-lg px-2.5 py-1.5 text-xs outline-none cursor-pointer focus-visible:ring-2 focus-visible:ring-zinc-400"
             >
               {TOOLS.map((tl) => (
                 <option key={tl} value={tl} className="bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-white">

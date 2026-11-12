@@ -1,12 +1,10 @@
 export type Category = 
   | 'All'
-  | 'Buttons & Controls'
-  | 'Hero & Landing'
+  | 'Buttons'
+  | 'Landing'
   | 'Dashboard'
-  | 'SaaS'
-  | 'Mobile'
-  | 'E-Commerce'
-  | 'Components';
+  | 'Components'
+  | 'Mobile';
 
 export type DesignStyle = 
   | 'All'

@@ -11,15 +11,13 @@ import {
   Zap,
   ArrowUpRight,
   Sliders,
-  Sparkle,
+  Layers,
   Play,
   Pause,
   UploadCloud,
   FileText,
   Bell,
-  CheckCircle2,
-  Clock,
-  Sparkles
+  CheckCircle2
 } from 'lucide-react';
 
 interface MiniPreviewProps {
@@ -28,6 +26,7 @@ interface MiniPreviewProps {
 
 export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isAnnual, setIsAnnual] = useState(true);
 
   switch (previewId) {
     /* 1. BUTTON SHOWCASE MATRIX (6 Unique Button Archetypes) */
@@ -56,7 +55,7 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
               onClick={(e) => e.stopPropagation()}
               className="py-1 px-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/25 text-white text-[9px] font-semibold hover:bg-white/20 active:scale-95 transition-all shadow-sm flex items-center justify-center gap-1"
             >
-              <Sparkle className="w-2.5 h-2.5 text-cyan-300" />
+              <Layers className="w-2.5 h-2.5 text-cyan-300" />
               Frosted Glass
             </button>
 
@@ -73,7 +72,7 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
               onClick={(e) => e.stopPropagation()}
               className="relative py-1 px-2 rounded-lg bg-zinc-900 text-white text-[9px] font-semibold border border-violet-500/60 shadow-[0_0_12px_rgba(139,92,246,0.35)] hover:border-violet-400 active:scale-95 transition-all flex items-center justify-center gap-1 overflow-hidden group"
             >
-              <Sparkles className="w-2.5 h-2.5 text-violet-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
               <span>Glow Shimmer</span>
             </button>
 
@@ -202,47 +201,113 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
         </div>
       );
 
-    /* 4. NOTIFICATION CENTER & ACTIVITY FLYOUT */
+    /* 4. NOTIFICATION CENTER & ACTIVITY FLYOUT (LINEAR / RAYCAST INBOX PATTERN) */
     case 'notification-center':
       return (
-        <div className="w-full h-full p-2.5 bg-zinc-950 flex flex-col justify-between select-none font-sans">
-          <div className="flex items-center justify-between pb-1 border-b border-zinc-800">
-            <span className="text-[10px] font-bold text-white flex items-center gap-1.5">
-              <Bell className="w-3 h-3 text-violet-400" /> Notifications
-            </span>
-            <span className="text-[7.5px] text-zinc-400 font-mono hover:text-white cursor-pointer">
+        <div className="w-full h-full p-2 bg-[#090A0E] text-zinc-200 flex flex-col justify-between select-none font-sans overflow-hidden">
+          {/* Header Bar */}
+          <div className="flex items-center justify-between pb-1 border-b border-white/10 text-[7.5px]">
+            <div className="flex items-center gap-1">
+              <span className="w-3.5 h-3.5 rounded bg-violet-500/20 text-violet-400 flex items-center justify-center font-bold">
+                <Bell className="w-2 h-2" />
+              </span>
+              <span className="font-bold text-white tracking-tight">Inbox</span>
+              <span className="px-1.5 py-0.2 rounded-full bg-violet-500/25 text-violet-300 font-mono text-[6px] border border-violet-500/40 font-semibold">
+                3 new
+              </span>
+            </div>
+
+            {/* Filter Tabs */}
+            <div className="flex items-center gap-1 text-[6.5px] text-zinc-400">
+              <span className="px-1 py-0.2 rounded bg-white/10 text-white font-semibold">All</span>
+              <span className="hover:text-zinc-200">Mentions</span>
+              <span className="hover:text-zinc-200">System</span>
+            </div>
+          </div>
+
+          {/* Activity Item List */}
+          <div className="space-y-1 my-auto">
+            {/* Item 1: PR Merge (Alex Rivera) */}
+            <div className="p-1 rounded-lg bg-zinc-900/90 border border-white/10 hover:border-violet-500/50 transition-all flex items-start gap-1.5 shadow-xs">
+              <div className="relative shrink-0 mt-0.5">
+                <div className="w-4 h-4 rounded-full bg-gradient-to-tr from-violet-600 to-indigo-500 flex items-center justify-center text-[6px] font-black text-white shadow-xs">
+                  AR
+                </div>
+                <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 border border-[#090A0E] flex items-center justify-center text-[4.5px] text-black font-black">
+                  ✓
+                </div>
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-1">
+                  <div className="text-[7px] font-bold text-white truncate">
+                    Alex Rivera <span className="text-zinc-400 font-normal">merged PR #142</span>
+                  </div>
+                  <span className="text-[6px] font-mono text-zinc-500 shrink-0">2m</span>
+                </div>
+                <div className="text-[6px] text-zinc-400 font-mono truncate">
+                  feat(auth): token rotation & session guard
+                </div>
+              </div>
+
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0 mt-1 shadow-[0_0_6px_rgba(167,139,250,0.8)]" />
+            </div>
+
+            {/* Item 2: Vercel Cloud Deployment */}
+            <div className="p-1 rounded-lg bg-zinc-900/50 border border-white/5 flex items-start gap-1.5">
+              <div className="w-4 h-4 rounded bg-black border border-white/10 flex items-center justify-center shrink-0 mt-0.5">
+                <svg className="w-2 h-2 fill-white" viewBox="0 0 24 24">
+                  <path d="M12 1L24 22H0L12 1Z" />
+                </svg>
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-1">
+                  <div className="text-[7px] font-bold text-zinc-200 truncate flex items-center gap-1">
+                    <span>Edge Deploy: Production</span>
+                    <span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse" />
+                  </div>
+                  <span className="text-[6px] font-mono text-zinc-500 shrink-0">14m</span>
+                </div>
+                <div className="text-[6px] text-zinc-400 font-mono truncate">
+                  api.promptui.dev • 38ms latency
+                </div>
+              </div>
+
+              <span className="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0 mt-1" />
+            </div>
+
+            {/* Item 3: Linear Issue Mention */}
+            <div className="p-1 rounded-lg bg-zinc-900/50 border border-white/5 flex items-start gap-1.5">
+              <div className="w-4 h-4 rounded bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center shrink-0 mt-0.5 font-mono text-[6px] font-bold">
+                P1
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-1">
+                  <div className="text-[7px] font-bold text-zinc-300 truncate">
+                    Assigned to <span className="text-amber-400 font-semibold">ENG-2041</span>
+                  </div>
+                  <span className="text-[6px] font-mono text-zinc-500 shrink-0">1h</span>
+                </div>
+                <div className="text-[6px] text-zinc-400 font-mono truncate">
+                  Audit WCAG AA color contrast on light mode
+                </div>
+              </div>
+
+              <span className="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0 mt-1" />
+            </div>
+          </div>
+
+          {/* Footer Bar: Linear Triage Hotkeys */}
+          <div className="pt-1 border-t border-white/10 flex items-center justify-between text-[6px] font-mono text-zinc-500">
+            <div className="flex items-center gap-1">
+              <span><kbd className="px-1 py-0.2 rounded bg-white/10 text-zinc-300">J</kbd><kbd className="px-1 py-0.2 rounded bg-white/10 text-zinc-300 ml-0.5">K</kbd> Nav</span>
+              <span><kbd className="px-1 py-0.2 rounded bg-white/10 text-zinc-300">E</kbd> Done</span>
+            </div>
+            <span className="text-violet-400 font-bold hover:underline cursor-pointer flex items-center gap-0.5">
               Mark all read
             </span>
-          </div>
-
-          <div className="space-y-1.5 my-auto">
-            <div className="p-1.5 rounded-lg bg-zinc-900/90 border border-zinc-800 flex items-start gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 mt-1 shrink-0" />
-              <div className="flex-1 min-w-0">
-                <div className="text-[8px] text-zinc-200 font-medium truncate">
-                  Alex approved your pull request #128
-                </div>
-                <div className="text-[7px] text-zinc-500 flex items-center gap-1 mt-0.5 font-mono">
-                  <Clock className="w-2.5 h-2.5" /> 5m ago
-                </div>
-              </div>
-            </div>
-
-            <div className="p-1.5 rounded-lg bg-zinc-900/60 border border-zinc-800/80 flex items-start gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-zinc-600 mt-1 shrink-0" />
-              <div className="flex-1 min-w-0">
-                <div className="text-[8px] text-zinc-300 font-medium truncate">
-                  Invoice #902 paid ($420.00)
-                </div>
-                <div className="text-[7px] text-zinc-500 flex items-center gap-1 mt-0.5 font-mono">
-                  <Clock className="w-2.5 h-2.5" /> 1h ago
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-[7.5px] font-mono text-zinc-500 text-center">
-            Unread dots, timestamps & quick actions
           </div>
         </div>
       );
@@ -389,7 +454,7 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-1.5">
                 <div className="w-4 h-4 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-                  <Sparkle className="w-2.5 h-2.5 text-cyan-300" />
+                  <Layers className="w-2.5 h-2.5 text-cyan-300" />
                 </div>
                 <span className="text-[10px] font-semibold tracking-tight">Liquid Glass</span>
               </div>
@@ -623,6 +688,297 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
             <div className="w-full py-1 bg-white text-black font-semibold text-center rounded text-[9px]">
               Checkout Now
             </div>
+          </div>
+        </div>
+      );
+
+    /* 14. MODERN CREATIVE DIGITAL AGENCY LANDING (TURNOVER) */
+    case 'creative-agency-landing':
+      return (
+        <div className="relative w-full h-full bg-[#FAF8F5] text-zinc-900 flex flex-col justify-between p-2 select-none overflow-hidden font-sans">
+          {/* Ambient Warm Radial Center Glow */}
+          <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-48 h-48 rounded-full bg-orange-500/12 blur-2xl pointer-events-none" />
+
+          {/* Top Mini Nav */}
+          <div className="relative z-10 flex items-center justify-between pb-1 border-b border-black/5 text-[7.5px]">
+            <div className="flex items-center gap-0.5 font-black text-zinc-950 tracking-tight">
+              <span>Turn</span>
+              <span className="text-orange-500 font-bold">↗</span>
+              <span>ver</span>
+            </div>
+            <div className="hidden sm:flex items-center gap-2 text-[6.5px] text-zinc-400">
+              <span className="text-zinc-900 font-bold border-b border-orange-500 pb-0.5">Home</span>
+              <span>Services</span>
+              <span>About</span>
+              <span>Work</span>
+            </div>
+            <span className="bg-orange-500 text-white font-bold text-[6.5px] px-2 py-0.5 rounded-full shadow-xs">
+              Explore Work
+            </span>
+          </div>
+
+          {/* Hero Content Split */}
+          <div className="relative z-10 grid grid-cols-12 gap-1 my-auto items-center">
+            {/* Left Column: Copy & Stats */}
+            <div className="col-span-7 flex flex-col gap-0.5 pr-1">
+              <div className="inline-flex items-center gap-1 text-[6.5px] font-bold text-orange-600">
+                <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
+                <span>Creative Digital Agency</span>
+              </div>
+
+              <h4 className="text-[11px] sm:text-[12px] font-black leading-[1.15] tracking-tight text-zinc-950">
+                We Build Brands <br />
+                <span className="text-orange-500">That Stand Out</span>
+              </h4>
+
+              {/* CTAs */}
+              <div className="flex items-center gap-1.5 mt-1">
+                <button
+                  onClick={(e) => e.stopPropagation()}
+                  className="px-2.5 py-0.5 bg-orange-500 text-white text-[7px] font-bold rounded-full shadow-xs hover:bg-orange-600 transition flex items-center"
+                >
+                  <span>Start Project</span>
+                </button>
+                <div className="flex items-center gap-0.5 text-[6.5px] text-zinc-600 font-semibold">
+                  <div className="w-3.5 h-3.5 rounded-full bg-white shadow-xs border border-black/5 flex items-center justify-center">
+                    <Play className="w-1.5 h-1.5 text-orange-500 fill-current ml-0.5" />
+                  </div>
+                  <span>Watch Story</span>
+                </div>
+              </div>
+
+              {/* Mini Stats Row */}
+              <div className="grid grid-cols-4 gap-0.5 pt-1 mt-1 border-t border-black/5 text-center">
+                <div>
+                  <div className="font-black text-[7.5px] text-zinc-950">320+</div>
+                  <div className="text-[5px] text-zinc-400">Clients</div>
+                </div>
+                <div>
+                  <div className="font-black text-[7.5px] text-zinc-950">5+</div>
+                  <div className="text-[5px] text-zinc-400">Years</div>
+                </div>
+                <div>
+                  <div className="font-black text-[7.5px] text-zinc-950">150+</div>
+                  <div className="text-[5px] text-zinc-400">Projects</div>
+                </div>
+                <div>
+                  <div className="font-black text-[7.5px] text-zinc-950">98%</div>
+                  <div className="text-[5px] text-zinc-400">Satisfied</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: 3D Visual & Floating Glass Cards */}
+            <div className="col-span-5 relative h-26 flex items-center justify-center">
+              {/* 3D Mannequin Silhouette with Neon Visor */}
+              <div className="relative w-18 h-22 flex items-center justify-center">
+                {/* Acoustic Head Fins */}
+                <div className="absolute right-1 top-2 flex flex-col gap-0.5 opacity-70">
+                  <div className="w-2 h-0.5 bg-zinc-400 rounded-full" />
+                  <div className="w-3 h-0.5 bg-zinc-400 rounded-full" />
+                  <div className="w-4 h-0.5 bg-zinc-500 rounded-full" />
+                  <div className="w-3.5 h-0.5 bg-zinc-500 rounded-full" />
+                  <div className="w-2 h-0.5 bg-zinc-400 rounded-full" />
+                </div>
+
+                {/* Bust Silhouette */}
+                <svg className="w-14 h-20 drop-shadow-md" viewBox="0 0 60 80" fill="none">
+                  {/* Shoulders & Torso */}
+                  <path d="M10 75 Q15 50 25 45 L35 45 Q45 50 50 75 Z" fill="#1e293b" />
+                  {/* Neck */}
+                  <path d="M26 35 L26 48 L34 48 L34 35 Z" fill="#334155" />
+                  {/* Head Shape */}
+                  <ellipse cx="30" cy="25" rx="13" ry="17" fill="#0f172a" />
+                  {/* Glowing Orange Cyber Visor */}
+                  <rect x="14" y="20" width="30" height="9" rx="3.5" fill="#ff5500" filter="drop-shadow(0 0 5px #ff5500)" />
+                  <text x="29" y="26.5" fontSize="3.5" fontFamily="sans-serif" fontWeight="900" fill="#ffffff" textAnchor="middle" letterSpacing="0.4">
+                    TURNOVER
+                  </text>
+                </svg>
+
+                {/* Swirling 3D Orange Ribbon */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 70 80" fill="none">
+                  <path
+                    d="M 5 45 C 10 15, 55 25, 60 55 C 65 72, 20 78, 8 68"
+                    stroke="#ff5500"
+                    strokeWidth="3.2"
+                    strokeLinecap="round"
+                    className="opacity-95 drop-shadow-[0_2px_6px_rgba(255,85,0,0.6)]"
+                  />
+                  <path
+                    d="M 8 46 C 13 18, 52 28, 57 55"
+                    stroke="#ffffff"
+                    strokeWidth="0.6"
+                    strokeDasharray="1.5 1.5"
+                    className="opacity-75"
+                  />
+                </svg>
+              </div>
+
+              {/* Floating Frosted Glass Cards */}
+              <div className="absolute -top-0.5 -right-1 px-1.5 py-0.5 rounded-md bg-white/85 backdrop-blur-md border border-white shadow-xs flex items-center gap-1 text-[5.5px] font-bold text-zinc-800">
+                <span className="w-1 h-1 rounded-full bg-orange-500" />
+                <span>Brand Strategy</span>
+              </div>
+
+              <div className="absolute top-8 -right-1 px-1.5 py-0.5 rounded-md bg-white/85 backdrop-blur-md border border-white shadow-xs flex items-center gap-1 text-[5.5px] font-bold text-zinc-800">
+                <span className="w-1 h-1 rounded-full bg-amber-500" />
+                <span>Creative Design</span>
+              </div>
+
+              <div className="absolute bottom-1 -left-2 px-1.5 py-0.5 rounded-md bg-white/85 backdrop-blur-md border border-white shadow-xs flex items-center gap-1 text-[5.5px] font-bold text-zinc-800">
+                <span className="w-1 h-1 rounded-full bg-emerald-500" />
+                <span>Digital Growth</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer note */}
+          <div className="relative z-10 flex items-center justify-between text-[6px] font-mono text-zinc-400 pt-0.5 border-t border-black/5">
+            <span>Modern 3D Studio Canvas</span>
+            <span>Case Studies</span>
+          </div>
+        </div>
+      );
+
+    /* 15. B2B SAAS PRICING & FEATURE MATRIX */
+    case 'saas-pricing-matrix':
+      return (
+        <div className="w-full h-full p-2 bg-[#090A0F] text-zinc-200 flex flex-col justify-between select-none font-sans overflow-hidden">
+          {/* Header & Toggle */}
+          <div className="flex items-center justify-between pb-1 border-b border-white/10">
+            <div>
+              <div className="text-[6.5px] font-mono font-bold tracking-wider text-violet-400 uppercase">
+                PLANS & BILLING
+              </div>
+              <div className="text-[8px] font-black text-white">
+                Predictable tiers
+              </div>
+            </div>
+
+            {/* Interactive Billing Frequency Switcher */}
+            <div className="inline-flex p-0.5 rounded-lg bg-zinc-900 border border-white/10 text-[6.5px]">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsAnnual(false);
+                }}
+                className={`px-1.5 py-0.5 rounded transition-all font-semibold ${
+                  !isAnnual ? 'bg-white/15 text-white shadow-xs' : 'text-zinc-500 hover:text-zinc-300'
+                }`}
+              >
+                Monthly
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsAnnual(true);
+                }}
+                className={`px-1.5 py-0.5 rounded transition-all font-semibold flex items-center gap-1 ${
+                  isAnnual ? 'bg-violet-600 text-white shadow-xs' : 'text-zinc-500 hover:text-zinc-300'
+                }`}
+              >
+                <span>Annual</span>
+                <span className="text-[5.5px] px-1 py-0.2 rounded bg-emerald-500/20 text-emerald-400 font-mono font-bold">
+                  -20%
+                </span>
+              </button>
+            </div>
+          </div>
+
+          {/* 3-Tier Grid */}
+          <div className="grid grid-cols-3 gap-1 my-auto">
+            {/* 1. Hobby Tier */}
+            <div className="p-1.5 rounded-lg bg-zinc-900/60 border border-white/5 flex flex-col justify-between">
+              <div>
+                <div className="text-[7px] font-bold text-zinc-300">Hobby</div>
+                <div className="text-[10px] font-black font-mono text-white mt-0.5">$0</div>
+                <div className="text-[5.5px] text-zinc-500">Free forever</div>
+
+                <div className="space-y-0.5 mt-1 pt-1 border-t border-white/5 text-[6px] text-zinc-400 font-mono">
+                  <div className="flex items-center gap-1 text-zinc-300">
+                    <span className="text-emerald-400">✓</span> 1 Seat
+                  </div>
+                  <div className="flex items-center gap-1 text-zinc-300">
+                    <span className="text-emerald-400">✓</span> 3 Projects
+                  </div>
+                  <div className="flex items-center gap-1 text-zinc-500">
+                    <span className="text-zinc-600 font-bold">✕</span> No audit log
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-1.5 py-0.5 rounded bg-white/10 text-zinc-300 text-[6.5px] font-bold text-center border border-white/10">
+                Start Free Sandbox
+              </div>
+            </div>
+
+            {/* 2. Team Pro (Featured) */}
+            <div className="p-1.5 rounded-lg bg-[#151722] border border-violet-500/50 shadow-[0_0_12px_rgba(139,92,246,0.15)] flex flex-col justify-between relative">
+              <div className="absolute -top-1.5 right-1 px-1 py-0.2 rounded bg-violet-600 text-white font-mono text-[5px] font-black uppercase tracking-wider">
+                POPULAR
+              </div>
+
+              <div>
+                <div className="text-[7px] font-bold text-violet-300">Team Pro</div>
+                <div className="flex items-baseline gap-0.5 mt-0.5">
+                  <span className="text-[10px] font-black font-mono text-white">
+                    {isAnnual ? '$19' : '$24'}
+                  </span>
+                  <span className="text-[5.5px] font-mono text-zinc-400">/seat/mo</span>
+                </div>
+                <div className="text-[5.5px] text-violet-300/80 font-mono">
+                  {isAnnual ? 'Billed $228/yr' : 'Billed monthly'}
+                </div>
+
+                <div className="space-y-0.5 mt-1 pt-1 border-t border-white/10 text-[6px] text-zinc-300 font-mono">
+                  <div className="flex items-center gap-1">
+                    <span className="text-emerald-400">✓</span> 25 Seats
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span className="text-emerald-400">✓</span> Unlimited Repos
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span className="text-emerald-400">✓</span> 90d Audit Logs
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-1.5 py-0.5 rounded bg-violet-600 text-white text-[6.5px] font-bold text-center shadow-xs">
+                Choose Team Pro
+              </div>
+            </div>
+
+            {/* 3. Enterprise Tier */}
+            <div className="p-1.5 rounded-lg bg-zinc-900/60 border border-white/5 flex flex-col justify-between">
+              <div>
+                <div className="text-[7px] font-bold text-zinc-300">Enterprise</div>
+                <div className="text-[10px] font-black font-mono text-white mt-0.5">Custom</div>
+                <div className="text-[5.5px] text-zinc-500">Dedicated VPC</div>
+
+                <div className="space-y-0.5 mt-1 pt-1 border-t border-white/5 text-[6px] text-zinc-400 font-mono">
+                  <div className="flex items-center gap-1 text-zinc-300">
+                    <span className="text-emerald-400">✓</span> Unlimited
+                  </div>
+                  <div className="flex items-center gap-1 text-zinc-300">
+                    <span className="text-emerald-400">✓</span> 99.99% SLA
+                  </div>
+                  <div className="flex items-center gap-1 text-zinc-300">
+                    <span className="text-emerald-400">✓</span> SAML / SSO
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-1.5 py-0.5 rounded bg-white/5 text-zinc-400 text-[6.5px] font-bold text-center border border-white/10">
+                Contact Sales
+              </div>
+            </div>
+          </div>
+
+          {/* Footer assurance */}
+          <div className="pt-0.5 border-t border-white/10 flex items-center justify-between text-[5.5px] font-mono text-zinc-500">
+            <span>14-day risk-free trial</span>
+            <span>Zero credit card required</span>
           </div>
         </div>
       );

@@ -12,17 +12,22 @@ import { Layers, SearchX } from 'lucide-react';
 
 const CATEGORIES: Category[] = [
   'All',
-  'Buttons & Controls',
-  'Hero & Landing',
+  'Buttons',
+  'Landing',
   'Dashboard',
-  'SaaS',
-  'Mobile',
-  'E-Commerce',
   'Components',
+  'Mobile',
 ];
 
 export function App() {
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('promptui-theme');
+      if (saved === 'dark' || saved === 'light') return saved;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    return 'dark';
+  });
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<Category>('All');
   const [selectedStyle, setSelectedStyle] = useState<DesignStyle>('All');
@@ -31,7 +36,7 @@ export function App() {
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Sync theme with HTML class
+  // Sync theme with HTML class and persist in localStorage
   useEffect(() => {
     const root = document.documentElement;
     if (theme === 'dark') {
@@ -40,6 +45,11 @@ export function App() {
     } else {
       root.classList.add('light');
       root.classList.remove('dark');
+    }
+    try {
+      localStorage.setItem('promptui-theme', theme);
+    } catch {
+      // LocalStorage unavailable in sandbox
     }
   }, [theme]);
 
@@ -115,12 +125,6 @@ export function App() {
       {/* Navigation */}
       <Navbar
         onOpenSubmit={() => setIsSubmitModalOpen(true)}
-        onFocusSearch={() => {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          const input = document.querySelector('input');
-          input?.focus();
-        }}
-        totalPrompts={PROMPTS_DATA.length}
         theme={theme}
         onToggleTheme={toggleTheme}
       />
@@ -150,9 +154,9 @@ export function App() {
         />
 
         {/* Showcase Section */}
-        <section 
+        <section
           aria-label="Curated UI Design Prompts Gallery"
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 w-full pb-16"
+          className="max-w-360 mx-auto px-4 sm:px-6 lg:px-8 flex-1 w-full pb-16"
         >
           {filteredPrompts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -167,8 +171,8 @@ export function App() {
             </div>
           ) : (
             /* Accessible Empty Search State */
-            <div className="py-20 text-center flex flex-col items-center justify-center max-w-md mx-auto glass-card p-8 rounded-2xl">
-              <div className="w-12 h-12 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-zinc-400 mb-3">
+            <div className="py-20 text-center flex flex-col items-center justify-center max-w-md mx-auto glass-card p-8 rounded-xl">
+              <div className="w-12 h-12 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-zinc-400 mb-3">
                 <SearchX className="w-6 h-6" />
               </div>
               <h2 className="text-base font-semibold text-zinc-900 dark:text-white mb-1">
@@ -179,7 +183,7 @@ export function App() {
               </p>
               <button
                 onClick={handleResetFilters}
-                className="glass-btn px-4 py-2 rounded-xl text-xs font-semibold text-zinc-900 dark:text-white"
+                className="glass-btn px-4 py-2 rounded-lg text-xs font-semibold text-zinc-900 dark:text-white focus-visible:ring-2 focus-visible:ring-zinc-400"
               >
                 Reset Filters
               </button>
@@ -190,11 +194,11 @@ export function App() {
 
       {/* Semantic Footer */}
       <footer role="contentinfo" className="border-t border-black/5 dark:border-white/10 bg-white/40 dark:bg-zinc-950/40 backdrop-blur-md py-8 px-4 sm:px-6 lg:px-8 text-xs text-zinc-500 transition-colors">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="max-w-360 mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Layers className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
             <span className="font-semibold text-zinc-900 dark:text-zinc-100">PromptUI</span>
-            <span>— Free open-source UI design prompts and architectural markdown specs.</span>
+            <span>: Free open-source UI design prompts and architectural markdown specs.</span>
           </div>
 
           <nav aria-label="Footer Navigation" className="flex items-center gap-5">
