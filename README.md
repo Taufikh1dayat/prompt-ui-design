@@ -6,6 +6,7 @@ A curated catalog and repository of production-ready UI design prompts, design t
 
 ## Overview
 
+<img width="1535" height="786" alt="image" src="https://github.com/user-attachments/assets/c9c4f0b8-c911-4797-9fcc-b3493d78f9ce" />
 Modern AI coding agents frequently generate generic, repetitive user interfaces when given brief or unconstrained prompts (commonly referred to as "AI slop" — arbitrary gradient texts, gratuitous pill badges, trailing arrows on buttons, and non-functional glows). 
 
 `prompt-ui-design` provides structured, battle-tested UI prompts and architectural specifications. Each specification defines explicit layout hierarchies, verified Tailwind CSS classes, strict color palettes, and component states (hover, active, focus, disabled, loading, and empty states) to ensure deterministic, production-grade output from LLMs.
