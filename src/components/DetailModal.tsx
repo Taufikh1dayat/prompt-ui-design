@@ -123,12 +123,12 @@ export const DetailModal: React.FC<DetailModalProps> = ({
           </div>
         </div>
 
-        {/* Navigation Tabs */}
-        <div className="px-4 sm:px-6 border-b border-black/5 dark:border-white/10 bg-zinc-50/80 dark:bg-zinc-900/40 flex items-center justify-between">
-          <div className="flex items-center gap-4" role="tablist" aria-label="Specification view options">
+        {/* Navigation Tabs Bar */}
+        <div className="px-3 sm:px-6 border-b border-black/5 dark:border-white/10 bg-zinc-50/80 dark:bg-zinc-900/40 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto scrollbar-none py-1 sm:py-0 w-full sm:w-auto" role="tablist" aria-label="Specification view options">
             <button
               onClick={() => setActiveTab('prompt')}
-              className={`flex items-center gap-1.5 py-3 text-xs font-semibold border-b-2 transition ${
+              className={`flex items-center gap-1.5 py-2.5 sm:py-3 px-2 sm:px-0 text-xs font-semibold border-b-2 transition whitespace-nowrap shrink-0 ${
                 activeTab === 'prompt'
                   ? 'border-violet-600 text-violet-600 dark:border-violet-400 dark:text-violet-400 font-bold'
                   : 'border-transparent text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'
@@ -140,7 +140,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
 
             <button
               onClick={() => setActiveTab('markdown')}
-              className={`flex items-center gap-1.5 py-3 text-xs font-semibold border-b-2 transition ${
+              className={`flex items-center gap-1.5 py-2.5 sm:py-3 px-2 sm:px-0 text-xs font-semibold border-b-2 transition whitespace-nowrap shrink-0 ${
                 activeTab === 'markdown'
                   ? 'border-violet-600 text-violet-600 dark:border-violet-400 dark:text-violet-400 font-bold'
                   : 'border-transparent text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'
@@ -152,7 +152,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
 
             <button
               onClick={() => setActiveTab('tokens')}
-              className={`flex items-center gap-1.5 py-3 text-xs font-semibold border-b-2 transition ${
+              className={`flex items-center gap-1.5 py-2.5 sm:py-3 px-2 sm:px-0 text-xs font-semibold border-b-2 transition whitespace-nowrap shrink-0 ${
                 activeTab === 'tokens'
                   ? 'border-violet-600 text-violet-600 dark:border-violet-400 dark:text-violet-400 font-bold'
                   : 'border-transparent text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'
@@ -163,8 +163,8 @@ export const DetailModal: React.FC<DetailModalProps> = ({
             </button>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex items-center gap-2">
+          {/* Desktop Action Buttons */}
+          <div className="hidden sm:flex items-center gap-2 shrink-0">
             {activeTab === 'markdown' && (
               <button
                 onClick={handleDownloadMarkdown}
@@ -257,6 +257,36 @@ export const DetailModal: React.FC<DetailModalProps> = ({
               </div>
             </div>
           )}
+        </div>
+
+        {/* Mobile Action Bar (Thumb Zone) */}
+        <div className="p-3 border-t border-black/5 dark:border-white/10 bg-zinc-50 dark:bg-[#0e0f15] flex items-center justify-end gap-2 shrink-0 sm:hidden">
+          {activeTab === 'markdown' && (
+            <button
+              onClick={handleDownloadMarkdown}
+              className="glass-btn flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-zinc-800 dark:text-zinc-200 text-xs font-medium transition focus-visible:ring-2 focus-visible:ring-zinc-400"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Download</span>
+            </button>
+          )}
+
+          <button
+            onClick={activeTab === 'markdown' ? handleCopyMarkdown : handleCopyPrompt}
+            className="flex-1 flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-xs font-bold shadow-xs transition active:scale-95 focus-visible:ring-2 focus-visible:ring-violet-400"
+          >
+            {(activeTab === 'markdown' ? copiedMarkdown : copiedPrompt) ? (
+              <>
+                <Check className="w-3.5 h-3.5" />
+                <span>Copied</span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-3.5 h-3.5" />
+                <span>Copy {activeTab === 'markdown' ? 'Spec' : 'Prompt'}</span>
+              </>
+            )}
+          </button>
         </div>
       </div>
     </div>

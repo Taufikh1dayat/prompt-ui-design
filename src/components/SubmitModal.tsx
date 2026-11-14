@@ -61,7 +61,7 @@ Brief description of the UI problem and solution.
         role="dialog"
         aria-modal="true"
         aria-labelledby="submit-modal-title"
-        className="relative w-full max-w-xl bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl p-6 z-10"
+        className="relative w-full max-w-xl bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl p-4 sm:p-6 z-10 max-h-[92vh] overflow-y-auto"
       >
         <div className="flex items-center justify-between pb-4 border-b border-zinc-800">
           <div className="flex items-center gap-2">
@@ -98,16 +98,16 @@ Brief description of the UI problem and solution.
             </pre>
           </div>
 
-          <div className="p-3 bg-violet-500/10 border border-violet-500/20 rounded-xl flex items-center justify-between">
+          <div className="p-3 bg-violet-500/10 border border-violet-500/20 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <div className="text-violet-300 font-semibold">Ready to contribute?</div>
+              <div className="text-violet-300 font-semibold text-xs">Ready to contribute?</div>
               <div className="text-zinc-400 text-[11px]">Fork the repository and submit a Pull Request.</div>
             </div>
             <a
               href="https://github.com/Taufikh1dayat/prompt-ui-design"
               target="_blank"
               rel="noreferrer"
-              className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-medium text-xs shadow-sm transition"
+              className="px-3 py-2 sm:py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-medium text-xs shadow-sm transition text-center shrink-0"
             >
               Open GitHub PR
             </a>

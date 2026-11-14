@@ -156,10 +156,10 @@ export function App() {
         {/* Showcase Section */}
         <section
           aria-label="Curated UI Design Prompts Gallery"
-          className="max-w-360 mx-auto px-4 sm:px-6 lg:px-8 flex-1 w-full pb-16"
+          className="max-w-360 mx-auto px-3.5 sm:px-6 lg:px-8 flex-1 w-full pb-16"
         >
           {filteredPrompts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
               {filteredPrompts.map((prompt) => (
                 <PromptCard
                   key={prompt.id}
@@ -193,8 +193,8 @@ export function App() {
       </main>
 
       {/* Semantic Footer */}
-      <footer role="contentinfo" className="border-t border-black/5 dark:border-white/10 bg-white/40 dark:bg-zinc-950/40 backdrop-blur-md py-8 px-4 sm:px-6 lg:px-8 text-xs text-zinc-500 transition-colors">
-        <div className="max-w-360 mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <footer role="contentinfo" className="border-t border-black/5 dark:border-white/10 bg-white/40 dark:bg-zinc-950/40 backdrop-blur-md py-6 sm:py-8 px-4 sm:px-6 lg:px-8 text-xs text-zinc-500 transition-colors">
+        <div className="max-w-360 mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left">
           <div className="flex items-center gap-2">
             <Layers className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
             <span className="font-semibold text-zinc-900 dark:text-zinc-100">PromptUI</span>

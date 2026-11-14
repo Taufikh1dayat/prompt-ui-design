@@ -104,13 +104,13 @@ export const PromptCard: React.FC<PromptCardProps> = ({
 
         {/* Footer */}
         <div className="pt-2.5 border-t border-black/5 dark:border-white/10 flex items-center justify-between">
-          <div className="flex items-center gap-1.5" title="Palette swatches">
+          <div className="flex items-center gap-2" title="Palette swatches">
             {prompt.colorPalette.slice(0, 4).map((color, idx) => (
               <button
                 key={idx}
                 onClick={(e) => handleColorClick(e, color.hex, color.name)}
                 style={{ backgroundColor: color.hex }}
-                className="w-3.5 h-3.5 rounded-full border border-black/10 dark:border-white/20 hover:scale-125 transition-transform shadow-xs"
+                className="relative w-3.5 h-3.5 rounded-full border border-black/10 dark:border-white/20 hover:scale-125 transition-transform shadow-xs after:content-[''] after:absolute after:-inset-2"
                 title={`${color.name} (${color.hex})`}
                 aria-label={`Copy color ${color.name} ${color.hex}`}
               />

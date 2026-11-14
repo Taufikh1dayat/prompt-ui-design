@@ -50,10 +50,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   isFiltered,
 }) => {
   return (
-    <div className="sticky top-15 z-30 w-full bg-white/60 dark:bg-zinc-950/60 backdrop-blur-xl border-y border-black/5 dark:border-white/10 py-3 px-4 sm:px-6 lg:px-8 mb-8 transition-colors">
-      <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <div className="sticky top-14 z-30 w-full bg-white/80 dark:bg-[#090a0f]/80 backdrop-blur-xl border-y border-black/5 dark:border-white/10 py-2.5 sm:py-3 px-3 sm:px-6 lg:px-8 mb-6 sm:mb-8 transition-colors">
+      <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-2.5 sm:gap-4">
         {/* Category Filter Tabs */}
-        <div className="w-full md:w-auto flex items-center gap-1 overflow-x-auto pb-1 md:pb-0 scrollbar-none" role="tablist" aria-label="Prompt Categories">
+        <div className="w-full md:w-auto flex items-center gap-1.5 overflow-x-auto pb-1.5 md:pb-0 scrollbar-none overscroll-x-contain" role="tablist" aria-label="Prompt Categories">
           {categories.map((cat) => {
             const isActive = selectedCategory === cat;
             return (
@@ -62,7 +62,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => onSelectCategory(cat)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none ${
+                className={`px-3 py-2 sm:py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none shrink-0 ${
                   isActive
                     ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 font-semibold shadow-xs'
                     : 'glass-btn text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100'
@@ -75,15 +75,15 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         </div>
 
         {/* Secondary Selectors */}
-        <div className="w-full md:w-auto flex items-center justify-between md:justify-end gap-3">
+        <div className="w-full md:w-auto flex items-center justify-between md:justify-end gap-2 sm:gap-3 flex-wrap sm:flex-nowrap">
           {/* Aesthetic Selector */}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 flex-1 sm:flex-initial">
             <span className="text-[11px] text-zinc-500 hidden sm:inline">Aesthetic:</span>
             <select
               value={selectedStyle}
               onChange={(e) => onSelectStyle(e.target.value as DesignStyle)}
               aria-label="Filter by Design Aesthetic"
-              className="glass-btn text-zinc-800 dark:text-zinc-200 rounded-lg px-2.5 py-1.5 text-xs outline-none cursor-pointer font-medium focus-visible:ring-2 focus-visible:ring-zinc-400"
+              className="w-full sm:w-auto glass-btn text-zinc-800 dark:text-zinc-200 rounded-lg px-2.5 py-2 sm:py-1.5 text-xs outline-none cursor-pointer font-medium focus-visible:ring-2 focus-visible:ring-zinc-400"
             >
               {STYLES.map((st) => (
                 <option key={st} value={st} className="bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-white">
@@ -94,13 +94,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           </div>
 
           {/* Tool Selector */}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 flex-1 sm:flex-initial">
             <span className="text-[11px] text-zinc-500 hidden sm:inline">Tool:</span>
             <select
               value={selectedTool}
               onChange={(e) => onSelectTool(e.target.value as TargetTool)}
               aria-label="Filter by Target AI Tool"
-              className="glass-btn text-zinc-800 dark:text-zinc-200 rounded-lg px-2.5 py-1.5 text-xs outline-none cursor-pointer focus-visible:ring-2 focus-visible:ring-zinc-400"
+              className="w-full sm:w-auto glass-btn text-zinc-800 dark:text-zinc-200 rounded-lg px-2.5 py-2 sm:py-1.5 text-xs outline-none cursor-pointer focus-visible:ring-2 focus-visible:ring-zinc-400"
             >
               {TOOLS.map((tl) => (
                 <option key={tl} value={tl} className="bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-white">

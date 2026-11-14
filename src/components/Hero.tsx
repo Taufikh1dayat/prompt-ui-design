@@ -26,12 +26,12 @@ export const Hero: React.FC<HeroProps> = ({ searchQuery, onSearchChange, totalCo
   }, []);
 
   return (
-    <header className="pt-14 pb-8 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
+    <header className="pt-8 sm:pt-14 pb-6 sm:pb-8 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
       {/* 
         Solid, Unapologetic High-Contrast Headline (Zero AI-Slop Muted Split / Zero Gradients)
         Unified stark white/black across both lines for a confident, human-designed editorial weight.
       */}
-      <h1 className="font-display text-4xl sm:text-6xl lg:text-[4.5rem] font-extrabold text-zinc-950 dark:text-white tracking-[-0.035em] leading-[1.08] mb-5 select-none">
+      <h1 className="font-display text-3xl sm:text-5xl lg:text-[4.5rem] font-extrabold text-zinc-950 dark:text-white tracking-[-0.035em] leading-[1.12] sm:leading-[1.08] mb-4 sm:mb-5 select-none">
         <span>Production UI Prompts</span>{' '}
         <span className="font-editorial italic font-normal text-zinc-400 dark:text-zinc-500 text-[0.88em] mx-1">
           &
@@ -41,26 +41,26 @@ export const Hero: React.FC<HeroProps> = ({ searchQuery, onSearchChange, totalCo
       </h1>
 
       {/* Strong Value Proposition */}
-      <p className="max-w-2xl mx-auto text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed mb-8">
+      <p className="max-w-2xl mx-auto text-zinc-600 dark:text-zinc-400 text-xs sm:text-base leading-relaxed mb-6 sm:mb-8">
         Stop writing generic prompts like <span className="text-zinc-900 dark:text-zinc-200 italic font-medium font-serif">"buatkan dashboard modern"</span>. 
         Steal battle-tested prompt architectures, exact design tokens, and structured <code className="text-zinc-800 dark:text-zinc-200 bg-black/5 dark:bg-white/10 px-1.5 py-0.5 rounded text-xs font-mono font-semibold border border-black/5 dark:border-white/10">.md</code> specs ready for v0, Claude, and Cursor.
       </p>
 
       {/* Search Input (Anti-Slop R-11: Structured 12px Radius, Zero Floating Slop) */}
-      <div className="max-w-xl mx-auto mb-8">
+      <div className="max-w-xl mx-auto mb-6 sm:mb-8">
         <label htmlFor="prompt-search-input" className="sr-only">
           Search UI Prompts
         </label>
         <div className="relative flex items-center rounded-xl bg-white dark:bg-[#0d0e15] border border-black/10 dark:border-white/10 shadow-xs focus-within:ring-2 focus-within:ring-zinc-400 focus-within:border-transparent transition-all p-1">
-          <Search className="absolute left-4 w-4 h-4 text-zinc-400 dark:text-zinc-500 pointer-events-none" />
+          <Search className="absolute left-3.5 sm:left-4 w-4 h-4 text-zinc-400 dark:text-zinc-500 pointer-events-none" />
           <input
             id="prompt-search-input"
             ref={searchInputRef}
             type="search"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder={`Search across ${totalCount} production prompts (e.g. buttons, brutalism, bento)...`}
-            className="w-full pl-11 pr-24 py-2.5 bg-transparent text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 text-sm outline-none"
+            placeholder={`Search across ${totalCount} prompts (e.g. bento, buttons)...`}
+            className="w-full pl-10 sm:pl-11 pr-4 sm:pr-24 py-2 sm:py-2.5 bg-transparent text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 text-base sm:text-sm outline-none"
             aria-label={`Search across ${totalCount} UI design prompts and specs`}
           />
           <div className="absolute right-3 flex items-center gap-1.5 pointer-events-none" aria-hidden="true">
