@@ -8,7 +8,8 @@ import {
   Download, 
   Terminal, 
   FileCode2, 
-  Palette 
+  Palette,
+  Share2
 } from 'lucide-react';
 
 interface DetailModalProps {
@@ -76,6 +77,27 @@ export const DetailModal: React.FC<DetailModalProps> = ({
     onTriggerToast(`${name} (${hex}) copied`);
   };
 
+  const handleShareLink = async () => {
+    try {
+      const shareUrl = `${window.location.origin}${window.location.pathname}?prompt=${prompt.slug}`;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(shareUrl);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = shareUrl;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+      onTriggerToast(`Shareable link copied for "${prompt.title}"`);
+    } catch {
+      onTriggerToast('Failed to copy link to clipboard');
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
       {/* Backdrop */}
@@ -107,13 +129,25 @@ export const DetailModal: React.FC<DetailModalProps> = ({
             </p>
           </div>
 
-          <button
-            onClick={onClose}
-            aria-label="Close specification modal"
-            className="p-1.5 rounded-lg glass-btn text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition focus-visible:ring-2 focus-visible:ring-zinc-400"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-1.5 shrink-0">
+            <button
+              onClick={handleShareLink}
+              title="Copy direct shareable link"
+              aria-label="Copy direct shareable link"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg glass-btn text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white text-xs font-semibold transition focus-visible:ring-2 focus-visible:ring-zinc-400"
+            >
+              <Share2 className="w-3.5 h-3.5 text-violet-500 dark:text-violet-400" />
+              <span className="hidden sm:inline">Share</span>
+            </button>
+
+            <button
+              onClick={onClose}
+              aria-label="Close specification modal"
+              className="p-1.5 rounded-lg glass-btn text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition focus-visible:ring-2 focus-visible:ring-zinc-400"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Live Preview Container */}
@@ -261,6 +295,15 @@ export const DetailModal: React.FC<DetailModalProps> = ({
 
         {/* Mobile Action Bar (Thumb Zone) */}
         <div className="p-3 border-t border-black/5 dark:border-white/10 bg-zinc-50 dark:bg-[#0e0f15] flex items-center justify-end gap-2 shrink-0 sm:hidden">
+          <button
+            onClick={handleShareLink}
+            aria-label="Share direct link"
+            title="Share direct link"
+            className="glass-btn p-2 rounded-lg text-zinc-600 dark:text-zinc-300 shrink-0"
+          >
+            <Share2 className="w-4 h-4 text-violet-500 dark:text-violet-400" />
+          </button>
+
           {activeTab === 'markdown' && (
             <button
               onClick={handleDownloadMarkdown}

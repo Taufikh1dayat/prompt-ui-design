@@ -32,7 +32,20 @@ export function App() {
   const [selectedCategory, setSelectedCategory] = useState<Category>('All');
   const [selectedStyle, setSelectedStyle] = useState<DesignStyle>('All');
   const [selectedTool, setSelectedTool] = useState<TargetTool>('All');
-  const [activePrompt, setActivePrompt] = useState<UIPrompt | null>(null);
+  const [activePrompt, setActivePrompt] = useState<UIPrompt | null>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const slug = params.get('prompt');
+        if (slug) {
+          return PROMPTS_DATA.find((p) => p.slug === slug || p.id === slug) || null;
+        }
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  });
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -52,6 +65,50 @@ export function App() {
       // LocalStorage unavailable in sandbox
     }
   }, [theme]);
+
+  // Listen to browser Back / Forward buttons (popstate)
+  useEffect(() => {
+    const handlePopState = () => {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const slug = params.get('prompt');
+        if (slug) {
+          const target = PROMPTS_DATA.find((p) => p.slug === slug || p.id === slug);
+          setActivePrompt(target || null);
+        } else {
+          setActivePrompt(null);
+        }
+      } catch {
+        setActivePrompt(null);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const handleOpenDetail = (prompt: UIPrompt) => {
+    setActivePrompt(prompt);
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('prompt', prompt.slug);
+      window.history.pushState({ promptSlug: prompt.slug }, '', url.toString());
+    } catch {
+      // Fallback if pushState is restricted
+    }
+  };
+
+  const handleCloseDetail = () => {
+    setActivePrompt(null);
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('prompt');
+      const cleanUrl = url.pathname + (url.search ? url.search : '') + url.hash;
+      window.history.replaceState({}, '', cleanUrl);
+    } catch {
+      // Fallback
+    }
+  };
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
@@ -164,7 +221,7 @@ export function App() {
                 <PromptCard
                   key={prompt.id}
                   prompt={prompt}
-                  onOpenDetail={setActivePrompt}
+                  onOpenDetail={handleOpenDetail}
                   onTriggerToast={showToast}
                 />
               ))}
@@ -223,7 +280,7 @@ export function App() {
       {/* Modals & Toast */}
       <DetailModal
         prompt={activePrompt}
-        onClose={() => setActivePrompt(null)}
+        onClose={handleCloseDetail}
         onTriggerToast={showToast}
       />
 
