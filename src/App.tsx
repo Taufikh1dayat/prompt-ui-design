@@ -8,7 +8,7 @@ import { PromptCard } from './components/PromptCard';
 import { DetailModal } from './components/DetailModal';
 import { SubmitModal } from './components/SubmitModal';
 import { Toast } from './components/Toast';
-import { Layers, SearchX } from 'lucide-react';
+import { Layers, SearchX, Bookmark } from 'lucide-react';
 
 const CATEGORIES: Category[] = [
   'All',
@@ -48,6 +48,21 @@ export function App() {
   });
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [bookmarks, setBookmarks] = useState<string[]>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('promptui-bookmarks');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed)) return parsed;
+        }
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  });
+  const [showSavedOnly, setShowSavedOnly] = useState(false);
 
   // Sync theme with HTML class and persist in localStorage
   useEffect(() => {
@@ -121,24 +136,49 @@ export function App() {
     }, 3500);
   };
 
+  const handleToggleBookmark = (promptId: string) => {
+    setBookmarks((prev) => {
+      const isBookmarked = prev.includes(promptId);
+      const updated = isBookmarked ? prev.filter((id) => id !== promptId) : [...prev, promptId];
+      try {
+        localStorage.setItem('promptui-bookmarks', JSON.stringify(updated));
+      } catch {
+        // Fallback for sandboxed environments
+      }
+      const target = PROMPTS_DATA.find((p) => p.id === promptId);
+      showToast(
+        isBookmarked
+          ? `Removed "${target?.title || promptId}" from bookmarks`
+          : `Saved "${target?.title || promptId}" to bookmarks`
+      );
+      return updated;
+    });
+  };
+
   const isFiltered = useMemo(() => {
     return (
       searchQuery.trim() !== '' ||
       selectedCategory !== 'All' ||
       selectedStyle !== 'All' ||
-      selectedTool !== 'All'
+      selectedTool !== 'All' ||
+      showSavedOnly
     );
-  }, [searchQuery, selectedCategory, selectedStyle, selectedTool]);
+  }, [searchQuery, selectedCategory, selectedStyle, selectedTool, showSavedOnly]);
 
   const handleResetFilters = () => {
     setSearchQuery('');
     setSelectedCategory('All');
     setSelectedStyle('All');
     setSelectedTool('All');
+    setShowSavedOnly(false);
   };
 
   const filteredPrompts = useMemo(() => {
     return PROMPTS_DATA.filter((prompt) => {
+      if (showSavedOnly && !bookmarks.includes(prompt.id)) {
+        return false;
+      }
+
       if (searchQuery.trim() !== '') {
         const query = searchQuery.toLowerCase();
         const matchesText =
@@ -164,7 +204,7 @@ export function App() {
 
       return true;
     });
-  }, [searchQuery, selectedCategory, selectedStyle, selectedTool]);
+  }, [searchQuery, selectedCategory, selectedStyle, selectedTool, showSavedOnly, bookmarks]);
 
   return (
     <div className="relative min-h-screen bg-[#f8fafc] dark:bg-[#080913] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans transition-colors overflow-x-hidden">
@@ -208,6 +248,9 @@ export function App() {
           totalCount={PROMPTS_DATA.length}
           onResetFilters={handleResetFilters}
           isFiltered={isFiltered}
+          savedCount={bookmarks.length}
+          showSavedOnly={showSavedOnly}
+          onToggleSavedOnly={() => setShowSavedOnly((prev) => !prev)}
         />
 
         {/* Showcase Section */}
@@ -221,28 +264,32 @@ export function App() {
                 <PromptCard
                   key={prompt.id}
                   prompt={prompt}
+                  isBookmarked={bookmarks.includes(prompt.id)}
                   onOpenDetail={handleOpenDetail}
+                  onToggleBookmark={handleToggleBookmark}
                   onTriggerToast={showToast}
                 />
               ))}
             </div>
           ) : (
-            /* Accessible Empty Search State */
+            /* Accessible Empty State */
             <div className="py-20 text-center flex flex-col items-center justify-center max-w-md mx-auto glass-card p-8 rounded-xl">
               <div className="w-12 h-12 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-zinc-400 mb-3">
-                <SearchX className="w-6 h-6" />
+                {showSavedOnly ? <Bookmark className="w-6 h-6 text-amber-500" /> : <SearchX className="w-6 h-6" />}
               </div>
               <h2 className="text-base font-semibold text-zinc-900 dark:text-white mb-1">
-                No prompts matched your search
+                {showSavedOnly ? 'No saved prompts yet' : 'No prompts matched your search'}
               </h2>
               <p className="text-xs text-zinc-500 mb-4">
-                Try searching with different keywords or reset your active filters.
+                {showSavedOnly
+                  ? 'Click the bookmark icon on any prompt card to save your favorite UI designs here.'
+                  : 'Try searching with different keywords or reset your active filters.'}
               </p>
               <button
                 onClick={handleResetFilters}
                 className="glass-btn px-4 py-2 rounded-lg text-xs font-semibold text-zinc-900 dark:text-white focus-visible:ring-2 focus-visible:ring-zinc-400"
               >
-                Reset Filters
+                {showSavedOnly ? 'Browse All Prompts' : 'Reset Filters'}
               </button>
             </div>
           )}
@@ -280,7 +327,9 @@ export function App() {
       {/* Modals & Toast */}
       <DetailModal
         prompt={activePrompt}
+        isBookmarked={activePrompt ? bookmarks.includes(activePrompt.id) : false}
         onClose={handleCloseDetail}
+        onToggleBookmark={handleToggleBookmark}
         onTriggerToast={showToast}
       />
 

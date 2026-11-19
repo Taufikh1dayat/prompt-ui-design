@@ -17,7 +17,10 @@ import {
   UploadCloud,
   FileText,
   Bell,
-  CheckCircle2
+  CheckCircle2,
+  ArrowRight,
+  Key,
+  ShieldCheck
 } from 'lucide-react';
 
 interface MiniPreviewProps {
@@ -27,6 +30,7 @@ interface MiniPreviewProps {
 export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isAnnual, setIsAnnual] = useState(true);
+  const [authTab, setAuthTab] = useState<'magic' | 'passkey'>('magic');
 
   switch (previewId) {
     /* 1. BUTTON SHOWCASE MATRIX (6 Unique Button Archetypes) */
@@ -979,6 +983,167 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
           <div className="pt-0.5 border-t border-white/10 flex items-center justify-between text-[5.5px] font-mono text-zinc-500">
             <span>14-day risk-free trial</span>
             <span>Zero credit card required</span>
+          </div>
+        </div>
+      );
+
+    /* 16. MODERN SPLIT-SCREEN AUTHENTICATION & SSO */
+    case 'split-screen-auth':
+      return (
+        <div className="w-full h-full p-2 bg-[#090A0F] text-white flex select-none font-sans overflow-hidden">
+          {/* 2-Column Split: Left = Form, Right = Telemetry */}
+          <div className="grid grid-cols-12 gap-1.5 w-full h-full">
+            {/* Left Column (7 cols): Authentication Card */}
+            <div className="col-span-7 bg-[#11131C] border border-white/10 rounded-lg p-2 flex flex-col justify-between">
+              <div>
+                {/* Header / Brand */}
+                <div className="flex items-center justify-between pb-1.5 border-b border-white/5">
+                  <div className="flex items-center gap-1">
+                    <div className="w-3.5 h-3.5 rounded bg-indigo-600 flex items-center justify-center text-[7px] font-black text-white">
+                      ▲
+                    </div>
+                    <span className="text-[8px] font-bold tracking-tight text-white">Acme Cloud</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setAuthTab('magic');
+                      }}
+                      className={`text-[6px] font-mono px-1 py-0.2 rounded transition ${
+                        authTab === 'magic'
+                          ? 'bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40'
+                          : 'text-zinc-500 hover:text-zinc-300'
+                      }`}
+                    >
+                      Magic Link
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setAuthTab('passkey');
+                      }}
+                      className={`text-[6px] font-mono px-1 py-0.2 rounded transition ${
+                        authTab === 'passkey'
+                          ? 'bg-indigo-600/30 text-indigo-300 font-bold border border-indigo-500/40'
+                          : 'text-zinc-500 hover:text-zinc-300'
+                      }`}
+                    >
+                      Passkey
+                    </button>
+                  </div>
+                </div>
+
+                {/* Title */}
+                <div className="mt-1">
+                  <div className="text-[8px] font-bold text-zinc-100 leading-tight">Sign in to console</div>
+                  <div className="text-[5.5px] text-zinc-400">Zero-password developer authentication</div>
+                </div>
+
+                {/* Quick OAuth Pills */}
+                <div className="grid grid-cols-2 gap-1 mt-1.5">
+                  <div className="flex items-center justify-center gap-1 py-0.5 px-1 rounded bg-white/5 border border-white/10 text-[6px] text-zinc-300 hover:bg-white/10 transition">
+                    <svg className="w-2 h-2 fill-current" viewBox="0 0 24 24">
+                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
+                    <span>GitHub</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-1 py-0.5 px-1 rounded bg-white/5 border border-white/10 text-[6px] text-zinc-300 hover:bg-white/10 transition">
+                    <svg className="w-2 h-2" viewBox="0 0 24 24">
+                      <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+                      <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.35 24 12 24z"/>
+                      <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.03 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                      <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.35 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                    </svg>
+                    <span>Google</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1.5 my-1.5">
+                  <div className="h-px bg-white/10 flex-1" />
+                  <span className="text-[5px] font-mono text-zinc-500 uppercase">OR WITH EMAIL</span>
+                  <div className="h-px bg-white/10 flex-1" />
+                </div>
+
+                {/* Dynamic Auth Method Content */}
+                {authTab === 'magic' ? (
+                  <div className="space-y-1">
+                    <div className="space-y-0.5">
+                      <div className="text-[5.5px] font-mono text-zinc-400">WORK EMAIL</div>
+                      <div className="px-1.5 py-0.5 rounded bg-black/40 border border-indigo-500/40 text-[6.5px] font-mono text-zinc-200 flex items-center justify-between">
+                        <span>dev@acmecorp.dev</span>
+                        <span className="w-1 h-2 bg-indigo-400 animate-pulse" />
+                      </div>
+                    </div>
+
+                    <div className="py-0.5 px-1 rounded bg-indigo-600 text-white text-[6.5px] font-bold flex items-center justify-center gap-1 shadow-xs hover:bg-indigo-500 transition">
+                      <span>Send Magic Link</span>
+                      <ArrowRight className="w-2 h-2" />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="p-1 rounded bg-indigo-950/40 border border-indigo-500/30 space-y-1">
+                    <div className="flex items-center gap-1 text-[6px] text-indigo-300 font-mono">
+                      <Key className="w-2.5 h-2.5 text-indigo-400" />
+                      <span>Hardware Key / Biometrics</span>
+                    </div>
+                    <div className="py-0.5 rounded bg-indigo-600 text-white text-[6.5px] font-bold text-center">
+                      Verify Passkey
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="pt-1 border-t border-white/5 text-[5px] text-zinc-500 font-mono flex items-center justify-between">
+                <span>Passkey Ready</span>
+                <span className="text-zinc-400">SSO Help</span>
+              </div>
+            </div>
+
+            {/* Right Column (5 cols): Telemetry & Proof Showcase */}
+            <div className="col-span-5 bg-[#0C0D14] border border-white/10 rounded-lg p-2 flex flex-col justify-between relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-xl pointer-events-none" />
+
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[6px] font-mono text-zinc-400 uppercase tracking-wider">CLUSTER STATE</span>
+                  <div className="flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-[5.5px] font-mono text-emerald-400">99.99%</span>
+                  </div>
+                </div>
+
+                {/* Mini Telemetry Code Box */}
+                <div className="mt-1.5 p-1 rounded bg-black/60 border border-white/5 font-mono text-[5px] space-y-0.5">
+                  <div className="text-zinc-500">// active region: us-east-1</div>
+                  <div className="flex justify-between text-zinc-300">
+                    <span>p99 latency:</span>
+                    <span className="text-emerald-400 font-bold">14.2ms</span>
+                  </div>
+                  <div className="flex justify-between text-zinc-300">
+                    <span>edge nodes:</span>
+                    <span className="text-indigo-300">48 / 48</span>
+                  </div>
+                  <div className="flex justify-between text-zinc-300">
+                    <span>auth guard:</span>
+                    <span className="text-zinc-400">webauthn-v2</span>
+                  </div>
+                </div>
+
+                {/* Micro Quote */}
+                <div className="mt-2 text-[5.5px] text-zinc-400 italic leading-snug border-l border-indigo-500/50 pl-1">
+                  "Zero auth friction for our 200+ engineers."
+                </div>
+              </div>
+
+              {/* Compliance strip */}
+              <div className="pt-1 border-t border-white/5 flex items-center justify-between text-[5px] font-mono text-zinc-500">
+                <span className="flex items-center gap-0.5">
+                  <ShieldCheck className="w-2 h-2 text-indigo-400" /> SOC2
+                </span>
+                <span>E2E Encrypted</span>
+              </div>
+            </div>
           </div>
         </div>
       );

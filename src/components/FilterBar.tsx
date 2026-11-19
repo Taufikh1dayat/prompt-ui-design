@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Category, DesignStyle, TargetTool } from '../types';
-import { X } from 'lucide-react';
+import { X, Bookmark } from 'lucide-react';
 
 interface FilterBarProps {
   categories: Category[];
@@ -14,6 +14,9 @@ interface FilterBarProps {
   totalCount: number;
   onResetFilters: () => void;
   isFiltered: boolean;
+  savedCount: number;
+  showSavedOnly: boolean;
+  onToggleSavedOnly: () => void;
 }
 
 const STYLES: DesignStyle[] = [
@@ -48,20 +51,50 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   totalCount,
   onResetFilters,
   isFiltered,
+  savedCount,
+  showSavedOnly,
+  onToggleSavedOnly,
 }) => {
   return (
     <div className="sticky top-14 z-30 w-full bg-white/80 dark:bg-[#090a0f]/80 backdrop-blur-xl border-y border-black/5 dark:border-white/10 py-2.5 sm:py-3 px-3 sm:px-6 lg:px-8 mb-6 sm:mb-8 transition-colors">
       <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-2.5 sm:gap-4">
         {/* Category Filter Tabs */}
         <div className="w-full md:w-auto flex items-center gap-1.5 overflow-x-auto pb-1.5 md:pb-0 scrollbar-none overscroll-x-contain" role="tablist" aria-label="Prompt Categories">
+          {/* Saved Bookmarks Tab */}
+          <button
+            role="tab"
+            aria-selected={showSavedOnly}
+            onClick={onToggleSavedOnly}
+            className={`flex items-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none shrink-0 ${
+              showSavedOnly
+                ? 'bg-amber-500 text-zinc-950 font-bold shadow-xs'
+                : 'glass-btn text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100'
+            }`}
+          >
+            <Bookmark className={`w-3.5 h-3.5 ${showSavedOnly ? 'fill-current' : ''}`} />
+            <span>Saved</span>
+            {savedCount > 0 && (
+              <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono ${
+                showSavedOnly ? 'bg-zinc-950/20 text-zinc-950' : 'bg-black/10 dark:bg-white/10 text-zinc-500 dark:text-zinc-300'
+              }`}>
+                {savedCount}
+              </span>
+            )}
+          </button>
+
+          <div className="h-4 w-px bg-black/10 dark:bg-white/10 mx-0.5 shrink-0" aria-hidden="true" />
+
           {categories.map((cat) => {
-            const isActive = selectedCategory === cat;
+            const isActive = !showSavedOnly && selectedCategory === cat;
             return (
               <button
                 key={cat}
                 role="tab"
                 aria-selected={isActive}
-                onClick={() => onSelectCategory(cat)}
+                onClick={() => {
+                  if (showSavedOnly) onToggleSavedOnly();
+                  onSelectCategory(cat);
+                }}
                 className={`px-3 py-2 sm:py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none shrink-0 ${
                   isActive
                     ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 font-semibold shadow-xs'

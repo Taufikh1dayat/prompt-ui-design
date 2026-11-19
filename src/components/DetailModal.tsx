@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import type { UIPrompt } from '../types';
 import { MiniPreview } from './MiniPreviews';
 import { 
@@ -9,23 +9,30 @@ import {
   Terminal, 
   FileCode2, 
   Palette,
-  Share2
+  Share2,
+  Bookmark,
+  Code2
 } from 'lucide-react';
 
 interface DetailModalProps {
   prompt: UIPrompt | null;
+  isBookmarked: boolean;
   onClose: () => void;
+  onToggleBookmark: (promptId: string) => void;
   onTriggerToast: (message: string) => void;
 }
 
 export const DetailModal: React.FC<DetailModalProps> = ({
   prompt,
+  isBookmarked,
   onClose,
+  onToggleBookmark,
   onTriggerToast,
 }) => {
-  const [activeTab, setActiveTab] = useState<'prompt' | 'markdown' | 'tokens'>('prompt');
+  const [activeTab, setActiveTab] = useState<'prompt' | 'markdown' | 'tokens' | 'rules'>('prompt');
   const [copiedPrompt, setCopiedPrompt] = useState(false);
   const [copiedMarkdown, setCopiedMarkdown] = useState(false);
+  const [copiedRules, setCopiedRules] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -42,6 +49,39 @@ export const DetailModal: React.FC<DetailModalProps> = ({
       document.body.style.overflow = 'auto';
     };
   }, [prompt, onClose]);
+
+  const cursorRuleText = useMemo(() => {
+    if (!prompt) return '';
+    const tokenList = prompt.colorPalette
+      .map((t) => `  - ${t.name}: ${t.hex} /* ${t.usage} */`)
+      .join('\n');
+    const antiSlopList = prompt.antiSlopChecks
+      .map((c) => `- ${c}`)
+      .join('\n');
+
+    return `<!-- .cursorrules / CLAUDE.md Architectural Guideline -->
+# Role: Senior Frontend Engineer & UI Architect
+## Target Component: ${prompt.title}
+- Aesthetic Style: ${prompt.style}
+- Category: ${prompt.category}
+- AI Target: ${prompt.targetTool}
+- Complexity: ${prompt.difficulty}
+
+### 1. Design System & Design Tokens
+- Typography Font Stack: ${prompt.fontStack}
+- Color Tokens:
+${tokenList}
+
+### 2. Anti-Slop Architectural Safeguards
+${antiSlopList}
+
+### 3. Component Specification (.md)
+${prompt.markdownSpec}
+
+### 4. Implementation Prompt
+${prompt.quickPrompt}
+`;
+  }, [prompt]);
 
   if (!prompt) return null;
 
@@ -70,6 +110,26 @@ export const DetailModal: React.FC<DetailModalProps> = ({
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
     onTriggerToast(`Downloaded ${prompt.slug}.md`);
+  };
+
+  const handleCopyRules = () => {
+    navigator.clipboard.writeText(cursorRuleText);
+    setCopiedRules(true);
+    onTriggerToast(`Copied AI rules (.cursorrules / CLAUDE.md) for "${prompt.title}"`);
+    setTimeout(() => setCopiedRules(false), 2000);
+  };
+
+  const handleDownloadRules = () => {
+    const blob = new Blob([cursorRuleText], { type: 'text/plain;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `${prompt.slug}.cursorrules`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    onTriggerToast(`Downloaded ${prompt.slug}.cursorrules`);
   };
 
   const handleCopyToken = (hex: string, name: string) => {
@@ -130,6 +190,20 @@ export const DetailModal: React.FC<DetailModalProps> = ({
           </div>
 
           <div className="flex items-center gap-1.5 shrink-0">
+            <button
+              onClick={() => onToggleBookmark(prompt.id)}
+              title={isBookmarked ? 'Remove from bookmarks' : 'Save to bookmarks'}
+              aria-label={isBookmarked ? 'Remove from bookmarks' : 'Save to bookmarks'}
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-semibold transition focus-visible:ring-2 focus-visible:ring-zinc-400 ${
+                isBookmarked
+                  ? 'bg-amber-500 text-zinc-950 border-amber-400 shadow-xs'
+                  : 'glass-btn text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white'
+              }`}
+            >
+              <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-current' : ''}`} />
+              <span className="hidden sm:inline">{isBookmarked ? 'Saved' : 'Save'}</span>
+            </button>
+
             <button
               onClick={handleShareLink}
               title="Copy direct shareable link"
@@ -195,6 +269,18 @@ export const DetailModal: React.FC<DetailModalProps> = ({
               <Palette className="w-3.5 h-3.5" />
               <span>Design Tokens</span>
             </button>
+
+            <button
+              onClick={() => setActiveTab('rules')}
+              className={`flex items-center gap-1.5 py-2.5 sm:py-3 px-2 sm:px-0 text-xs font-semibold border-b-2 transition whitespace-nowrap shrink-0 ${
+                activeTab === 'rules'
+                  ? 'border-violet-600 text-violet-600 dark:border-violet-400 dark:text-violet-400 font-bold'
+                  : 'border-transparent text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'
+              }`}
+            >
+              <Code2 className="w-3.5 h-3.5" />
+              <span>Cursor / Claude Rules</span>
+            </button>
           </div>
 
           {/* Desktop Action Buttons */}
@@ -209,11 +295,25 @@ export const DetailModal: React.FC<DetailModalProps> = ({
               </button>
             )}
 
+            {activeTab === 'rules' && (
+              <button
+                onClick={handleDownloadRules}
+                className="glass-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-zinc-800 dark:text-zinc-200 text-xs font-medium transition focus-visible:ring-2 focus-visible:ring-zinc-400"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Download .rules</span>
+              </button>
+            )}
+
             <button
-              onClick={activeTab === 'markdown' ? handleCopyMarkdown : handleCopyPrompt}
+              onClick={() => {
+                if (activeTab === 'rules') handleCopyRules();
+                else if (activeTab === 'markdown') handleCopyMarkdown();
+                else handleCopyPrompt();
+              }}
               className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-xs font-bold shadow-xs transition active:scale-95 focus-visible:ring-2 focus-visible:ring-violet-400"
             >
-              {(activeTab === 'markdown' ? copiedMarkdown : copiedPrompt) ? (
+              {(activeTab === 'rules' ? copiedRules : activeTab === 'markdown' ? copiedMarkdown : copiedPrompt) ? (
                 <>
                   <Check className="w-3.5 h-3.5" />
                   <span>Copied</span>
@@ -221,7 +321,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
               ) : (
                 <>
                   <Copy className="w-3.5 h-3.5" />
-                  <span>Copy {activeTab === 'markdown' ? 'Spec' : 'Prompt'}</span>
+                  <span>Copy {activeTab === 'rules' ? 'AI Rules' : activeTab === 'markdown' ? 'Spec' : 'Prompt'}</span>
                 </>
               )}
             </button>
@@ -291,10 +391,35 @@ export const DetailModal: React.FC<DetailModalProps> = ({
               </div>
             </div>
           )}
+
+          {activeTab === 'rules' && (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between text-xs text-zinc-500 font-mono">
+                <span>Architecture rule for .cursorrules / CLAUDE.md:</span>
+                <span className="text-[11px] text-violet-600 dark:text-violet-400 font-semibold">Zero-slop system prompt</span>
+              </div>
+              <pre className="p-4 rounded-xl bg-white dark:bg-zinc-950 border border-black/5 dark:border-white/10 text-zinc-800 dark:text-zinc-300 font-mono text-xs leading-relaxed whitespace-pre-wrap select-all shadow-inner">
+                {cursorRuleText}
+              </pre>
+            </div>
+          )}
         </div>
 
         {/* Mobile Action Bar (Thumb Zone) */}
         <div className="p-3 border-t border-black/5 dark:border-white/10 bg-zinc-50 dark:bg-[#0e0f15] flex items-center justify-end gap-2 shrink-0 sm:hidden">
+          <button
+            onClick={() => onToggleBookmark(prompt.id)}
+            title={isBookmarked ? 'Remove from bookmarks' : 'Save to bookmarks'}
+            aria-label={isBookmarked ? 'Remove from bookmarks' : 'Save to bookmarks'}
+            className={`p-2 rounded-lg border transition shrink-0 ${
+              isBookmarked
+                ? 'bg-amber-500 text-zinc-950 border-amber-400'
+                : 'glass-btn text-zinc-600 dark:text-zinc-300'
+            }`}
+          >
+            <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-current' : ''}`} />
+          </button>
+
           <button
             onClick={handleShareLink}
             aria-label="Share direct link"
@@ -310,15 +435,29 @@ export const DetailModal: React.FC<DetailModalProps> = ({
               className="glass-btn flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-zinc-800 dark:text-zinc-200 text-xs font-medium transition focus-visible:ring-2 focus-visible:ring-zinc-400"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>Download</span>
+              <span>Download .md</span>
+            </button>
+          )}
+
+          {activeTab === 'rules' && (
+            <button
+              onClick={handleDownloadRules}
+              className="glass-btn flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-zinc-800 dark:text-zinc-200 text-xs font-medium transition focus-visible:ring-2 focus-visible:ring-zinc-400"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Download .rules</span>
             </button>
           )}
 
           <button
-            onClick={activeTab === 'markdown' ? handleCopyMarkdown : handleCopyPrompt}
+            onClick={() => {
+              if (activeTab === 'rules') handleCopyRules();
+              else if (activeTab === 'markdown') handleCopyMarkdown();
+              else handleCopyPrompt();
+            }}
             className="flex-1 flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-xs font-bold shadow-xs transition active:scale-95 focus-visible:ring-2 focus-visible:ring-violet-400"
           >
-            {(activeTab === 'markdown' ? copiedMarkdown : copiedPrompt) ? (
+            {(activeTab === 'rules' ? copiedRules : activeTab === 'markdown' ? copiedMarkdown : copiedPrompt) ? (
               <>
                 <Check className="w-3.5 h-3.5" />
                 <span>Copied</span>
@@ -326,7 +465,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
             ) : (
               <>
                 <Copy className="w-3.5 h-3.5" />
-                <span>Copy {activeTab === 'markdown' ? 'Spec' : 'Prompt'}</span>
+                <span>Copy {activeTab === 'rules' ? 'AI Rules' : activeTab === 'markdown' ? 'Spec' : 'Prompt'}</span>
               </>
             )}
           </button>

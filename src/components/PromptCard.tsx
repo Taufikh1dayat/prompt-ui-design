@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import type { UIPrompt } from '../types';
 import { MiniPreview } from './MiniPreviews';
-import { Copy, Check, Eye } from 'lucide-react';
+import { Copy, Check, Eye, Bookmark } from 'lucide-react';
 
 interface PromptCardProps {
   prompt: UIPrompt;
+  isBookmarked: boolean;
   onOpenDetail: (prompt: UIPrompt) => void;
+  onToggleBookmark: (promptId: string) => void;
   onTriggerToast: (message: string) => void;
 }
 
 export const PromptCard: React.FC<PromptCardProps> = ({
   prompt,
+  isBookmarked,
   onOpenDetail,
+  onToggleBookmark,
   onTriggerToast,
 }) => {
   const [copied, setCopied] = useState(false);
@@ -56,6 +60,23 @@ export const PromptCard: React.FC<PromptCardProps> = ({
             {prompt.category}
           </span>
         </div>
+
+        {/* Bookmark Button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleBookmark(prompt.id);
+          }}
+          aria-label={isBookmarked ? `Remove ${prompt.title} from bookmarks` : `Save ${prompt.title} to bookmarks`}
+          title={isBookmarked ? 'Remove from bookmarks' : 'Save to bookmarks'}
+          className={`absolute top-2 right-2 z-30 p-1.5 rounded-lg border transition-all duration-150 backdrop-blur-md focus-visible:ring-2 focus-visible:ring-white active:scale-90 ${
+            isBookmarked
+              ? 'bg-amber-500 text-zinc-950 border-amber-400 shadow-md'
+              : 'bg-black/60 text-zinc-400 hover:text-white border-white/10 hover:bg-black/80'
+          }`}
+        >
+          <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-current' : ''}`} />
+        </button>
 
         {/* Hover Action Overlay */}
         <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 z-20">

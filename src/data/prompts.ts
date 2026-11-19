@@ -784,5 +784,91 @@ Rules & Anti-Slop:
 
 ## 3. Master Prompt
 See quickPrompt above for the ready-to-run prompt.`
+  },
+
+  /* 16. MODERN SPLIT-SCREEN AUTHENTICATION & SSO */
+  {
+    id: 'split-screen-auth',
+    slug: 'split-screen-authentication-sso',
+    title: 'Modern Split-Screen Authentication & SSO',
+    category: 'Components',
+    style: 'Developer Native',
+    targetTool: 'v0.dev / Claude',
+    difficulty: 'Intermediate',
+    summary: 'Developer-grade split-screen authentication screen inspired by Linear and Clerk: magic link email login, GitHub/Google OAuth, passkey WebAuthn triggers, and live infrastructure telemetry showcase.',
+    tags: ['Auth', 'Split-Screen', 'SSO', 'Passkeys', 'Magic-Link', 'Linear-Style', 'Developer'],
+    copyCount: 1650,
+    previewId: 'split-screen-auth',
+    fontStack: 'Inter, Geist Mono for metrics',
+    colorPalette: [
+      { name: 'Canvas Root', hex: '#090A0F', usage: 'Base dark background' },
+      { name: 'Form Surface', hex: '#11131C', usage: 'Card form container' },
+      { name: 'Telemetry Surface', hex: '#0C0D14', usage: 'Showcase panel background' },
+      { name: 'Accent Indigo', hex: '#6366F1', usage: 'Primary submit button and focus rings' },
+      { name: 'Status Emerald', hex: '#10B981', usage: 'Live operational health pulse' },
+      { name: 'Hairline Border', hex: 'rgba(255, 255, 255, 0.08)', usage: '1px clean structural edges' },
+    ],
+    antiSlopChecks: [
+      'R-01: Zero floating rainbow glass cards; solid grounded surfaces (#11131C) with 1px hairline borders',
+      'R-04: Authentic monochrome brand marks for GitHub and Google without colorful drop shadows',
+      'R-08: Explicit button labels ("Send Magic Link", "Authenticate with Passkey", "Continue with GitHub")',
+      'R-11: Uniform 40px touch boundaries across primary CTA and third-party SSO buttons',
+      'R-17: Right-hand telemetry panel shows realistic SOC2 compliance & system latency metrics, not AI buzzwords',
+      'R-28: Inline error and helper states use solid amber/crimson badges instead of jarring animated overlays'
+    ],
+    quickPrompt: `Build a production-grade, developer-native split-screen authentication screen in React and Tailwind CSS.
+
+Layout Requirements:
+- Desktop: 2-column split (Left: 50% max-w-lg centered auth form; Right: 50% dark recessed telemetry panel).
+- Mobile: Stacked layout where the telemetry panel collapses into a compact security verification badge.
+- Background: Deep obsidian (#090A0F) with hairline 1px borders (rgba(255, 255, 255, 0.08)).
+
+Auth Column (Left):
+- Brand mark: Minimalist monochrome square glyph with "Acme Cloud" logotype.
+- Header: H1 "Sign in to Acme Cloud" with subtitle "Manage your infrastructure, edge routes, and deployments."
+- OAuth Stack:
+  * Two equal-width buttons: GitHub and Google with authentic monochrome SVG brand marks.
+  * 40px height, background rgba(255,255,255,0.04), hairline border, hover:bg-white/10.
+- Separator: Clean hairline rule with centered uppercase text "OR WITH EMAIL" (text-xs font-mono text-zinc-500).
+- Form Controls:
+  * Email input with persistent uppercase label "WORK EMAIL", placeholder "you@company.com", font-mono text, focus ring-2 ring-indigo-500/50.
+  * Primary Button: "Send Magic Link" (solid Indigo #6366F1, hover:bg-indigo-600, font-semibold text-white).
+- Alternative: Secondary button "Sign in with Passkey / WebAuthn" with fingerprint/key icon.
+- Terms disclaimer with subtle underline hover states.
+
+Telemetry Column (Right):
+- Dark panel (#0C0D14) with subtle radial grid overlay.
+- Top status pill: Live pulsing green indicator "All systems operational" + "Region: us-east-1 (12ms)".
+- Code/Metric Box: Simulated JSON/terminal card showing production cluster health and active ingress requests.
+- Customer quote: Verified engineering quote from a VP of Infra with verified avatar initial badge.
+- Security footer: "SOC2 Type II • ISO 27001 • End-to-End Encrypted" badges in monospace.
+
+Anti-Slop Guardrails:
+- Zero purple/cyan gradient backgrounds.
+- Zero floating cards with blurred rainbow drop shadows.
+- Strict WCAG AA contrast (11:1 on text elements).`,
+    markdownSpec: `# UI Specification: Modern Split-Screen Authentication & SSO
+
+## 1. Context & Anti-Slop Rationale
+- **Target Problem**: Typical AI-generated authentication pages suffer from severe slop: bloated floating glass containers with illegible contrast, unrequested neon gradients, generic "Welcome back! Login to your account" copy, and asymmetrical third-party SSO buttons.
+- **Real-World Foundation**: Designed according to developer-first standards established by **Linear, Supabase, Vercel, and Clerk**:
+  - Two-column split-screen layout on desktop: Left column contains the streamlined authentication form; right column contains an ambient engineering telemetry panel.
+  - Zero password fatigue: Prioritizes passwordless authentication (Magic Link + WebAuthn Passkeys) with one-click GitHub & Google OAuth.
+  - Strict input ergonomics: Floating labels avoided in favor of high-contrast persistent labels, explicit focus rings (\`#6366F1\`), and uniform 40px button heights.
+  - No decorative glitter: Visual interest generated through typography, hairline borders (\`rgba(255, 255, 255, 0.08)\`), and tabular monospace latency readouts.
+
+## 2. Design Tokens
+- **Canvas Root**: \`#090A0F\`
+- **Form Surface**: \`#11131C\`
+- **Telemetry Surface**: \`#0C0D14\`
+- **Hairline Border**: \`rgba(255, 255, 255, 0.08)\`
+- **Accent Primary**: \`#6366F1\`
+- **Accent Hover**: \`#4F46E5\`
+- **Status Operational**: \`#10B981\`
+- **Text Primary**: \`#FFFFFF\`
+- **Text Secondary**: \`#94A3B8\`
+
+## 3. Master Prompt
+See quickPrompt above for the ready-to-run prompt.`
   }
 ];
