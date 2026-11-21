@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import type { UIPrompt } from '../types';
+import type { UIPrompt, PromptFormat } from '../types';
+import { generateFormattedPrompt, PROMPT_FORMAT_OPTIONS } from '../utils/promptAdapter';
 import { MiniPreview } from './MiniPreviews';
 import { 
   X, 
@@ -33,6 +34,28 @@ export const DetailModal: React.FC<DetailModalProps> = ({
   const [copiedPrompt, setCopiedPrompt] = useState(false);
   const [copiedMarkdown, setCopiedMarkdown] = useState(false);
   const [copiedRules, setCopiedRules] = useState(false);
+  const [promptFormat, setPromptFormat] = useState<PromptFormat>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('promptui-prompt-format');
+        if (saved === 'agnostic' || saved === 'react-tailwind' || saved === 'html-css' || saved === 'design-brief') {
+          return saved;
+        }
+      } catch {
+        return 'agnostic';
+      }
+    }
+    return 'agnostic';
+  });
+
+  const handleSelectFormat = (format: PromptFormat) => {
+    setPromptFormat(format);
+    try {
+      localStorage.setItem('promptui-prompt-format', format);
+    } catch {
+      // LocalStorage unavailable in sandbox
+    }
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -49,6 +72,11 @@ export const DetailModal: React.FC<DetailModalProps> = ({
       document.body.style.overflow = 'auto';
     };
   }, [prompt, onClose]);
+
+  const formattedPrompt = useMemo(() => {
+    if (!prompt) return '';
+    return generateFormattedPrompt(prompt, promptFormat);
+  }, [prompt, promptFormat]);
 
   const cursorRuleText = useMemo(() => {
     if (!prompt) return '';
@@ -78,17 +106,18 @@ ${antiSlopList}
 ### 3. Component Specification (.md)
 ${prompt.markdownSpec}
 
-### 4. Implementation Prompt
-${prompt.quickPrompt}
+### 4. Implementation Prompt (${promptFormat.toUpperCase()})
+${formattedPrompt}
 `;
-  }, [prompt]);
+  }, [prompt, promptFormat, formattedPrompt]);
 
   if (!prompt) return null;
 
   const handleCopyPrompt = () => {
-    navigator.clipboard.writeText(prompt.quickPrompt);
+    navigator.clipboard.writeText(formattedPrompt);
     setCopiedPrompt(true);
-    onTriggerToast(`Prompt for "${prompt.title}" copied`);
+    const formatObj = PROMPT_FORMAT_OPTIONS.find((f) => f.id === promptFormat);
+    onTriggerToast(`Prompt (${formatObj?.label || 'Custom'}) copied for "${prompt.title}"`);
     setTimeout(() => setCopiedPrompt(false), 2000);
   };
 
@@ -331,12 +360,56 @@ ${prompt.quickPrompt}
         {/* Tab Content Body */}
         <div className="p-4 sm:p-6 overflow-y-auto flex-1 bg-zinc-50/30 dark:bg-zinc-950/30">
           {activeTab === 'prompt' && (
-            <div className="space-y-3">
-              <div className="text-xs text-zinc-500 font-mono">
-                Direct prompt for code generation tools:
+            <div className="space-y-4">
+              {/* Framework / Agnostic Format Switcher */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-black/5 dark:border-white/10">
+                <div>
+                  <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-1.5">
+                    <span>Target Format</span>
+                    <span className="text-[10px] font-normal text-zinc-500 font-mono">
+                      (Choose implementation style)
+                    </span>
+                  </div>
+                  <div className="text-[11px] text-zinc-500 mt-0.5">
+                    {PROMPT_FORMAT_OPTIONS.find((f) => f.id === promptFormat)?.description}
+                  </div>
+                </div>
+
+                {/* Segmented Format Pills */}
+                <div className="flex flex-wrap items-center gap-1.5" role="radiogroup" aria-label="Prompt format selection">
+                  {PROMPT_FORMAT_OPTIONS.map((opt) => {
+                    const isSelected = promptFormat === opt.id;
+                    return (
+                      <button
+                        key={opt.id}
+                        role="radio"
+                        aria-checked={isSelected}
+                        onClick={() => handleSelectFormat(opt.id)}
+                        className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition focus-visible:ring-2 focus-visible:ring-violet-400 active:scale-95 ${
+                          isSelected
+                            ? 'bg-violet-600 text-white shadow-xs font-bold'
+                            : 'glass-btn text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100'
+                        }`}
+                        title={opt.description}
+                      >
+                        <span>{opt.label}</span>
+                        <span
+                          className={`text-[9px] font-mono px-1 py-0.2 rounded ${
+                            isSelected
+                              ? 'bg-white/20 text-white'
+                              : 'bg-black/5 dark:bg-white/10 text-zinc-500 dark:text-zinc-400'
+                          }`}
+                        >
+                          {opt.badge}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
+
               <pre className="p-4 rounded-xl bg-white dark:bg-zinc-950 border border-black/5 dark:border-white/10 text-zinc-800 dark:text-zinc-200 font-mono text-xs leading-relaxed whitespace-pre-wrap select-all shadow-inner">
-                {prompt.quickPrompt}
+                {formattedPrompt}
               </pre>
             </div>
           )}

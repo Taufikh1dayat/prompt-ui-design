@@ -1,26 +1,23 @@
 import React, { useState } from 'react';
 import { 
   TrendingUp, 
-  Users, 
-  DollarSign, 
   Search, 
   Command, 
-  Smartphone, 
-  CreditCard, 
-  ShoppingCart,
-  Zap,
-  ArrowUpRight,
-  Sliders,
-  Layers,
-  Play,
-  Pause,
-  UploadCloud,
-  FileText,
-  Bell,
-  CheckCircle2,
-  ArrowRight,
-  Key,
-  ShieldCheck
+  ShoppingCart, 
+  Zap, 
+  Sliders, 
+  Layers, 
+  Play, 
+  Pause, 
+  UploadCloud, 
+  FileText, 
+  Bell, 
+  CheckCircle2, 
+  ArrowRight, 
+  Key, 
+  ShieldCheck, 
+  GitBranch, 
+  AlertCircle 
 } from 'lucide-react';
 
 interface MiniPreviewProps {
@@ -107,69 +104,157 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
         </div>
       );
 
-    /* 2. AGILE KANBAN SPRINT BOARD */
+    /* 2. AGILE KANBAN SPRINT BOARD (Linear-Grade Issue Pipeline) */
     case 'kanban-sprint-board':
       return (
-        <div className="w-full h-full p-2.5 bg-zinc-950 flex flex-col justify-between select-none font-sans">
-          {/* Header */}
-          <div className="flex items-center justify-between pb-1.5 border-b border-zinc-800 text-[9px]">
-            <span className="font-bold text-white flex items-center gap-1">
-              <span className="w-2 h-2 rounded bg-violet-500" /> Sprint 42 Board
-            </span>
-            <span className="text-[8px] font-mono bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded">
-              3 Columns
-            </span>
+        <div className="w-full h-full p-2 sm:p-2.5 bg-[#090a0f] text-zinc-100 flex flex-col justify-between select-none font-sans overflow-hidden">
+          {/* Header with Linear cycle progress & filters */}
+          <div className="flex items-center justify-between pb-1.5 border-b border-white/10 text-[8.5px]">
+            <div className="flex items-center gap-1.5">
+              <span className="font-mono text-zinc-400 font-semibold tracking-tight">ENG / Platform</span>
+              <span className="text-zinc-600">/</span>
+              <span className="font-bold text-white flex items-center gap-1">
+                Cycle 38
+              </span>
+              <span className="hidden sm:inline-block text-[7px] font-mono px-1 py-0.2 rounded bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">
+                4d left
+              </span>
+            </div>
+
+            {/* Cycle Burndown Mini Progress */}
+            <div className="flex items-center gap-1.5 text-[7px] font-mono text-zinc-400">
+              <span className="hidden sm:inline">68% Done</span>
+              <div className="w-12 h-1 bg-zinc-800 rounded-full overflow-hidden">
+                <div className="h-full bg-indigo-500 rounded-full" style={{ width: '68%' }} />
+              </div>
+              <span className="text-zinc-500">7 Issues</span>
+            </div>
           </div>
 
           {/* 3 Columns */}
           <div className="grid grid-cols-3 gap-1.5 my-auto">
             {/* Col 1: Todo */}
-            <div className="bg-zinc-900/60 border border-zinc-800/80 rounded-lg p-1.5">
-              <div className="flex justify-between text-[8px] font-mono text-zinc-400 mb-1">
-                <span>TO DO</span>
-                <span>2</span>
+            <div className="bg-[#111218] border border-white/5 rounded-lg p-1.5 flex flex-col justify-between">
+              <div className="flex items-center justify-between text-[7.5px] font-mono text-zinc-400 mb-1 pb-1 border-b border-white/5">
+                <span className="flex items-center gap-1 text-zinc-300 font-semibold">
+                  <span className="w-1.5 h-1.5 rounded-full border border-zinc-400" />
+                  <span>TODO</span>
+                </span>
+                <span className="text-[7px] text-zinc-500">2</span>
               </div>
-              <div className="bg-zinc-800/80 p-1.5 rounded border border-zinc-700/60 shadow-xs mb-1">
-                <div className="text-[8px] font-semibold text-zinc-200 truncate">Auth Refactor</div>
-                <div className="flex justify-between items-center mt-1 text-[6.5px]">
-                  <span className="bg-amber-500/20 text-amber-400 px-1 py-0.2 rounded font-mono">HIGH</span>
-                  <div className="w-3.5 h-3.5 rounded-full bg-zinc-700 text-[6px] flex items-center justify-center text-white">AK</div>
+
+              <div className="space-y-1">
+                {/* Task 1 */}
+                <div className="bg-[#181a24] p-1.5 rounded border border-white/10 shadow-xs hover:border-white/20 transition">
+                  <div className="flex items-center justify-between text-[6px] font-mono text-zinc-500">
+                    <span className="text-zinc-400 font-semibold">AUTH-1048</span>
+                    <span className="text-amber-400 font-bold flex items-center gap-0.5">
+                      <span className="w-1 h-1 rounded-full bg-amber-400" /> High
+                    </span>
+                  </div>
+                  <div className="text-[7.5px] font-medium text-zinc-200 mt-0.5 line-clamp-1">
+                    Migrate OAuth to PKCE vault
+                  </div>
+                  <div className="flex items-center justify-between mt-1 text-[6px] text-zinc-500 font-mono">
+                    <span className="flex items-center gap-0.5 text-zinc-400 truncate max-w-[50px]">
+                      <GitBranch className="w-1.5 h-1.5" /> pkce
+                    </span>
+                    <span className="px-1 py-0.2 rounded bg-zinc-800 text-zinc-300 font-semibold">
+                      3/5
+                    </span>
+                  </div>
+                </div>
+
+                {/* Task 2 */}
+                <div className="bg-[#181a24] p-1.5 rounded border border-white/5 shadow-xs opacity-90">
+                  <div className="flex items-center justify-between text-[6px] font-mono text-zinc-500">
+                    <span>INFRA-89</span>
+                    <span>Med</span>
+                  </div>
+                  <div className="text-[7.5px] font-medium text-zinc-300 mt-0.5 line-clamp-1">
+                    Redis 3x replica failover
+                  </div>
+                  <div className="flex items-center justify-between mt-1 text-[6px] text-zinc-500 font-mono">
+                    <span className="text-[5.5px] text-zinc-500">2d ago</span>
+                    <div className="w-3 h-3 rounded-full bg-zinc-700 text-[5.5px] font-bold text-zinc-200 flex items-center justify-center">
+                      DX
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Col 2: In Progress */}
-            <div className="bg-zinc-900/60 border border-violet-500/30 rounded-lg p-1.5">
-              <div className="flex justify-between text-[8px] font-mono text-violet-400 mb-1">
-                <span>IN PROGRESS</span>
-                <span>1</span>
+            <div className="bg-[#111218] border border-indigo-500/30 rounded-lg p-1.5 flex flex-col justify-between">
+              <div className="flex items-center justify-between text-[7.5px] font-mono text-indigo-400 mb-1 pb-1 border-b border-indigo-500/20">
+                <span className="flex items-center gap-1 font-semibold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+                  <span>IN PROGRESS</span>
+                </span>
+                <span className="text-[7px] text-indigo-400">1</span>
               </div>
-              <div className="bg-zinc-800/90 p-1.5 rounded border border-violet-500/40 shadow-xs">
-                <div className="text-[8px] font-semibold text-white truncate">Stripe Webhooks</div>
-                <div className="flex justify-between items-center mt-1 text-[6.5px]">
-                  <span className="bg-violet-500/20 text-violet-300 px-1 py-0.2 rounded font-mono">DEV</span>
-                  <div className="w-3.5 h-3.5 rounded-full bg-violet-600 text-[6px] flex items-center justify-center text-white">SA</div>
+
+              <div className="bg-[#181b28] p-1.5 rounded border border-indigo-500/40 shadow-md">
+                <div className="flex items-center justify-between text-[6px] font-mono">
+                  <span className="text-indigo-400 font-bold">BILL-204</span>
+                  <span className="text-rose-400 font-bold flex items-center gap-0.5">
+                    <AlertCircle className="w-1.5 h-1.5" /> P0
+                  </span>
+                </div>
+                <div className="text-[7.5px] font-bold text-white mt-0.5 line-clamp-1">
+                  Stripe webhook replay
+                </div>
+                <div className="mt-1 px-1 py-0.2 rounded bg-rose-500/15 border border-rose-500/30 text-[5.5px] font-mono text-rose-300 truncate">
+                  Blocked: PR #891 review
+                </div>
+                <div className="flex items-center justify-between mt-1 text-[6px] text-zinc-400 font-mono">
+                  <span className="flex items-center gap-0.5 truncate max-w-[50px]">
+                    <GitBranch className="w-1.5 h-1.5 text-indigo-400" /> replay
+                  </span>
+                  <div className="w-3.5 h-3.5 rounded-full bg-indigo-600 text-[6px] font-bold text-white flex items-center justify-center border border-indigo-400/50">
+                    SA
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Col 3: Done */}
-            <div className="bg-zinc-900/60 border border-zinc-800/80 rounded-lg p-1.5">
-              <div className="flex justify-between text-[8px] font-mono text-emerald-400 mb-1">
-                <span>DONE</span>
-                <span>4</span>
+            <div className="bg-[#111218] border border-white/5 rounded-lg p-1.5 flex flex-col justify-between">
+              <div className="flex items-center justify-between text-[7.5px] font-mono text-emerald-400 mb-1 pb-1 border-b border-white/5">
+                <span className="flex items-center gap-1 font-semibold">
+                  <CheckCircle2 className="w-1.5 h-1.5 text-emerald-400" />
+                  <span>DONE</span>
+                </span>
+                <span className="text-[7px] text-emerald-400">4</span>
               </div>
-              <div className="bg-zinc-800/80 p-1.5 rounded border border-zinc-700/60 opacity-80">
-                <div className="text-[8px] font-semibold text-zinc-300 line-through truncate">Dark Mode UI</div>
-                <div className="text-[6.5px] text-emerald-400 mt-1 flex items-center gap-0.5">
-                  <CheckCircle2 className="w-2.5 h-2.5" /> Deployed
+
+              <div className="space-y-1">
+                <div className="bg-[#181a24]/80 p-1.5 rounded border border-white/5 opacity-85">
+                  <div className="flex items-center justify-between text-[6px] font-mono text-zinc-500">
+                    <span>PERF-512</span>
+                    <span className="text-emerald-400 font-bold">v2.4.1</span>
+                  </div>
+                  <div className="text-[7.5px] font-medium text-zinc-300 mt-0.5 line-clamp-1">
+                    Tenant sharding query
+                  </div>
+                  <div className="flex items-center justify-between mt-1 text-[5.5px] text-emerald-400 font-mono">
+                    <span>✓ Merged</span>
+                    <span className="text-zinc-500">#a8f10c</span>
+                  </div>
+                </div>
+
+                <div className="p-1 rounded border border-dashed border-white/10 text-[6px] font-mono text-zinc-500 text-center">
+                  +3 deployed
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="text-[7.5px] font-mono text-zinc-500 text-center">
-            Drag-and-drop board with priority chips & avatars
+          {/* Footer Shortcuts Strip */}
+          <div className="flex items-center justify-between text-[6px] font-mono text-zinc-500 pt-0.5 border-t border-white/5">
+            <span>C: Create Issue</span>
+            <span>J/K: Navigate</span>
+            <span>↵: Detail</span>
           </div>
         </div>
       );
@@ -363,49 +448,56 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
         </div>
       );
 
-    /* 6. NEO-BRUTALISM */
+        /* 6. NEO-BRUTALISM */
     case 'neo-brutalism':
       return (
-        <div className="w-full h-full p-3 bg-[#FFE600] flex flex-col justify-between font-sans select-none text-black">
-          <div className="flex items-center justify-between border-b-2 border-black pb-1.5">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 bg-black" />
-              <span className="font-extrabold text-[11px] tracking-wider uppercase font-mono">
-                BRUTAL//UI
-              </span>
+        <div className="w-full h-full p-2.5 bg-[#FFE600] text-black flex flex-col justify-between font-sans select-none rounded-none border-2 border-black relative overflow-hidden">
+          {/* Top Hazard Bar */}
+          <div className="flex items-center justify-between border-b-2 border-black pb-1">
+            <div className="flex items-center gap-1 font-black text-[10px] uppercase font-mono tracking-tight">
+              <span className="w-2.5 h-2.5 bg-black rounded-none" />
+              <span>RAW//BRUTAL</span>
             </div>
-            <span className="text-[9px] font-black uppercase bg-[#FF2A85] text-white px-2 py-0.5 border-2 border-black shadow-[2px_2px_0px_#000]">
-              RAW 2026
+            <span className="text-[8px] font-black uppercase bg-[#FF2A85] text-white px-1.5 py-0.5 border-2 border-black shadow-[2px_2px_0px_#000] rounded-none">
+              0PX RADIUS
             </span>
           </div>
 
-          <div className="my-1.5 p-2.5 bg-white border-2 border-black shadow-[3px_3px_0px_#000] flex items-center justify-between gap-2">
+          {/* Content Card with Hard 3D Offset Shadow */}
+          <div className="my-auto p-2 bg-white border-2 border-black shadow-[3px_3px_0px_#000] rounded-none flex items-center justify-between gap-1.5">
             <div>
-              <div className="text-[12px] font-black leading-tight uppercase">
-                Zero AI Slop.<br />Pure Structure.
+              <div className="text-[10.5px] font-black leading-tight uppercase">
+                Zero Rounded Corners.<br />Pure Tactile Physics.
               </div>
-              <div className="text-[8px] font-mono text-zinc-700 mt-1">
-                4px solid borders • 0px blur
+              <div className="text-[7px] font-mono text-zinc-700 mt-0.5">
+                Hard 3D shadows • Solid fills
               </div>
             </div>
-            <div className="w-8 h-8 rounded-none bg-[#00F0FF] border-2 border-black shadow-[2px_2px_0px_#000] flex items-center justify-center font-black text-sm">
+            <div className="w-7 h-7 bg-[#00F0FF] border-2 border-black shadow-[2px_2px_0px_#000] rounded-none flex items-center justify-center font-black text-xs shrink-0">
               !
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
-            <button className="py-1 px-2 bg-black text-white font-black text-[9px] uppercase border-2 border-black shadow-[2px_2px_0px_#FFF] flex items-center justify-center gap-1">
+          {/* Action Row with Sharp Buttons */}
+          <div className="grid grid-cols-2 gap-1.5">
+            <button
+              onClick={(e) => e.stopPropagation()}
+              className="py-1 px-1.5 bg-black text-white font-black text-[8px] uppercase border-2 border-black shadow-[2px_2px_0px_#FFE600] rounded-none flex items-center justify-center gap-1 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+            >
               <Zap className="w-2.5 h-2.5 fill-current" />
-              Launch Spec
+              <span>Launch</span>
             </button>
-            <button className="py-1 px-2 bg-[#FF2A85] text-white font-black text-[9px] uppercase border-2 border-black shadow-[2px_2px_0px_#000] flex items-center justify-center">
-              Copy Tokens
+            <button
+              onClick={(e) => e.stopPropagation()}
+              className="py-1 px-1.5 bg-[#FF2A85] text-white font-black text-[8px] uppercase border-2 border-black shadow-[2px_2px_0px_#000] rounded-none flex items-center justify-center active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+            >
+              <span>Copy</span>
             </button>
           </div>
         </div>
       );
 
-    /* 7. CINEMATIC HERO */
+/* 7. CINEMATIC HERO */
     case 'cinematic-hero':
       return (
         <div className="relative w-full h-full bg-gradient-to-b from-[#2a080c] via-[#630b15] to-[#09090b] flex flex-col justify-between p-3 select-none text-white overflow-hidden">
@@ -485,136 +577,228 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
         </div>
       );
 
-    /* 9. SWISS MINIMAL */
+        /* 9. SWISS MINIMAL */
     case 'swiss-minimal':
       return (
-        <div className="w-full h-full p-3 bg-[#f5f5f5] text-black flex flex-col justify-between font-sans select-none border-b border-zinc-300">
-          <div className="flex justify-between items-baseline border-b border-black pb-1">
-            <span className="text-[9px] font-mono font-bold tracking-widest uppercase">
-              ARCH_01 / HELVETICA
+        <div className="w-full h-full p-2.5 bg-[#f4f4f4] text-black flex flex-col justify-between font-sans select-none border border-black/80 rounded-none relative overflow-hidden">
+          {/* Top Asymmetric Bar */}
+          <div className="flex justify-between items-baseline border-b-2 border-black pb-1">
+            <span className="text-[9px] font-mono font-black tracking-widest uppercase">
+              HELVETICA // 1957
             </span>
-            <span className="text-[8px] font-mono">ZÜRICH • 1957</span>
+            <span className="text-[7.5px] font-mono font-bold bg-[#E11D48] text-white px-1 py-0.2 rounded-none">
+              ZÜRICH
+            </span>
           </div>
 
-          <div className="my-auto grid grid-cols-3 gap-2 items-end">
-            <div className="col-span-1">
-              <span className="text-3xl font-black tracking-tighter leading-none block">
+          {/* Mathematical Grid Intersection */}
+          <div className="my-auto grid grid-cols-12 gap-1 items-start">
+            <div className="col-span-4 border-r-2 border-black pr-1.5">
+              <div className="text-4xl font-black tracking-tighter leading-none">
                 08
-              </span>
-              <span className="text-[8px] font-mono text-zinc-600 block mt-0.5">
-                INDEX_RULER
-              </span>
-            </div>
-            <div className="col-span-2 border-l border-black pl-2">
-              <div className="text-[10px] font-extrabold uppercase tracking-tight leading-snug">
-                Form Follows Grid. Content Dictates Form.
               </div>
-              <div className="text-[7.5px] text-zinc-600 mt-1 leading-relaxed">
-                International Typographic Style. Strict mathematical baseline, no gradients.
+              <div className="text-[6.5px] font-mono uppercase text-zinc-600 mt-1">
+                MATHEMATICAL RULER
+              </div>
+            </div>
+
+            <div className="col-span-8 pl-1">
+              <div className="text-[10px] font-black uppercase tracking-tight leading-snug">
+                FORM FOLLOWS GRID.<br />CONTENT DICTATES FORM.
+              </div>
+              <div className="text-[7px] text-zinc-700 mt-1 leading-tight font-medium">
+                Pure International Typographic Style. 0px corner radius, strict baseline grid, zero artificial gradients.
               </div>
             </div>
           </div>
 
-          <div className="border-t border-black pt-1 flex justify-between items-center text-[8px] font-mono">
+          {/* Bottom Coordinate Ruler */}
+          <div className="border-t-2 border-black pt-1 flex justify-between items-center text-[7.5px] font-mono">
             <span>GRID: 12-COL ASYMMETRIC</span>
-            <span className="flex items-center gap-0.5 font-bold">
-              VIEW SPEC <ArrowUpRight className="w-2.5 h-2.5" />
+            <span className="font-black bg-black text-white px-1 py-0.2 rounded-none">
+              DIN 1451
             </span>
           </div>
         </div>
       );
 
-    /* 10. SAAS BENTO GRID */
+/* 10. SAAS BENTO GRID (Enterprise Telemetry & Revenue Bridge) */
     case 'bento-analytics':
       return (
-        <div className="w-full h-full p-3 bg-zinc-950 flex flex-col justify-between font-sans select-none overflow-hidden">
-          <div className="flex items-center justify-between pb-2 border-b border-zinc-800/80">
+        <div className="w-full h-full p-2.5 bg-[#090A0F] text-zinc-100 flex flex-col justify-between font-sans select-none overflow-hidden">
+          {/* Top Control & Environment Header */}
+          <div className="flex items-center justify-between pb-1.5 border-b border-white/10 text-[7.5px]">
             <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[11px] font-medium text-zinc-300">Live ARR Metrics</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span className="font-mono text-zinc-300 font-semibold tracking-tight">Telemetry Hub</span>
+              <span className="text-zinc-600">/</span>
+              <span className="text-[6.5px] font-mono text-zinc-500">us-east-1</span>
             </div>
-            <span className="text-[10px] font-mono bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded">30D</span>
+
+            {/* Timeframe Selector & Sync Status */}
+            <div className="flex items-center gap-1.5 text-[6.5px] font-mono">
+              <div className="flex items-center rounded bg-zinc-900 border border-white/10 p-0.5">
+                <span className="px-1 py-0.2 text-zinc-500">7D</span>
+                <span className="px-1 py-0.2 rounded bg-white/15 text-white font-bold">30D</span>
+                <span className="px-1 py-0.2 text-zinc-500">QTD</span>
+              </div>
+              <span className="hidden sm:inline text-zinc-500">42s ago</span>
+            </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-2 my-1">
-            <div className="col-span-2 bg-zinc-900/90 border border-zinc-800 rounded-lg p-2 flex flex-col justify-between">
-              <div className="flex justify-between items-start">
+          {/* Primary Bento Body */}
+          <div className="grid grid-cols-12 gap-1.5 my-auto">
+            {/* Left 8 Cols: Net ARR Expansion Bridge */}
+            <div className="col-span-8 bg-[#11131C] border border-white/10 rounded-lg p-2 flex flex-col justify-between">
+              <div className="flex items-start justify-between">
                 <div>
-                  <div className="text-[9px] text-zinc-400">Total Revenue</div>
-                  <div className="text-sm font-semibold text-white font-mono tracking-tight">$142,850</div>
+                  <div className="text-[7.5px] text-zinc-400 font-mono">Net New ARR Bridge</div>
+                  <div className="text-xs sm:text-sm font-black font-mono text-white tracking-tight mt-0.5">
+                    $184,290
+                  </div>
                 </div>
-                <span className="text-[9px] font-mono text-emerald-400 bg-emerald-500/10 px-1 py-0.5 rounded flex items-center gap-0.5">
-                  <TrendingUp className="w-2.5 h-2.5" /> +14.2%
-                </span>
+                <div className="text-right">
+                  <div className="text-[7.5px] font-mono text-emerald-400 font-bold flex items-center justify-end gap-0.5">
+                    <TrendingUp className="w-2 h-2" /> +11.2%
+                  </div>
+                  <div className="text-[6px] text-zinc-500 font-mono">+$18.4k MoM</div>
+                </div>
               </div>
-              <div className="h-6 w-full mt-2">
-                <svg viewBox="0 0 100 24" className="w-full h-full overflow-visible">
-                  <defs>
-                    <linearGradient id="grad-bento-mini" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.4" />
-                      <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.0" />
-                    </linearGradient>
-                  </defs>
-                  <path d="M 0,20 Q 20,18 35,10 T 70,12 T 100,4 L 100,24 L 0,24 Z" fill="url(#grad-bento-mini)" />
-                  <path d="M 0,20 Q 20,18 35,10 T 70,12 T 100,4" fill="none" stroke="#a78bfa" strokeWidth="1.5" strokeLinecap="round" />
-                </svg>
+
+              {/* Stacked Histogram Bars (Expansion vs Contraction) */}
+              <div className="mt-1.5 pt-1.5 border-t border-white/5">
+                <div className="flex items-end justify-between h-9 gap-1 px-1">
+                  {[
+                    { m: 'Jan', exp: 65, churn: 15 },
+                    { m: 'Feb', exp: 78, churn: 18 },
+                    { m: 'Mar', exp: 70, churn: 12 },
+                    { m: 'Apr', exp: 88, churn: 14 },
+                    { m: 'May', exp: 95, churn: 16 },
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex-1 flex flex-col items-center gap-0.5 h-full justify-end">
+                      <div className="w-full flex items-end justify-center gap-0.5 h-7">
+                        <div
+                          className="w-2 sm:w-2.5 rounded-t-xs bg-indigo-500/80 hover:bg-indigo-400 transition"
+                          style={{ height: `${item.exp}%` }}
+                          title={`Expansion: $${item.exp}k`}
+                        />
+                        <div
+                          className="w-1.5 sm:w-2 rounded-t-xs bg-rose-500/60"
+                          style={{ height: `${item.churn}%` }}
+                          title={`Contraction: -$${item.churn}k`}
+                        />
+                      </div>
+                      <span className="text-[5.5px] font-mono text-zinc-500">{item.m}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
-            <div className="col-span-1 bg-zinc-900/90 border border-zinc-800 rounded-lg p-2 flex flex-col items-center justify-center text-center">
-              <div className="text-[9px] text-zinc-400 mb-1">Churn</div>
-              <div className="relative w-8 h-8 flex items-center justify-center">
-                <svg className="w-8 h-8 -rotate-90">
-                  <circle cx="16" cy="16" r="12" stroke="#27272a" strokeWidth="2.5" fill="none" />
-                  <circle cx="16" cy="16" r="12" stroke="#10b981" strokeWidth="2.5" fill="none" strokeDasharray="75" strokeDashoffset="55" strokeLinecap="round" />
-                </svg>
-                <span className="absolute text-[8px] font-mono text-zinc-200">1.4%</span>
+            {/* Right 4 Cols: Cohort N-Day Retention */}
+            <div className="col-span-4 bg-[#11131C] border border-white/10 rounded-lg p-2 flex flex-col justify-between">
+              <div>
+                <div className="text-[7.5px] text-zinc-400 font-mono leading-tight">Retention (N-Day)</div>
+                <div className="text-[6px] text-zinc-500 font-mono mt-0.5">90D active cohort</div>
+              </div>
+
+              {/* Retention Step Heat-bars */}
+              <div className="space-y-1 my-auto">
+                <div>
+                  <div className="flex justify-between text-[6px] font-mono mb-0.5">
+                    <span className="text-zinc-400">D1</span>
+                    <span className="text-zinc-200 font-bold">96.4%</span>
+                  </div>
+                  <div className="h-1 bg-zinc-800 rounded-full overflow-hidden">
+                    <div className="h-full bg-emerald-400 rounded-full" style={{ width: '96.4%' }} />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-[6px] font-mono mb-0.5">
+                    <span className="text-zinc-400">D7</span>
+                    <span className="text-zinc-200 font-bold">84.2%</span>
+                  </div>
+                  <div className="h-1 bg-zinc-800 rounded-full overflow-hidden">
+                    <div className="h-full bg-indigo-400 rounded-full" style={{ width: '84.2%' }} />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-[6px] font-mono mb-0.5">
+                    <span className="text-zinc-400">D30</span>
+                    <span className="text-zinc-200 font-bold">78.1%</span>
+                  </div>
+                  <div className="h-1 bg-zinc-800 rounded-full overflow-hidden">
+                    <div className="h-full bg-violet-400 rounded-full" style={{ width: '78.1%' }} />
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-1 border-t border-white/5 flex items-center justify-between text-[5.5px] font-mono text-zinc-500">
+                <span>NDR: 124%</span>
+                <span className="text-emerald-400 font-bold">Healthy</span>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
-            <div className="bg-zinc-900/60 border border-zinc-800/80 rounded p-1.5 flex items-center justify-between">
-              <span className="text-[9px] text-zinc-400 flex items-center gap-1">
-                <Users className="w-2.5 h-2.5 text-zinc-500" /> Active
-              </span>
-              <span className="text-[9px] font-mono text-white">8,421</span>
+          {/* Bottom Telemetry Strip */}
+          <div className="grid grid-cols-3 gap-1.5 pt-1 border-t border-white/5 text-[6.5px] font-mono text-zinc-400">
+            <div className="flex items-center justify-between px-1 py-0.5 rounded bg-white/5 border border-white/5">
+              <span className="text-zinc-500">p99 Latency</span>
+              <span className="text-zinc-200 font-bold">28.4ms</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-800/80 rounded p-1.5 flex items-center justify-between">
-              <span className="text-[9px] text-zinc-400 flex items-center gap-1">
-                <DollarSign className="w-2.5 h-2.5 text-zinc-500" /> ARPU
-              </span>
-              <span className="text-[9px] font-mono text-white">$42.10</span>
+            <div className="flex items-center justify-between px-1 py-0.5 rounded bg-white/5 border border-white/5">
+              <span className="text-zinc-500">Ingestion</span>
+              <span className="text-zinc-200 font-bold">42k req/s</span>
+            </div>
+            <div className="flex items-center justify-between px-1 py-0.5 rounded bg-white/5 border border-white/5">
+              <span className="text-zinc-500">Gross Margin</span>
+              <span className="text-emerald-400 font-bold">84.6%</span>
             </div>
           </div>
         </div>
       );
 
-    /* 11. COMMAND PALETTE */
+        /* 11. COMMAND PALETTE */
     case 'command-palette':
       return (
-        <div className="w-full h-full p-4 bg-zinc-950 flex flex-col justify-center items-center font-sans select-none">
-          <div className="w-full max-w-[260px] bg-zinc-900 border border-zinc-800 rounded-xl shadow-xl overflow-hidden p-2">
-            <div className="flex items-center gap-2 px-2 py-1.5 bg-zinc-950/80 rounded-md border border-zinc-800/80 mb-2">
-              <Search className="w-3 h-3 text-zinc-500" />
-              <span className="text-[10px] text-zinc-400">Type a command...</span>
-              <span className="ml-auto text-[8px] bg-zinc-800 text-zinc-400 px-1 py-0.5 rounded font-mono">ESC</span>
+        <div className="relative w-full h-full bg-[#0d1117] flex items-center justify-center font-sans select-none overflow-hidden">
+          {/* Faint IDE Background Code */}
+          <div className="absolute inset-0 p-2 font-mono text-[6.5px] text-zinc-600 leading-relaxed select-none opacity-40">
+            <div><span className="text-purple-400">import</span> &#123; createVault &#125; <span className="text-purple-400">from</span> <span className="text-emerald-400">'@vault/core'</span>;</div>
+            <div><span className="text-blue-400">const</span> session = <span className="text-purple-400">await</span> createVault.<span className="text-yellow-400">authenticate</span>(&#123;</div>
+            <div className="pl-2">provider: <span className="text-emerald-400">'webauthn-pkce'</span>,</div>
+            <div className="pl-2">enforceMFA: <span className="text-orange-400">true</span></div>
+            <div>&#125;);</div>
+          </div>
+
+          {/* Dimmed Overlay */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-xs" />
+
+          {/* Floating Spotlight Dialog */}
+          <div className="relative z-10 w-[240px] sm:w-[250px] bg-[#161822] border border-white/15 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden p-2">
+            <div className="flex items-center gap-1.5 px-2 py-1 bg-black/40 rounded-lg border border-white/10 mb-1.5">
+              <Search className="w-2.5 h-2.5 text-violet-400" />
+              <span className="text-[8px] text-zinc-200 font-mono">deploy --prod</span>
+              <span className="ml-auto text-[6.5px] bg-zinc-800 text-zinc-400 px-1 py-0.2 rounded font-mono">ESC</span>
             </div>
-            <div className="space-y-1">
-              <div className="text-[8px] font-mono text-zinc-500 px-1 pt-0.5">SUGGESTIONS</div>
-              <div className="flex items-center justify-between px-2 py-1 rounded bg-zinc-800 text-white text-[10px]">
+
+            <div className="space-y-0.5">
+              <div className="flex items-center justify-between px-1.5 py-1 rounded bg-violet-600/30 border border-violet-500/40 text-white text-[8px]">
                 <div className="flex items-center gap-1.5">
-                  <Command className="w-2.5 h-2.5 text-violet-400" />
-                  <span>Create Project</span>
+                  <Zap className="w-2.5 h-2.5 text-violet-400 fill-current" />
+                  <span className="font-semibold">Deploy to Production</span>
                 </div>
-                <span className="text-[8px] font-mono text-zinc-400 bg-zinc-900 px-1 py-0.2 rounded">⌘N</span>
+                <span className="text-[6.5px] font-mono text-violet-300">↵</span>
               </div>
-              <div className="flex items-center justify-between px-2 py-1 rounded text-zinc-400 text-[10px] hover:bg-zinc-800/50">
+
+              <div className="flex items-center justify-between px-1.5 py-1 rounded text-zinc-400 text-[8px] hover:bg-white/5">
                 <div className="flex items-center gap-1.5">
-                  <Users className="w-2.5 h-2.5 text-zinc-500" />
-                  <span>Invite Teammate</span>
+                  <Command className="w-2.5 h-2.5 text-zinc-500" />
+                  <span>Switch Workspace</span>
                 </div>
-                <span className="text-[8px] font-mono text-zinc-500">⌘I</span>
+                <span className="text-[6.5px] font-mono text-zinc-500">⌘W</span>
               </div>
             </div>
           </div>
@@ -624,36 +808,71 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
     /* 12. MOBILE FINTECH */
     case 'fintech-cashflow-mobile':
       return (
-        <div className="w-full h-full p-2 bg-zinc-950 flex justify-center items-center select-none font-sans">
-          <div className="w-[180px] bg-black border border-zinc-800 rounded-2xl p-2.5 shadow-xl flex flex-col justify-between">
+        <div className="w-full h-full p-2 bg-[#090A0F] flex justify-center items-center select-none font-sans overflow-hidden">
+          {/* Smartphone Chassis / Frame */}
+          <div className="w-[168px] sm:w-[176px] bg-[#0c0d14] border-[2.5px] border-zinc-700/80 rounded-[24px] p-2 shadow-2xl flex flex-col justify-between relative overflow-hidden">
+            {/* Dynamic Island / Speaker Pill */}
+            <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-10 h-2 bg-black rounded-full flex items-center justify-center z-20 shadow-xs">
+              <div className="w-1.5 h-1.5 rounded-full bg-zinc-900 ml-auto mr-1" />
+            </div>
+
+            {/* Status Bar */}
+            <div className="flex justify-between items-center text-[6px] font-mono text-zinc-400 pt-0.5 pb-1 mb-0.5">
+              <span>9:41</span>
+              <div className="flex items-center gap-0.5">
+                <span>5G</span>
+                <div className="w-3 h-1.5 border border-zinc-500 rounded-xs p-0.2 flex items-center">
+                  <div className="w-full h-full bg-emerald-400 rounded-2xs" />
+                </div>
+              </div>
+            </div>
+
+            {/* Total Balance */}
             <div>
-              <div className="flex justify-between items-center mb-1.5">
-                <div className="w-4 h-4 rounded-full bg-zinc-800" />
-                <span className="text-[7px] font-mono text-zinc-500">9:41</span>
-                <Smartphone className="w-2.5 h-2.5 text-zinc-600" />
-              </div>
-              <div className="text-[8px] text-zinc-400">Total Balance</div>
-              <div className="text-sm font-bold text-white font-mono">$48,250.80</div>
+              <div className="text-[6.5px] text-zinc-400 font-mono">Total Balance</div>
+              <div className="text-xs sm:text-sm font-black text-white font-mono tracking-tight">$48,250.80</div>
             </div>
 
-            <div className="bg-gradient-to-tr from-zinc-900 via-zinc-800 to-zinc-900 border border-zinc-700/60 rounded-xl p-2 my-1.5 shadow-md">
+            {/* Metallic VISA Card */}
+            <div className="bg-gradient-to-tr from-zinc-900 via-zinc-800 to-zinc-900 border border-zinc-700/70 rounded-xl p-2 my-1 shadow-md relative overflow-hidden">
+              <div className="absolute -right-4 -bottom-4 w-12 h-12 rounded-full bg-white/5 blur-sm pointer-events-none" />
               <div className="flex justify-between items-center mb-2">
-                <CreditCard className="w-3 h-3 text-zinc-300" />
-                <span className="text-[8px] font-bold text-zinc-200 tracking-wider">VISA</span>
+                <div className="w-3.5 h-2.5 rounded-xs bg-amber-400/80 border border-amber-300/40" />
+                <span className="text-[7.5px] font-black text-zinc-200 tracking-wider">VISA</span>
               </div>
-              <div className="text-[9px] font-mono text-zinc-300">•••• 8842</div>
+              <div className="text-[8px] font-mono text-zinc-300 tracking-wider">•••• 8842</div>
+              <div className="flex justify-between text-[5.5px] font-mono text-zinc-400 mt-1">
+                <span>EXP 08/28</span>
+                <span>PLATINUM</span>
+              </div>
             </div>
 
-            <div className="space-y-1">
-              <div className="flex justify-between text-[8px]">
-                <span className="text-zinc-300">Apple Store</span>
+            {/* Quick Contacts Row */}
+            <div className="flex items-center justify-between py-1 border-y border-white/5">
+              <div className="text-[6px] font-mono text-zinc-400">Send:</div>
+              <div className="flex items-center gap-1">
+                {['AR', 'SK', 'DX'].map((ini, i) => (
+                  <div key={i} className="w-3.5 h-3.5 rounded-full bg-zinc-800 border border-white/10 text-[5.5px] font-bold text-zinc-200 flex items-center justify-center">
+                    {ini}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Recent Transaction Feed */}
+            <div className="space-y-0.5 pt-0.5">
+              <div className="flex justify-between text-[6.5px]">
+                <span className="text-zinc-300 truncate">Apple Store</span>
                 <span className="font-mono text-zinc-300">-$1,299</span>
               </div>
-              <div className="flex justify-between text-[8px]">
-                <span className="text-zinc-300">Stripe Payout</span>
-                <span className="font-mono text-emerald-400">+$4,800</span>
+              <div className="flex justify-between text-[6.5px]">
+                <span className="text-zinc-300 truncate">Stripe Payout</span>
+                <span className="font-mono text-emerald-400 font-bold">+$4,800</span>
               </div>
             </div>
+
+            {/* Home Indicator Bar */}
+            <div className="w-8 h-0.5 rounded-full bg-zinc-600 mx-auto mt-1" />
           </div>
         </div>
       );
@@ -661,42 +880,69 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
     /* 13. E-COMMERCE CART DRAWER */
     case 'checkout-slide-drawer':
       return (
-        <div className="w-full h-full p-3 bg-zinc-950 flex flex-col justify-between select-none font-sans">
-          <div className="flex items-center justify-between border-b border-zinc-800 pb-1.5">
-            <span className="text-[10px] font-semibold text-white flex items-center gap-1">
-              <ShoppingCart className="w-2.5 h-2.5 text-zinc-400" /> Your Cart (2)
-            </span>
-            <span className="text-[8px] text-emerald-400 bg-emerald-500/10 px-1 py-0.2 rounded font-mono">
-              Free Ship
-            </span>
+        <div className="relative w-full h-full bg-[#08090E] select-none font-sans overflow-hidden">
+          {/* Dimmed Background Product View */}
+          <div className="p-2 opacity-35 filter blur-[0.5px]">
+            <div className="flex justify-between text-[7.5px] text-zinc-400 pb-1 border-b border-white/10">
+              <span className="font-bold text-white">KEYCHRON STUDIO</span>
+              <span>USD $</span>
+            </div>
+            <div className="mt-2 text-xs font-bold text-white">Q1 Pro Mechanical Keyboard</div>
+            <div className="text-[7.5px] text-zinc-400">Wireless custom mechanical keyboard with knob</div>
           </div>
 
-          <div className="flex items-center gap-2 py-1.5 bg-zinc-900/60 border border-zinc-800/80 rounded p-1.5 my-auto">
-            <div className="w-8 h-8 rounded bg-zinc-800 flex items-center justify-center text-[8px] text-zinc-500">
-              IMG
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-[9px] text-zinc-200 font-medium truncate">Mechanical Keyboard</div>
-              <div className="text-[8px] font-mono text-zinc-400">$120.00</div>
-            </div>
-            <div className="text-[8px] font-mono bg-zinc-800 text-zinc-300 px-1.5 py-0.5 rounded">
-              Qty: 1
-            </div>
-          </div>
+          {/* Dimmed Overlay */}
+          <div className="absolute inset-0 bg-black/60 pointer-events-none" />
 
-          <div className="space-y-1">
-            <div className="flex justify-between text-[9px] font-mono text-zinc-400">
-              <span>Total</span>
-              <span className="text-white font-bold">$165.00</span>
+          {/* Sliding Bottom Sheet Drawer */}
+          <div className="absolute bottom-0 inset-x-0 bg-zinc-900/95 border-t border-white/20 rounded-t-2xl p-2.5 shadow-2xl backdrop-blur-xl flex flex-col justify-between">
+            {/* Grab Handle */}
+            <div className="w-7 h-1 rounded-full bg-zinc-500 mx-auto mb-1.5" />
+
+            <div className="flex items-center justify-between pb-1 border-b border-white/10 text-[8px]">
+              <span className="font-bold text-white flex items-center gap-1">
+                <ShoppingCart className="w-2.5 h-2.5 text-zinc-400" /> Cart (1 Item)
+              </span>
+              <span className="text-[6.5px] font-mono text-emerald-400 bg-emerald-500/15 px-1 py-0.2 rounded">
+                Free Express Ship
+              </span>
             </div>
-            <div className="w-full py-1 bg-white text-black font-semibold text-center rounded text-[9px]">
-              Checkout Now
+
+            {/* Cart Item Row */}
+            <div className="flex items-center gap-2 py-1.5">
+              <div className="w-7 h-7 rounded-lg bg-zinc-800 border border-white/10 flex items-center justify-center text-[7px] font-mono text-zinc-400">
+                KB
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-[8px] font-semibold text-zinc-100 truncate">Q1 Pro Keyboard</div>
+                <div className="text-[7px] font-mono text-zinc-400">$199.00</div>
+              </div>
+              <div className="flex items-center gap-1 bg-black/40 border border-white/10 rounded px-1.5 py-0.5 text-[7px] font-mono text-zinc-300">
+                <span>-</span>
+                <span className="font-bold text-white">1</span>
+                <span>+</span>
+              </div>
+            </div>
+
+            {/* Order Total & Swipe Button */}
+            <div className="pt-1 border-t border-white/10 flex items-center justify-between">
+              <div>
+                <div className="text-[6px] text-zinc-400 uppercase font-mono">Total</div>
+                <div className="text-[10px] font-mono font-black text-white">$199.00</div>
+              </div>
+              <button
+                onClick={(e) => e.stopPropagation()}
+                className="px-3 py-1 rounded-full bg-white text-zinc-950 text-[7.5px] font-bold shadow-md hover:bg-zinc-200 transition flex items-center gap-1"
+              >
+                <span>Slide to Pay</span>
+                <ArrowRight className="w-2 h-2" />
+              </button>
             </div>
           </div>
         </div>
       );
 
-    /* 14. MODERN CREATIVE DIGITAL AGENCY LANDING (TURNOVER) */
+/* 14. MODERN CREATIVE DIGITAL AGENCY LANDING (TURNOVER) */
     case 'creative-agency-landing':
       return (
         <div className="relative w-full h-full bg-[#FAF8F5] text-zinc-900 flex flex-col justify-between p-2 select-none overflow-hidden font-sans">

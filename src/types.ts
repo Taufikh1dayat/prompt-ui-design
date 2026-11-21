@@ -24,6 +24,12 @@ export type TargetTool =
   | 'Cursor / IDE Spec'
   | 'Midjourney / Mockup';
 
+export type PromptFormat = 
+  | 'agnostic'
+  | 'react-tailwind'
+  | 'html-css'
+  | 'design-brief';
+
 export interface DesignToken {
   name: string;
   hex: string;
@@ -40,6 +46,7 @@ export interface UIPrompt {
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
   summary: string;
   quickPrompt: string;
+  pureDesignPrompt?: string;
   markdownSpec: string;
   colorPalette: DesignToken[];
   fontStack: string;

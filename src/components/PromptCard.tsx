@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import type { UIPrompt } from '../types';
+import type { UIPrompt, PromptFormat } from '../types';
+import { generateFormattedPrompt, PROMPT_FORMAT_OPTIONS } from '../utils/promptAdapter';
 import { MiniPreview } from './MiniPreviews';
 import { Copy, Check, Eye, Bookmark } from 'lucide-react';
 
@@ -22,9 +23,23 @@ export const PromptCard: React.FC<PromptCardProps> = ({
 
   const handleQuickCopy = (e: React.MouseEvent) => {
     e.stopPropagation();
-    navigator.clipboard.writeText(prompt.quickPrompt);
+    let format: PromptFormat = 'agnostic';
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('promptui-prompt-format');
+        if (saved === 'agnostic' || saved === 'react-tailwind' || saved === 'html-css' || saved === 'design-brief') {
+          format = saved;
+        }
+      } catch {
+        format = 'agnostic';
+      }
+    }
+
+    const formattedText = generateFormattedPrompt(prompt, format);
+    navigator.clipboard.writeText(formattedText);
     setCopied(true);
-    onTriggerToast(`Prompt copied for "${prompt.title}"`);
+    const formatLabel = PROMPT_FORMAT_OPTIONS.find((f) => f.id === format)?.badge || 'Agnostic';
+    onTriggerToast(`Prompt [${formatLabel}] copied for "${prompt.title}"`);
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -33,6 +48,31 @@ export const PromptCard: React.FC<PromptCardProps> = ({
     navigator.clipboard.writeText(hex);
     onTriggerToast(`${name} (${hex}) copied`);
   };
+
+  // Distinct outer framing tailored to each aesthetic movement
+  const cardFrameClass = React.useMemo(() => {
+    switch (prompt.style) {
+      case 'Neo-Brutalism':
+        return 'rounded-none border-2 border-black dark:border-zinc-200 shadow-[4px_4px_0px_#000] dark:shadow-[4px_4px_0px_#fff] bg-white dark:bg-[#0c0d12]';
+      case 'Swiss Minimal':
+        return 'rounded-none border-2 border-black/80 dark:border-white/40 shadow-none bg-white dark:bg-[#0c0d12]';
+      case 'Liquid Glassmorphism':
+        return 'rounded-2xl border border-white/25 shadow-xl bg-white/40 dark:bg-[#0d0e15]/60 backdrop-blur-2xl';
+      default:
+        return 'rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0d0e15] shadow-xs';
+    }
+  }, [prompt.style]);
+
+  const previewBorderClass = React.useMemo(() => {
+    switch (prompt.style) {
+      case 'Neo-Brutalism':
+        return 'border-b-2 border-black dark:border-zinc-200';
+      case 'Swiss Minimal':
+        return 'border-b-2 border-black/80 dark:border-white/40';
+      default:
+        return 'border-b border-black/5 dark:border-white/10';
+    }
+  }, [prompt.style]);
 
   return (
     <article
@@ -45,11 +85,11 @@ export const PromptCard: React.FC<PromptCardProps> = ({
           onOpenDetail(prompt);
         }
       }}
-      className="glass-card group relative flex flex-col rounded-xl overflow-hidden cursor-pointer focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none"
+      className={`group relative flex flex-col overflow-hidden cursor-pointer transition-all duration-150 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none ${cardFrameClass}`}
       aria-label={`UI Design Spec: ${prompt.title}. Press Enter to view full specification.`}
     >
       {/* Component Preview Container */}
-      <div className="relative aspect-[16/10] w-full bg-zinc-950 border-b border-black/5 dark:border-white/10 overflow-hidden">
+      <div className={`relative aspect-[16/10] w-full bg-zinc-950 overflow-hidden ${previewBorderClass}`}>
         <div className="w-full h-full">
           <MiniPreview previewId={prompt.previewId} />
         </div>
