@@ -1,117 +1,35 @@
 import type { UIPrompt } from '../types';
 
 export const PROMPTS_DATA: UIPrompt[] = [
-  /* 1. MODERN CREATIVE DIGITAL AGENCY LANDING (TURNOVER) */
+  /* 1. ARCHITECTURAL DESIGN ATELIER & MONOGRAPH SHOWCASE */
   {
     id: 'creative-agency-landing',
-    slug: 'modern-creative-digital-agency-landing',
-    title: 'Modern Creative Digital Agency Landing Page Design',
+    slug: 'architectural-design-atelier-monograph',
+    title: 'Architectural Design Atelier & Monograph Showcase',
     category: 'Landing',
-    style: 'Liquid Glassmorphism',
+    style: 'Cinematic Editorial',
     targetTool: 'v0.dev / Claude',
     difficulty: 'Advanced',
-    summary: 'High-impact creative agency landing page featuring a futuristic 3D hero bust with glowing neon orange visor, helical typographic ribbon, floating frosted acrylic glass cards with connection nodes, and social proof metrics on a pristine warm-light canvas.',
-    tags: ['Agency', 'Landing Page', '3D Element', 'Frosted Glass', 'Warm Minimalist', 'Neon Orange', 'Brand Identity'],
-    copyCount: 3120,
+    summary: 'Swiss-inspired architectural design studio showcase featuring an asymmetric editorial layout, physical clothbound monograph book artifacts, spatial typography, and archival project indices on a warm museum paper canvas.',
+    tags: ['Atelier', 'Editorial', 'Monograph', 'Swiss Grid', 'Typography', 'Architecture', 'Anti-Slop'],
     previewId: 'creative-agency-landing',
-    fontStack: 'Plus Jakarta Sans, Syne, Inter',
+    fontStack: 'Bricolage Grotesque, Instrument Serif, JetBrains Mono',
     colorPalette: [
-      { name: 'Warm Studio Canvas', hex: '#FAF8F5', usage: 'Main background canvas with ambient center warmth' },
-      { name: 'Laser Neon Orange', hex: '#FF5000', usage: 'Primary CTA, highlighted text & neon visor illumination' },
-      { name: 'Charcoal Onyx', hex: '#111113', usage: 'High-contrast headline and primary text' },
-      { name: 'Frosted Acrylic', hex: 'rgba(255, 255, 255, 0.72)', usage: 'Floating glassmorphic feature cards' },
-      { name: 'Cyber Slate', hex: '#334155', usage: 'Futuristic 3D mannequin sculpted shading' },
+      { name: 'Warm Museum Canvas', hex: '#FAF8F5', usage: 'Main tactile paper canvas' },
+      { name: 'Charcoal Onyx', hex: '#14151A', usage: 'High-contrast headline and monograph binding' },
+      { name: 'Ochre Amber', hex: '#B45309', usage: 'Edition numbering and colophon accents' },
+      { name: 'Editorial Slate', hex: '#52525B', usage: 'Secondary body text and publication metadata' },
+      { name: 'Hairline Divider', hex: 'rgba(0, 0, 0, 0.08)', usage: 'Architectural grid rules' },
     ],
     antiSlopChecks: [
-      'R-01: Intentional mono-accent palette (laser orange on warm cream) avoiding generic blue/purple AI meshes',
-      'R-04: Floating cards use functional service glyphs with semantic directional links',
+      'R-01: Zero neon AI orbs or cybernetic mannequins; grounded physical typography and warm paper tones',
+      'R-04: Authentic museum colophon and catalog index without floating decorative pill badges',
       'R-09: Spacious editorial headline hierarchy with dedicated breathing room and zero clutter',
-      'R-10: Restrained frosted glass with realistic refraction borders and diffuse contact shadows',
-      'R-31: Quantified social proof metrics with authentic client and project KPIs'
+      'R-17: Zero fabricated social proof ("320+ Clients", "98% Satisfied"); authentic publication specs only',
+      'R-36: Real tactile metadata (Fedrigoni 140gsm paper, Zurich exhibition dates) instead of marketing buzzwords'
     ],
-    quickPrompt: `Build a modern, award-winning Creative Digital Agency Landing Page in React and Tailwind CSS (inspired by cutting-edge Awwwards and Turnover Agency design).
-
-### 1. Visual Theme & Canvas
-- Canvas: Warm, pristine studio off-white/cream (#FAF8F5) with a subtle radial ambient light glow at the center (#FFF3EB at 35% opacity).
-- Primary Accent: High-energy electric laser orange (#FF5000 / #FF4500) for focal branding, glowing visor, and primary CTAs.
-- Typography: Heavy modern grotesque ("Plus Jakarta Sans" or "Inter") for headlines, coupled with crisp geometric typography for labels.
-
-### 2. Header & Navigation (Sticky Backdrop)
-- Logo: "Turnover" in bold charcoal typography with a stylized upward diagonal orange arrow accent over the 'o'.
-- Nav Links: Minimalist text links (Home, Services, About, Work, Blog, Contact) with an active orange dot indicator on "Home".
-- Header CTA: Pill button "Get Started →" in vibrant orange with white bold text (hover:scale-105 active:scale-95 transition).
-
-### 3. Hero Section (Asymmetrical Split Layout)
-#### Left Column: Content & Social Proof
-- Micro-Badge: Small vibrant orange dot + "Creative Digital Agency" in tracked uppercase text (text-[11px] font-semibold text-zinc-600).
-- Headline: Massive bold typography:
-  - Line 1: "We Build Brands" (charcoal onyx #111113, font-extrabold tracking-tight text-5xl sm:text-6xl lg:text-7xl).
-  - Line 2: "That Stand Out" (vibrant laser orange #FF5000, font-extrabold).
-- Subtitle: "Turnover is a creative agency helping modern businesses grow through strategy, design, and digital experiences." (text-zinc-600 leading-relaxed max-w-lg).
-- Action Buttons (Dual CTA):
-  1. Primary Button: "Let's Work Together →" (solid vibrant orange pill, px-7 py-3.5, font-bold text-white shadow-[0_10px_25px_rgba(255,80,0,0.35)]).
-  2. Secondary Action: Glass circular play button with pulsing glow ring + "Watch Our Story (2 min)" text link.
-- Social Proof Metrics Grid (4 items in a horizontal strip):
-  - "320+" Happy Clients
-  - "5+" Years Experience
-  - "150+" Projects Completed
-  - "98%" Client Satisfaction
-
-#### Center & Right Column: 3D Art & Floating Glass Feature Cards
-- Central 3D Visual Centerpiece:
-  - Futuristic dark slate mannequin/bust featuring a glowing neon orange cybernetic visor display with illuminated text ("TURNOVER MARKETING").
-  - Soundwave-like layered horizontal fin slats sculpted on the side of the head.
-  - A 3D helical orange ribbon swirling dynamically from background to foreground with typography: "Strategy • Design • Digital • Growth".
-- Floating Frosted Acrylic Cards (Connected with subtle vector node lines):
-  1. Top-Right: Glass card "Brand Strategy" ("Turn ideas into powerful brand stories. →") with an amber briefcase icon.
-  2. Mid-Right: Glass card "Creative Design" ("Beautiful designs that make an impact. →") with a pen/leaf icon.
-  3. Lower-Right: Glass card "Digital Growth" ("More traffic. More leads. More growth. →") with an analytics bar chart icon.
-  4. Bottom-Left: Floating thumbnail card "Our Latest Work" with a neon visor project thumbnail and description ("Branding for a modern tech company. →").
-
-### 4. Interactive Details & Micro-Interactions
-- Glass cards use: bg-white/70 backdrop-blur-xl border border-white/90 shadow-[0_20px_45px_rgba(0,0,0,0.06)] rounded-2xl hover:-translate-y-1 transition-transform.
-- Bottom right: Minimalist "Scroll Down" mouse scrollwheel indicator.
-- Fully responsive layout: gracefully collapses 3D elements behind text or stacks vertically on mobile viewports.`,
-    markdownSpec: `# UI Specification: Modern Creative Digital Agency Landing Page (Turnover)
-
-## 1. Context & Architecture
-- **Purpose**: Award-winning creative digital agency landing page engineered to communicate premium brand positioning, high-impact strategy, and modern digital craft.
-- **Aesthetic Direction**: High-energy futuristic 3D focal art (neon-illuminated cyber visor bust and helical typography ribbon) set on an airy, warm studio canvas.
-- **Framework Compatibility**: React 19 + Tailwind CSS + Lucide Icons (optimized for v0, Claude Artifacts, and Cursor).
-
-## 2. Design Tokens
-- **Canvas Base**: \`#FAF8F5\` (Warm Studio Off-White)
-- **Ambient Radial Warmth**: \`radial-gradient(circle at 65% 50%, rgba(255, 80, 0, 0.08), transparent 60%)\`
-- **Primary Accent**: \`#FF5000\` (Electric Laser Orange, WCAG AA compliant on light canvas)
-- **Headline / Dark Text**: \`#111113\` (Charcoal Onyx)
-- **Secondary Body Text**: \`#52525B\` (Zinc 600)
-- **Acrylic Frosted Glass**: \`rgba(255, 255, 255, 0.72)\` with \`backdrop-blur-xl\` and \`1px solid rgba(255, 255, 255, 0.85)\`
-- **Soft Contact Shadow**: \`0 20px 40px -15px rgba(0, 0, 0, 0.07)\`
-
-## 3. Structural Wireframe & Breakdown
-\`\`\`text
-+-----------------------------------------------------------------------------------+
-| [Turn↗ver]                 Home  Services  About  Work  Blog  Contact  [Get Started →] |
-+-----------------------------------------------------------------------------------+
-|  ● Creative Digital Agency                                                        |
-|                                                               [Brand Strategy →]  |
-|  We Build Brands                   [ 3D Bust / Visor ]             (Glass Pill)   |
-|  That Stand Out                    [ TURNOVER MARKETING ]                         |
-|                                    [ Swirling Orange Ribbon ] [Creative Design →] |
-|  Turnover is a creative agency...  [ Strategy • Design • ]         (Glass Pill)   |
-|                                                                                   |
-|  [Let's Work Together →] (▶) Story                            [Digital Growth →]  |
-|                                                                    (Glass Pill)   |
-|  320+        5+          150+         98%                                         |
-|  Clients    Years       Projects     Satisfaction                                 |
-|                                                                                   |
-|  [Our Latest Work →]                                                  Scroll Down |
-|  (Thumbnail Pill)                                                         (Mouse) |
-+-----------------------------------------------------------------------------------+
-\`\`\`
-
-## 4. Master Prompt
-See quickPrompt above for the ready-to-run prompt.`
+    quickPrompt: "Build an editorial Architectural Design Atelier & Monograph Showcase in React and Tailwind CSS.\nVisual Theme & Layout:\n- Canvas: Warm tactile museum paper (#FAF8F5) with crisp hairline architectural dividers (rgba(0, 0, 0, 0.08)).\n- Typography: High-contrast editorial bold sans (\"Bricolage Grotesque\" or \"Plus Jakarta Sans\") combined with crisp monospace metadata labels (\"JetBrains Mono\").\n- Top Bar: Minimalist atelier masthead (\"KINETIC ATELIER / CH-8001 Z\u00fcrich\") with links (Index, Monograph, Archive, Atelier).\n- Hero Split:\n  * Left: Special edition marker (\"Special Edition // 2026\"), massive editorial title (\"Spatial Architecture & Monolith Forms\"), description of a 420-page retrospective, and CTA \"View Case Archive\".\n  * Right: A physical clothbound monograph book artifact (dark charcoal volume with foil-stamped typography \"KINETIC VOL. VIII \u2116 08\").\n- Colophon Footer: Edition metadata (\"Commissioned by Kunsthalle Z\u00fcrich \u2022 Edition of 500 copies\").\nAnti-Slop Guardrails:\n- Zero fake floating pills with colored dots (no \"Brand Strategy\", no \"Digital Growth\").\n- Zero fabricated statistics (no \"320+ Clients\", no \"98% Satisfied\").\n- Grounded, authentic tactile craftsmanship throughout.",
+    markdownSpec: "# UI Specification: Architectural Design Atelier & Monograph Showcase\n\n## 1. Context & Architecture\n- **Purpose**: High-end editorial showcase for an architectural design atelier, highlighting spatial systems, physical monographs, and exhibition archives.\n- **Aesthetic Direction**: International Typographic Style merged with tactile physical book design on warm museum paper.\n- **Framework Compatibility**: Framework-Agnostic, React 19, or Semantic HTML5."
   },
 
   /* 2. CINEMATIC HERO */
@@ -125,7 +43,6 @@ See quickPrompt above for the ready-to-run prompt.`
     difficulty: 'Advanced',
     summary: 'Full-bleed atmospheric landing hero featuring a silhouette horizon, glowing dusk sun disc, editorial typography, and frosted glass command pill.',
     tags: ['Cinematic', 'Hero', 'Atmospheric', 'Editorial', 'Crimson Sunset'],
-    copyCount: 2180,
     previewId: 'cinematic-hero',
     fontStack: 'Plus Jakarta Sans, Geist Mono for CLI pill',
     colorPalette: [
@@ -171,7 +88,6 @@ Ensure absolute visual depth without cheap floating shapes or generic AI stock g
     difficulty: 'Intermediate',
     summary: 'High-energy Neo-Brutalist layout featuring hard 3px black borders, zero-blur drop shadows, canary yellow and hot magenta surfaces, and raw typography.',
     tags: ['Neo-Brutalism', 'Hard Shadow', 'Canary Yellow', 'High Contrast', 'Retro Web'],
-    copyCount: 1840,
     previewId: 'neo-brutalism',
     fontStack: 'Space Grotesk, JetBrains Mono',
     colorPalette: [
@@ -215,7 +131,6 @@ Neo-Brutalism rejects the generic "safe corporate tech" aesthetic. It emphasizes
     difficulty: 'Advanced',
     summary: 'Refined multi-layer frosted acrylic surface with specular edge highlights, chromatic refraction mesh, and high-contrast accessible typography.',
     tags: ['Glassmorphism', 'Frosted', 'Backdrop Blur', 'Acrylic', 'Refraction'],
-    copyCount: 1530,
     previewId: 'liquid-glassmorphism',
     fontStack: 'Plus Jakarta Sans, Geist Mono',
     colorPalette: [
@@ -229,12 +144,7 @@ Neo-Brutalism rejects the generic "safe corporate tech" aesthetic. It emphasizes
       'R-10: Glassmorphism dose cap strictly observed (applied only to primary card, not entire page)',
       'R-21: Text uses pure white and high-opacity tints to guarantee WCAG AA contrast over blurred background'
     ],
-    quickPrompt: `Build a refined, non-slop Liquid Glassmorphism acrylic card in React and Tailwind CSS.
-Visual Execution:
-- Background: Deep indigo/violet void (#0a051b) with 2 soft chromatic mesh color blobs (cobalt #4f46e5 and fuchsia #c026d3) blurred in the background.
-- Glass Surface: A centered card with bg-white/10 backdrop-blur-2xl border border-white/25 rounded-3xl shadow-2xl p-6.
-- Edge Lighting: 1px crisp top/left border highlight simulating refracted light.
-- Content: Header with frosted circle badge, card title, interactive slider, and high contrast typography.`,
+    quickPrompt: "Build an authentic Physical Optical Specular Glass Card in React and Tailwind CSS.\nVisual Execution:\n- Background: Deep obsidian studio environment (#0a0b12) with monochromatic typography and geometry passing underneath the glass slab to demonstrate real optical diffusion.\n- Glass Surface: A centered card with bg-white/[0.07] backdrop-blur-2xl border-t border-l border-white/35 border-b border-r border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.6),inset_0_1px_0_0_rgba(255,255,255,0.45)] rounded-2xl p-6.\n- Optical Specs: Real refractive index (Crown Glass 1.52n), 1px rim specular highlight, and precision optical slider controls.\nAnti-Slop Guardrails:\n- Zero purple, cyan, or fuchsia chromatic mesh blur orbs.\n- Real physical optical dispersion and caustics instead of rainbow AI gradient soup.",
     markdownSpec: `# UI Specification: Refined Liquid Glassmorphism
 
 ## 1. Anti-Slop Dose Cap (R-10 Compliance)
@@ -252,7 +162,6 @@ Glass is an intentional focal material applied exclusively to the hero card. The
     difficulty: 'Intermediate',
     summary: 'A curated gallery of 6 production button archetypes: Neo-Brutalist 3D press, Liquid Frosted Glass, Tactile Skeuomorphic, Border-Beam Shimmer, Cyberpunk Chamfered, and Minimalist State-Morph.',
     tags: ['Buttons', 'Micro-Interactions', 'Tactile', 'Hover Effects', 'Skeuomorphic', 'Shimmer'],
-    copyCount: 2950,
     previewId: 'button-showcase-matrix',
     fontStack: 'Space Grotesk, JetBrains Mono, Inter',
     colorPalette: [
@@ -321,7 +230,6 @@ clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 cal
     difficulty: 'Intermediate',
     summary: 'High-conversion, zero-slop B2B SaaS pricing matrix inspired by Stripe and Linear: interactive Annual/Monthly billing toggle with exact arithmetic, 3 distinct tiers (Hobby, Team Pro, Enterprise), explicit entitlement limits, and transparent feature breakdown without arbitrary gradient cards.',
     tags: ['Pricing', 'Billing', 'SaaS', 'Stripe', 'Linear', 'Tiers', 'Toggle', 'Anti-Slop'],
-    copyCount: 2890,
     previewId: 'saas-pricing-matrix',
     fontStack: 'Plus Jakarta Sans, Geist Mono',
     colorPalette: [
@@ -355,8 +263,7 @@ Three Tier Cards (3-column responsive grid on desktop, stacked on mobile):
    - Action CTA: "Start Free Sandbox" (translucent glass button).
    - Features: 1 developer seat, 3 active projects, 5GB bandwidth, community support. Negative items styled with subtle dash.
 2. Card 2 (Team Pro - Featured Card):
-   - Highlight: Micro-badge "MOST POPULAR" in violet border pill.
-   - 1px border-violet-500/40 with subtle violet glow.
+   - Transparent unit rates ($0.028/hr vCPU, $0.004/GB-hr RAM) with zero cheesy "POPULAR" badges or artificial purple glow.
    - Price: $19/mo (or $24/mo) with explicit billing frequency subtext.
    - Action CTA: "Upgrade to Team Pro" (solid vibrant violet/white button, tactile hover).
    - Features: Up to 25 seats, unlimited projects, 100GB edge bandwidth, 90-day audit log retention, 4-hour SLA.
@@ -406,7 +313,6 @@ See quickPrompt above for the ready-to-run prompt.`
     difficulty: 'Advanced',
     summary: 'Enterprise telemetry surface featuring an ARR expansion vs contraction stacked histogram, N-day cohort retention heat-bars, p99 latency metrics, and real-time ingestion velocity in a tight, structured bento grid.',
     tags: ['Bento Grid', 'Telemetry', 'SaaS', 'Revenue Bridge', 'Cohort Retention', 'PostHog Style'],
-    copyCount: 1840,
     previewId: 'bento-analytics',
     fontStack: 'Plus Jakarta Sans, JetBrains Mono, Inter',
     colorPalette: [
@@ -463,7 +369,6 @@ Engineered as an executive-level telemetry dashboard combining unit economics wi
     difficulty: 'Intermediate',
     summary: 'Developer-grade split-screen authentication screen inspired by Linear and Clerk: magic link email login, GitHub/Google OAuth, passkey WebAuthn triggers, and live infrastructure telemetry showcase.',
     tags: ['Auth', 'Split-Screen', 'SSO', 'Passkeys', 'Magic-Link', 'Linear-Style', 'Developer'],
-    copyCount: 1650,
     previewId: 'split-screen-auth',
     fontStack: 'Inter, Geist Mono for metrics',
     colorPalette: [
@@ -506,8 +411,7 @@ Telemetry Column (Right):
 - Dark panel (#0C0D14) with subtle radial grid overlay.
 - Top status pill: Live pulsing green indicator "All systems operational" + "Region: us-east-1 (12ms)".
 - Code/Metric Box: Simulated JSON/terminal card showing production cluster health and active ingress requests.
-- Customer quote: Verified engineering quote from a VP of Infra with verified avatar initial badge.
-- Security footer: "SOC2 Type II • ISO 27001 • End-to-End Encrypted" badges in monospace.
+- Cryptographic Ceremony Monitor: Real FIDO2 / WebAuthn L3 handshake log (challenge, direct attestation, userPresence biometric verification, and rolling session TTL) without fabricated testimonial quotes.
 
 Anti-Slop Guardrails:
 - Zero purple/cyan gradient backgrounds.
@@ -549,7 +453,6 @@ See quickPrompt above for the ready-to-run prompt.`
     difficulty: 'Advanced',
     summary: 'iPhone viewport mockup displaying virtual debit card carousel, total balance with hidden eye toggle, and categorized daily transaction feed.',
     tags: ['Mobile', 'iOS', 'FinTech', 'Transactions', 'Cards'],
-    copyCount: 1120,
     previewId: 'fintech-cashflow-mobile',
     fontStack: 'SF Pro Display, SF Pro Text',
     colorPalette: [
@@ -582,7 +485,6 @@ Viewport constrained to 390px (iPhone 15 Pro standard). Pure black OLED palette.
     difficulty: 'Advanced',
     summary: 'Engineer-grade sprint pipeline modeled after Linear, featuring cycle burndown tracking, authentic issue keys (AUTH-1048), git branch tags, subtask fractions, dependency blockers, and keyboard navigation shortcuts.',
     tags: ['Kanban', 'Linear-Style', 'Sprint', 'Issue Pipeline', 'Developer Native', 'Agile'],
-    copyCount: 1980,
     previewId: 'kanban-sprint-board',
     fontStack: 'Inter, JetBrains Mono',
     colorPalette: [
@@ -631,7 +533,6 @@ High-performance developer workspace designed with the rigor of Linear and GitHu
     difficulty: 'Intermediate',
     summary: 'Tactile media player card featuring an animated waveform visualizer, scrubber timestamps, play/pause state toggle, and track artwork.',
     tags: ['Audio', 'Waveform', 'Player', 'Media', 'Podcast'],
-    copyCount: 1470,
     previewId: 'audio-waveform-player',
     fontStack: 'Plus Jakarta Sans, Geist Mono',
     colorPalette: [
@@ -673,7 +574,6 @@ Compact audio component designed for dashboards, podcast platforms, and voice me
     difficulty: 'Intermediate',
     summary: 'Interactive file upload dropzone with active drag state, format constraints, animated progress bars, file-type icons, and cancel triggers.',
     tags: ['Upload', 'Dropzone', 'Progress Bar', 'File Manager', 'Forms'],
-    copyCount: 1240,
     previewId: 'file-upload-dropzone',
     fontStack: 'Inter, Geist Mono',
     colorPalette: [
@@ -696,7 +596,7 @@ Features:
    - Subtext: "Supports PDF, SVG, PNG up to 25MB".
 2. Active Upload Queue:
    - Card showing file name ("design_spec_v2.pdf"), size ("2.4 MB"), and percentage ("82%").
-   - Smooth animated progress bar with violet-to-emerald gradient fill.
+   - Solid high-contrast monochromatic progress bar with real byte counts and SHA-256 verification hash.
    - Status: Cancel "X" button and retry trigger on error.
 Dark zinc clean styling with clear drag-over hover feedback.`,
     markdownSpec: `# UI Specification: Drag & Drop File Upload Dropzone
@@ -716,7 +616,6 @@ Universal upload component supporting drag events, file validation, and real-tim
     difficulty: 'Advanced',
     summary: 'Spotlight-style global modal with keyboard navigation, fuzzy search group headers, recent queries, and action shortcut badges.',
     tags: ['Cmd+K', 'Modal', 'Developer', 'Keyboard-First', 'Raycast-Style'],
-    copyCount: 980,
     previewId: 'command-palette',
     fontStack: 'Inter, JetBrains Mono for keyboard keys',
     colorPalette: [
@@ -753,7 +652,6 @@ Spotlight command menu inspired by Raycast and Linear.`
     difficulty: 'Intermediate',
     summary: 'Keyboard-first activity triage inbox inspired by Linear and Raycast: inky obsidian canvas, 1px hairline borders, integration event badges (GitHub PR, Vercel deploy, Linear issues), and hotkey navigation (J/K/E).',
     tags: ['Linear Inbox', 'Raycast', 'Notifications', 'Activity Feed', 'Keyboard First', 'Triage'],
-    copyCount: 1640,
     previewId: 'notification-center',
     fontStack: 'Plus Jakarta Sans, Geist Mono',
     colorPalette: [
@@ -842,7 +740,6 @@ Layout & Styling:
     difficulty: 'Intermediate',
     summary: 'Slide-over slide drawer with animated item quantity steppers, free shipping progress bar, promo code input, and express checkout button.',
     tags: ['E-Commerce', 'Cart', 'Drawer', 'Checkout', 'Slideover'],
-    copyCount: 790,
     previewId: 'checkout-slide-drawer',
     fontStack: 'Plus Jakarta Sans, Geist Mono',
     colorPalette: [
@@ -874,7 +771,6 @@ Frictionless shopping bag designed to increase Average Order Value (AOV).`
     difficulty: 'Intermediate',
     summary: 'Strict mathematical grid layout inspired by mid-century Swiss graphic design: stark black/white contrast, oversized grotesque numerals, and asymmetric editorial columns.',
     tags: ['Swiss Style', 'Editorial', 'Helvetica', 'Grid System', 'Minimalist'],
-    copyCount: 1390,
     previewId: 'swiss-minimal',
     fontStack: 'Helvetica Neue, Inter, Space Mono',
     colorPalette: [

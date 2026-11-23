@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import type { UIPrompt, PromptFormat } from '../types';
 import { generateFormattedPrompt, PROMPT_FORMAT_OPTIONS } from '../utils/promptAdapter';
+import { copyText } from '../utils/clipboard';
 import { MiniPreview } from './MiniPreviews';
 import { 
   X, 
@@ -47,6 +48,13 @@ export const DetailModal: React.FC<DetailModalProps> = ({
     }
     return 'agnostic';
   });
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const onCloseRef = useRef(onClose);
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   const handleSelectFormat = (format: PromptFormat) => {
     setPromptFormat(format);
@@ -58,20 +66,45 @@ export const DetailModal: React.FC<DetailModalProps> = ({
   };
 
   useEffect(() => {
+    if (!prompt) return;
+
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        onClose();
+        onCloseRef.current();
+        return;
+      }
+      if (e.key !== 'Tab' || !dialogRef.current) return;
+
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((element) => element.getClientRects().length > 0);
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
       }
     };
-    if (prompt) {
-      window.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
-    }
+
+    window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = previousOverflow;
+      previouslyFocused?.focus?.();
     };
-  }, [prompt, onClose]);
+  }, [prompt]);
 
   const formattedPrompt = useMemo(() => {
     if (!prompt) return '';
@@ -113,19 +146,27 @@ ${formattedPrompt}
 
   if (!prompt) return null;
 
-  const handleCopyPrompt = () => {
-    navigator.clipboard.writeText(formattedPrompt);
-    setCopiedPrompt(true);
+  const handleCopyPrompt = async () => {
+    const copiedOk = await copyText(formattedPrompt);
     const formatObj = PROMPT_FORMAT_OPTIONS.find((f) => f.id === promptFormat);
-    onTriggerToast(`Prompt (${formatObj?.label || 'Custom'}) copied for "${prompt.title}"`);
-    setTimeout(() => setCopiedPrompt(false), 2000);
+    if (copiedOk) {
+      setCopiedPrompt(true);
+      window.setTimeout(() => setCopiedPrompt(false), 2000);
+      onTriggerToast(`Prompt (${formatObj?.label || 'Custom'}) copied for "${prompt.title}"`);
+    } else {
+      onTriggerToast('Clipboard unavailable. Select the prompt text and copy manually.');
+    }
   };
 
-  const handleCopyMarkdown = () => {
-    navigator.clipboard.writeText(prompt.markdownSpec);
-    setCopiedMarkdown(true);
-    onTriggerToast(`Markdown spec for "${prompt.title}" copied`);
-    setTimeout(() => setCopiedMarkdown(false), 2000);
+  const handleCopyMarkdown = async () => {
+    const copiedOk = await copyText(prompt.markdownSpec);
+    if (copiedOk) {
+      setCopiedMarkdown(true);
+      window.setTimeout(() => setCopiedMarkdown(false), 2000);
+      onTriggerToast(`Markdown spec for "${prompt.title}" copied`);
+    } else {
+      onTriggerToast('Clipboard unavailable.');
+    }
   };
 
   const handleDownloadMarkdown = () => {
@@ -141,11 +182,15 @@ ${formattedPrompt}
     onTriggerToast(`Downloaded ${prompt.slug}.md`);
   };
 
-  const handleCopyRules = () => {
-    navigator.clipboard.writeText(cursorRuleText);
-    setCopiedRules(true);
-    onTriggerToast(`Copied AI rules (.cursorrules / CLAUDE.md) for "${prompt.title}"`);
-    setTimeout(() => setCopiedRules(false), 2000);
+  const handleCopyRules = async () => {
+    const copiedOk = await copyText(cursorRuleText);
+    if (copiedOk) {
+      setCopiedRules(true);
+      window.setTimeout(() => setCopiedRules(false), 2000);
+      onTriggerToast(`Copied AI rules (.cursorrules / CLAUDE.md) for "${prompt.title}"`);
+    } else {
+      onTriggerToast('Clipboard unavailable.');
+    }
   };
 
   const handleDownloadRules = () => {
@@ -161,30 +206,19 @@ ${formattedPrompt}
     onTriggerToast(`Downloaded ${prompt.slug}.cursorrules`);
   };
 
-  const handleCopyToken = (hex: string, name: string) => {
-    navigator.clipboard.writeText(hex);
-    onTriggerToast(`${name} (${hex}) copied`);
+  const handleCopyToken = async (hex: string, name: string) => {
+    const copiedOk = await copyText(hex);
+    onTriggerToast(copiedOk ? `${name} (${hex}) copied` : 'Clipboard unavailable.');
   };
 
   const handleShareLink = async () => {
-    try {
-      const shareUrl = `${window.location.origin}${window.location.pathname}?prompt=${prompt.slug}`;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(shareUrl);
-      } else {
-        const textarea = document.createElement('textarea');
-        textarea.value = shareUrl;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-      }
-      onTriggerToast(`Shareable link copied for "${prompt.title}"`);
-    } catch {
-      onTriggerToast('Failed to copy link to clipboard');
-    }
+    const shareUrl = `${window.location.origin}${window.location.pathname}?prompt=${prompt.slug}`;
+    const copiedOk = await copyText(shareUrl);
+    onTriggerToast(
+      copiedOk
+        ? `Shareable link copied for "${prompt.title}"`
+        : 'Failed to copy link to clipboard'
+    );
   };
 
   return (
@@ -197,6 +231,7 @@ ${formattedPrompt}
 
       {/* Modal Dialog (Anti-Slop R-10, R-11: Structured Solid Canvas, 12px Radius) */}
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-prompt-title"
@@ -244,6 +279,7 @@ ${formattedPrompt}
             </button>
 
             <button
+              ref={closeButtonRef}
               onClick={onClose}
               aria-label="Close specification modal"
               className="p-1.5 rounded-lg glass-btn text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition focus-visible:ring-2 focus-visible:ring-zinc-400"

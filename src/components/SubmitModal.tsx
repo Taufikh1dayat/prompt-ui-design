@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { X, GitPullRequest, Copy } from 'lucide-react';
+import { copyText } from '../utils/clipboard';
 
 interface SubmitModalProps {
   isOpen: boolean;
@@ -13,16 +14,17 @@ export const SubmitModal: React.FC<SubmitModalProps> = ({
   onTriggerToast,
 }) => {
   useEffect(() => {
+    if (!isOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
-    if (isOpen) {
-      window.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
-    }
+    window.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = previousOverflow;
     };
   }, [isOpen, onClose]);
 
@@ -49,9 +51,9 @@ Brief description of the UI problem and solution.
 > "Create a [component] using React, Tailwind CSS..."
 `;
 
-  const handleCopyTemplate = () => {
-    navigator.clipboard.writeText(sampleTemplate);
-    onTriggerToast('Markdown template copied to clipboard!');
+  const handleCopyTemplate = async () => {
+    const copiedOk = await copyText(sampleTemplate);
+    onTriggerToast(copiedOk ? 'Markdown template copied to clipboard.' : 'Clipboard unavailable.');
   };
 
   return (
@@ -61,33 +63,33 @@ Brief description of the UI problem and solution.
         role="dialog"
         aria-modal="true"
         aria-labelledby="submit-modal-title"
-        className="relative w-full max-w-xl bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl p-4 sm:p-6 z-10 max-h-[92vh] overflow-y-auto"
+        className="relative w-full max-w-xl bg-white dark:bg-zinc-900 border border-black/10 dark:border-zinc-800 rounded-xl shadow-2xl p-4 sm:p-6 z-10 max-h-[92vh] overflow-y-auto"
       >
-        <div className="flex items-center justify-between pb-4 border-b border-zinc-800">
+        <div className="flex items-center justify-between pb-4 border-b border-black/10 dark:border-zinc-800">
           <div className="flex items-center gap-2">
-            <GitPullRequest className="w-5 h-5 text-violet-400" />
-            <h3 id="submit-modal-title" className="text-lg font-bold text-white">Submit a UI Prompt Spec</h3>
+            <GitPullRequest className="w-5 h-5 text-violet-600 dark:text-violet-400" />
+            <h3 id="submit-modal-title" className="text-lg font-bold text-zinc-900 dark:text-white">Submit a UI Prompt Spec</h3>
           </div>
           <button
             onClick={onClose}
             aria-label="Close modal"
-            className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition focus-visible:ring-2 focus-visible:ring-zinc-400"
+            className="p-1.5 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-zinc-800 transition focus-visible:ring-2 focus-visible:ring-zinc-400"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="py-4 space-y-4 text-xs text-zinc-300">
+        <div className="py-4 space-y-4 text-xs text-zinc-600 dark:text-zinc-300">
           <p>
             This repository is 100% open-source and community driven. We prioritize <strong>production-ready, non-slop</strong> UI prompts that include design tokens, realistic layout hierarchy, and clear AI instructions.
           </p>
 
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <span className="font-mono text-zinc-400">Standard .md Spec Template:</span>
+              <span className="font-mono text-zinc-500 dark:text-zinc-400">Standard .md Spec Template:</span>
               <button
                 onClick={handleCopyTemplate}
-                className="flex items-center gap-1 text-[11px] text-violet-400 hover:text-violet-300"
+                className="flex items-center gap-1 text-[11px] text-violet-600 dark:text-violet-400 hover:text-violet-500 dark:hover:text-violet-300"
               >
                 <Copy className="w-3 h-3" />
                 <span>Copy Template</span>
@@ -98,16 +100,16 @@ Brief description of the UI problem and solution.
             </pre>
           </div>
 
-          <div className="p-3 bg-violet-500/10 border border-violet-500/20 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="p-3 bg-violet-500/5 dark:bg-violet-500/10 border border-violet-500/20 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <div className="text-violet-300 font-semibold text-xs">Ready to contribute?</div>
-              <div className="text-zinc-400 text-[11px]">Fork the repository and submit a Pull Request.</div>
+              <div className="text-violet-700 dark:text-violet-300 font-semibold text-xs">Ready to contribute?</div>
+              <div className="text-zinc-500 dark:text-zinc-400 text-[11px]">Fork the repository and submit a Pull Request.</div>
             </div>
             <a
               href="https://github.com/Taufikh1dayat/prompt-ui-design"
               target="_blank"
               rel="noreferrer"
-              className="px-3 py-2 sm:py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-medium text-xs shadow-sm transition text-center shrink-0"
+              className="px-3 py-2 sm:py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-700 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-white font-medium text-xs shadow-sm transition text-center shrink-0"
             >
               Open GitHub PR
             </a>

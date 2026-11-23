@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { PROMPTS_DATA } from './data/prompts';
 import type { Category, DesignStyle, TargetTool, UIPrompt } from './types';
 import { Navbar } from './components/Navbar';
@@ -63,6 +63,7 @@ export function App() {
     return [];
   });
   const [showSavedOnly, setShowSavedOnly] = useState(false);
+  const toastTimerRef = useRef<number | null>(null);
 
   // Sync theme with HTML class and persist in localStorage
   useEffect(() => {
@@ -130,29 +131,41 @@ export function App() {
   };
 
   const showToast = (message: string) => {
+    if (toastTimerRef.current !== null) {
+      window.clearTimeout(toastTimerRef.current);
+    }
     setToastMessage(message);
-    setTimeout(() => {
+    toastTimerRef.current = window.setTimeout(() => {
       setToastMessage((prev) => (prev === message ? null : prev));
+      toastTimerRef.current = null;
     }, 3500);
   };
 
-  const handleToggleBookmark = (promptId: string) => {
-    setBookmarks((prev) => {
-      const isBookmarked = prev.includes(promptId);
-      const updated = isBookmarked ? prev.filter((id) => id !== promptId) : [...prev, promptId];
-      try {
-        localStorage.setItem('promptui-bookmarks', JSON.stringify(updated));
-      } catch {
-        // Fallback for sandboxed environments
+  useEffect(() => {
+    return () => {
+      if (toastTimerRef.current !== null) {
+        window.clearTimeout(toastTimerRef.current);
       }
-      const target = PROMPTS_DATA.find((p) => p.id === promptId);
-      showToast(
-        isBookmarked
-          ? `Removed "${target?.title || promptId}" from bookmarks`
-          : `Saved "${target?.title || promptId}" to bookmarks`
-      );
-      return updated;
-    });
+    };
+  }, []);
+
+  const handleToggleBookmark = (promptId: string) => {
+    const isBookmarked = bookmarks.includes(promptId);
+    const updated = isBookmarked
+      ? bookmarks.filter((id) => id !== promptId)
+      : [...bookmarks, promptId];
+    setBookmarks(updated);
+    try {
+      localStorage.setItem('promptui-bookmarks', JSON.stringify(updated));
+    } catch {
+      // LocalStorage unavailable in sandbox
+    }
+    const target = PROMPTS_DATA.find((p) => p.id === promptId);
+    showToast(
+      isBookmarked
+        ? `Removed "${target?.title || promptId}" from bookmarks`
+        : `Saved "${target?.title || promptId}" to bookmarks`
+    );
   };
 
   const isFiltered = useMemo(() => {
@@ -208,17 +221,6 @@ export function App() {
 
   return (
     <div className="relative min-h-screen bg-[#f8fafc] dark:bg-[#080913] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans transition-colors overflow-x-hidden">
-      {/* 
-        High-Performance Hardware-Accelerated Ambient Canvas
-        Zero continuous CPU/GPU repaints. Pure static radial gradients + GPU-cached grid lines.
-      */}
-      <div 
-        className="fixed inset-0 pointer-events-none -z-10 dark:ambient-gradient-dark ambient-gradient-light" 
-        aria-hidden="true"
-      >
-        <div className="absolute inset-0 bg-blueprint-grid pointer-events-none" />
-      </div>
-
       {/* Navigation */}
       <Navbar
         onOpenSubmit={() => setIsSubmitModalOpen(true)}
@@ -253,13 +255,13 @@ export function App() {
           onToggleSavedOnly={() => setShowSavedOnly((prev) => !prev)}
         />
 
-        {/* Showcase Section */}
+        {/* Showcase Section: three featured cards */}
         <section
           aria-label="Curated UI Design Prompts Gallery"
           className="max-w-360 mx-auto px-3.5 sm:px-6 lg:px-8 flex-1 w-full pb-16"
         >
           {filteredPrompts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {filteredPrompts.map((prompt) => (
                 <PromptCard
                   key={prompt.id}

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Search, Terminal, FileCode2, Palette } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 interface HeroProps {
   searchQuery: string;
@@ -28,26 +28,21 @@ export const Hero: React.FC<HeroProps> = ({ searchQuery, onSearchChange, totalCo
   return (
     <header className="pt-8 sm:pt-14 pb-6 sm:pb-8 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
       {/* 
-        Solid, Unapologetic High-Contrast Headline (Zero AI-Slop Muted Split / Zero Gradients)
-        Unified stark white/black across both lines for a confident, human-designed editorial weight.
+        Solid, Unapologetic High-Contrast Headline (Zero AI-Slop Italic Font-Mixing Gimmicks)
       */}
-      <h1 className="font-display text-3xl sm:text-5xl lg:text-[4.5rem] font-extrabold text-zinc-950 dark:text-white tracking-[-0.035em] leading-[1.12] sm:leading-[1.08] mb-4 sm:mb-5 select-none">
-        <span>Production UI Prompts</span>{' '}
-        <span className="font-editorial italic font-normal text-zinc-400 dark:text-zinc-500 text-[0.88em] mx-1">
-          &
-        </span>{' '}
-        <br className="hidden sm:inline" />
-        <span>Markdown Specs for AI</span>
+      <h1 className="font-display text-3xl sm:text-5xl lg:text-[4.25rem] font-black text-zinc-950 dark:text-white tracking-[-0.04em] leading-[1.08] mb-4 sm:mb-5 select-none">
+        Production UI Prompts<br className="hidden sm:inline" />
+        <span className="text-zinc-400 dark:text-zinc-500 font-bold"> & Markdown Specs</span>
       </h1>
 
       {/* Strong Value Proposition */}
       <p className="max-w-2xl mx-auto text-zinc-600 dark:text-zinc-400 text-xs sm:text-base leading-relaxed mb-6 sm:mb-8">
-        Stop writing generic prompts like <span className="text-zinc-900 dark:text-zinc-200 italic font-medium font-serif">"buatkan dashboard modern"</span>. 
+        Stop writing generic prompts like <span className="text-zinc-900 dark:text-zinc-200 font-medium">"buatkan dashboard modern"</span>.
         Steal battle-tested prompt architectures, exact design tokens, and structured <code className="text-zinc-800 dark:text-zinc-200 bg-black/5 dark:bg-white/10 px-1.5 py-0.5 rounded text-xs font-mono font-semibold border border-black/5 dark:border-white/10">.md</code> specs ready for v0, Claude, and Cursor.
       </p>
 
-      {/* Search Input (Anti-Slop R-11: Structured 12px Radius, Zero Floating Slop) */}
-      <div className="max-w-xl mx-auto mb-6 sm:mb-8">
+      {/* Search Input (Structured, High-Tactile Contrast) */}
+      <div className="max-w-xl mx-auto mb-5 sm:mb-6">
         <label htmlFor="prompt-search-input" className="sr-only">
           Search UI Prompts
         </label>
@@ -71,20 +66,13 @@ export const Hero: React.FC<HeroProps> = ({ searchQuery, onSearchChange, totalCo
         </div>
       </div>
 
-      {/* Feature Capability Markers */}
-      <div className="flex flex-wrap items-center justify-center gap-2.5 text-xs text-zinc-600 dark:text-zinc-400 font-medium">
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-xs">
-          <Terminal className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-          <span>1-Click Copy for v0 & Claude</span>
-        </div>
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-xs">
-          <FileCode2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-          <span>Downloadable .md Context Files</span>
-        </div>
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-xs">
-          <Palette className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400" />
-          <span>Design Tokens & Hex Inspection</span>
-        </div>
+      {/* Authentic Catalog Index Bar (Zero Floating Capsule Badges) */}
+      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-xs font-mono text-zinc-500 dark:text-zinc-400">
+        <span>{totalCount} Verified Architectures</span>
+        <span className="text-zinc-300 dark:text-zinc-700">•</span>
+        <span>Framework-Agnostic & React Exports</span>
+        <span className="text-zinc-300 dark:text-zinc-700">•</span>
+        <span>Design Tokens & Unit Metrics</span>
       </div>
     </header>
   );

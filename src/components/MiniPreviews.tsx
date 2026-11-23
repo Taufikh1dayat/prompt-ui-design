@@ -10,7 +10,6 @@ import {
   Play, 
   Pause, 
   UploadCloud, 
-  FileText, 
   Bell, 
   CheckCircle2, 
   ArrowRight, 
@@ -259,31 +258,42 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
         </div>
       );
 
-    /* 3. FILE UPLOAD DROPZONE */
+    /* 3. FILE UPLOAD DROPZONE (ENGINEERED ASSET INGESTION HUB) */
     case 'file-upload-dropzone':
       return (
-        <div className="w-full h-full p-2.5 bg-zinc-950 flex flex-col justify-between select-none font-sans">
-          {/* Dashed Dropzone */}
-          <div className="border border-dashed border-zinc-700 hover:border-violet-500 rounded-xl p-2.5 text-center bg-zinc-900/40 flex flex-col items-center justify-center gap-1 transition-colors">
-            <div className="w-6 h-6 rounded-full bg-violet-500/10 text-violet-400 flex items-center justify-center">
-              <UploadCloud className="w-3.5 h-3.5" />
+        <div className="w-full h-full p-2.5 bg-[#090A0E] text-zinc-200 flex flex-col justify-between select-none font-sans overflow-hidden">
+          {/* Technical Dropzone with Corner Hairline Markers */}
+          <div className="relative border border-dashed border-zinc-700/80 hover:border-zinc-400 rounded-lg p-2.5 text-center bg-[#111218] flex flex-col items-center justify-center gap-1 transition-colors">
+            {/* Corner Precision Ticks */}
+            <span className="absolute top-1 left-1.5 font-mono text-[6px] text-zinc-600">+</span>
+            <span className="absolute top-1 right-1.5 font-mono text-[6px] text-zinc-600">+</span>
+            <span className="absolute bottom-1 left-1.5 font-mono text-[6px] text-zinc-600">+</span>
+            <span className="absolute bottom-1 right-1.5 font-mono text-[6px] text-zinc-600">+</span>
+
+            <div className="w-5 h-5 rounded bg-zinc-800 text-zinc-300 flex items-center justify-center border border-white/10">
+              <UploadCloud className="w-3 h-3" />
             </div>
-            <div className="text-[9px] font-semibold text-white">Drag & drop files here</div>
-            <div className="text-[7.5px] text-zinc-500">PNG, SVG, PDF up to 25MB</div>
+            <div className="text-[8.5px] font-bold text-white tracking-tight">Drop build artifact or binary</div>
+            <div className="text-[6.5px] font-mono text-zinc-500">MIME: .tar.gz, .wasm, .bin (max 100MB)</div>
           </div>
 
-          {/* Upload Progress Item */}
-          <div className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center gap-2">
-            <div className="w-6 h-6 rounded bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
-              <FileText className="w-3 h-3" />
+          {/* Active Ingestion Stream with Checksum & Monochromatic Bar */}
+          <div className="p-1.5 rounded-lg bg-[#111218] border border-white/10 flex items-center gap-2">
+            <div className="w-5 h-5 rounded bg-zinc-800 text-zinc-200 flex items-center justify-center shrink-0 border border-white/10 font-mono text-[7px] font-bold">
+              GZ
             </div>
             <div className="flex-1 min-w-0">
-              <div className="flex justify-between text-[8px] mb-1">
-                <span className="text-zinc-200 font-medium truncate">design_spec_v2.pdf</span>
-                <span className="font-mono text-zinc-400">82%</span>
+              <div className="flex justify-between text-[7.5px] mb-0.5 font-mono">
+                <span className="text-zinc-200 font-semibold truncate">build-darwin-arm64.tar.gz</span>
+                <span className="text-zinc-400 font-bold">82%</span>
               </div>
+              {/* Solid Monochromatic Segmented Progress Bar (Zero Rainbow Slop) */}
               <div className="w-full h-1 bg-zinc-800 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-violet-500 to-emerald-500 w-[82%]" />
+                <div className="h-full bg-emerald-400 rounded-full" style={{ width: '82%' }} />
+              </div>
+              <div className="flex justify-between items-center text-[5.5px] font-mono text-zinc-500 mt-1">
+                <span>18.4 / 22.4 MB • 4.2 MB/s</span>
+                <span className="text-zinc-400">SHA-256: 8f4c...3e2</span>
               </div>
             </div>
           </div>
@@ -339,7 +349,7 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
                 </div>
               </div>
 
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0 mt-1 shadow-[0_0_6px_rgba(167,139,250,0.8)]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0 mt-1" />
             </div>
 
             {/* Item 2: Vercel Cloud Deployment */}
@@ -401,47 +411,59 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
         </div>
       );
 
-    /* 5. AUDIO WAVEFORM PLAYER */
+    /* 5. AUDIO WAVEFORM PLAYER (TACTILE HARDWARE AUDIO DECK) */
     case 'audio-waveform-player':
       return (
-        <div className="w-full h-full p-2.5 bg-zinc-950 flex flex-col justify-between select-none font-sans">
-          <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 flex flex-col gap-2 shadow-lg">
-            {/* Track Info */}
+        <div className="w-full h-full p-2.5 bg-[#090A0E] text-zinc-100 flex flex-col justify-between select-none font-sans overflow-hidden">
+          <div className="p-2.5 rounded-lg bg-[#12141c] border border-white/10 flex flex-col gap-2 shadow-xl">
+            {/* Track Info with Hardware Aesthetics */}
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-violet-600 to-rose-500 flex items-center justify-center text-white text-[9px] font-black shrink-0 shadow-sm">
-                UI
+              <div className="w-7 h-7 rounded bg-zinc-800 border border-white/10 flex flex-col items-center justify-center text-amber-400 font-mono text-[7px] font-black shrink-0">
+                <span>96k</span>
+                <span className="text-[5px] text-zinc-400 font-normal">FLAC</span>
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-[9px] font-bold text-white truncate">Synthesize Horizon</div>
-                <div className="text-[7.5px] text-zinc-400 truncate">Ambient Soundscape • Episode 04</div>
+                <div className="text-[8.5px] font-bold text-white truncate tracking-tight">Analog Modular Session 04</div>
+                <div className="text-[6.5px] font-mono text-zinc-400 truncate">Patch B • 124 BPM • Stereo Master</div>
               </div>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsPlaying(!isPlaying);
                 }}
-                className="w-6 h-6 rounded-full bg-white text-zinc-950 flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-md shrink-0"
+                className="w-6 h-6 rounded-md bg-zinc-200 text-zinc-950 flex items-center justify-center hover:bg-white active:scale-95 transition-all shadow-xs shrink-0 font-bold"
+                aria-label={isPlaying ? 'Pause playback' : 'Start playback'}
               >
                 {isPlaying ? <Pause className="w-2.5 h-2.5 fill-current" /> : <Play className="w-2.5 h-2.5 fill-current ml-0.5" />}
               </button>
             </div>
 
-            {/* Simulated Animated Waveform Bars */}
-            <div className="h-5 flex items-end gap-0.5 px-1 bg-zinc-950/80 rounded-md py-0.5 overflow-hidden">
-              {[40, 65, 80, 50, 95, 75, 45, 85, 100, 60, 40, 70, 90, 80, 55, 35, 75, 95, 65, 50, 30, 60, 85, 70, 40].map((h, i) => (
-                <div
-                  key={i}
-                  style={{ height: `${isPlaying ? Math.max(20, (h + (i % 3) * 15) % 100) : h * 0.7}%` }}
-                  className={`flex-1 rounded-full transition-all duration-150 ${
-                    i < 13 ? 'bg-violet-400' : 'bg-zinc-700'
-                  }`}
-                />
-              ))}
+            {/* Hardware Peak Meter / Waveform Bars */}
+            <div className="h-5 flex items-end gap-0.5 px-1 bg-black/60 rounded border border-white/5 py-0.5 overflow-hidden">
+              {[40, 65, 80, 50, 95, 75, 45, 85, 100, 60, 40, 70, 90, 80, 55, 35, 75, 95, 65, 50, 30, 60, 85, 70, 40].map((h, i) => {
+                const heightVal = isPlaying ? Math.max(20, (h + (i % 3) * 15) % 100) : h * 0.7;
+                const isPlayed = i < 14;
+                const isPeak = heightVal > 85;
+                return (
+                  <div
+                    key={i}
+                    style={{ height: `${heightVal}%` }}
+                    className={`flex-1 rounded-2xs transition-all duration-150 ${
+                      isPlayed
+                        ? isPeak
+                          ? 'bg-amber-400'
+                          : 'bg-emerald-400'
+                        : 'bg-zinc-800'
+                    }`}
+                  />
+                );
+              })}
             </div>
 
-            {/* Scrubber Timer */}
-            <div className="flex justify-between text-[7px] font-mono text-zinc-400">
-              <span>01:42</span>
+            {/* Hardware Status Strip */}
+            <div className="flex justify-between items-center text-[6.5px] font-mono text-zinc-400">
+              <span className="text-zinc-200">01:42</span>
+              <span className="text-[5.5px] text-zinc-500 uppercase">CH 1/2 • -6.2 dB RMS</span>
               <span>03:28</span>
             </div>
           </div>
@@ -538,40 +560,54 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
         </div>
       );
 
-    /* 8. LIQUID GLASSMORPHISM */
+    /* 8. LIQUID GLASSMORPHISM (PHYSICAL SPECULAR OPTICS & CAUSTICS) */
     case 'liquid-glassmorphism':
       return (
-        <div className="relative w-full h-full bg-[#0a051b] flex flex-col justify-center items-center p-3 select-none overflow-hidden">
-          <div className="absolute -top-4 -left-4 w-24 h-24 rounded-full bg-indigo-600/70 blur-xl pointer-events-none" />
-          <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full bg-fuchsia-600/70 blur-xl pointer-events-none" />
-          <div className="absolute top-1/2 left-1/3 w-16 h-16 rounded-full bg-cyan-400/50 blur-lg pointer-events-none" />
+        <div className="relative w-full h-full bg-[#0a0b12] flex flex-col justify-center items-center p-3 select-none overflow-hidden font-sans">
+          {/*
+            Underlying Architectural Geometric Contrast (Demonstrating Real Optical Refraction)
+            Zero AI-slop neon balls. Pure monochromatic graphic typography passing under frosted glass.
+          */}
+          <div className="absolute inset-0 flex items-center justify-between px-4 pointer-events-none opacity-25">
+            <div className="text-4xl font-black font-mono tracking-tighter text-zinc-400 select-none">
+              OPTIC
+            </div>
+            <div className="w-16 h-16 rounded-full border-2 border-zinc-500/40 select-none flex items-center justify-center font-mono text-[8px] text-zinc-400">
+              1.52 n
+            </div>
+          </div>
 
-          <div className="relative z-10 w-full max-w-[240px] p-3 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/25 shadow-2xl text-white">
-            <div className="flex items-center justify-between mb-2">
+          {/* Diagonal Optical Caustic Sheen Line */}
+          <div className="absolute -top-12 -left-12 w-48 h-48 bg-gradient-to-br from-white/10 via-transparent to-transparent rotate-45 pointer-events-none" />
+
+          {/* Physical Frosted Glass Plate */}
+          <div className="relative z-10 w-full max-w-[240px] p-3 rounded-xl bg-white/[0.07] backdrop-blur-2xl border-t border-l border-white/35 border-b border-r border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.6),inset_0_1px_0_0_rgba(255,255,255,0.45)] text-white">
+            <div className="flex items-center justify-between mb-2 pb-1.5 border-b border-white/10">
               <div className="flex items-center gap-1.5">
-                <div className="w-4 h-4 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-                  <Layers className="w-2.5 h-2.5 text-cyan-300" />
+                <div className="w-4 h-4 rounded bg-white/15 backdrop-blur-md flex items-center justify-center border border-white/20">
+                  <Layers className="w-2.5 h-2.5 text-zinc-100" />
                 </div>
-                <span className="text-[10px] font-semibold tracking-tight">Liquid Glass</span>
+                <span className="text-[9.5px] font-bold tracking-tight text-white">Specular Glass Slab</span>
               </div>
-              <span className="text-[8px] font-mono bg-white/15 px-1.5 py-0.5 rounded-full border border-white/20">
-                Frosted
+              <span className="text-[7px] font-mono bg-white/10 text-zinc-200 px-1.5 py-0.5 rounded border border-white/15">
+                Crown 1.52
               </span>
             </div>
 
+            {/* Optical Controls */}
             <div className="space-y-1.5">
-              <div className="p-2 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+              <div className="p-1.5 rounded-lg bg-black/30 border border-white/10 flex items-center justify-between">
                 <div>
-                  <div className="text-[8px] text-zinc-300">Acrylic Depth</div>
-                  <div className="text-xs font-bold font-mono">backdrop-blur-2xl</div>
+                  <div className="text-[7px] text-zinc-400 font-mono">Internal Refraction</div>
+                  <div className="text-[9.5px] font-mono font-bold text-white">32px blur • 45° caustic</div>
                 </div>
-                <Sliders className="w-3 h-3 text-cyan-300" />
+                <Sliders className="w-3 h-3 text-zinc-300" />
               </div>
             </div>
 
-            <div className="mt-2 text-[7.5px] text-zinc-300 flex justify-between items-center">
-              <span>Dynamic specular highlight</span>
-              <span className="font-mono text-cyan-300">1px border</span>
+            <div className="mt-2 text-[6.5px] font-mono text-zinc-300 flex justify-between items-center pt-1 border-t border-white/10">
+              <span>Physical dispersion</span>
+              <span className="text-zinc-200">1px rim specular</span>
             </div>
           </div>
         </div>
@@ -942,293 +978,171 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
         </div>
       );
 
-/* 14. MODERN CREATIVE DIGITAL AGENCY LANDING (TURNOVER) */
+/* 14. MODERN CREATIVE DIGITAL AGENCY LANDING (ARCHITECTURAL MONOGRAPH ATELIER) */
     case 'creative-agency-landing':
       return (
         <div className="relative w-full h-full bg-[#FAF8F5] text-zinc-900 flex flex-col justify-between p-2 select-none overflow-hidden font-sans">
-          {/* Ambient Warm Radial Center Glow */}
-          <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-48 h-48 rounded-full bg-orange-500/12 blur-2xl pointer-events-none" />
-
-          {/* Top Mini Nav */}
-          <div className="relative z-10 flex items-center justify-between pb-1 border-b border-black/5 text-[7.5px]">
-            <div className="flex items-center gap-0.5 font-black text-zinc-950 tracking-tight">
-              <span>Turn</span>
-              <span className="text-orange-500 font-bold">↗</span>
-              <span>ver</span>
+          {/* Top Browser Window Header */}
+          <div className="relative z-10 flex items-center justify-between pb-1.5 border-b border-black/10 text-[7px] font-mono">
+            <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-0.5" aria-hidden="true">
+                <span className="w-1.5 h-1.5 rounded-full bg-zinc-300" />
+                <span className="w-1.5 h-1.5 rounded-full bg-zinc-300" />
+                <span className="w-1.5 h-1.5 rounded-full bg-zinc-300" />
+              </div>
+              <span className="font-bold text-zinc-950 font-sans tracking-tight ml-1">KINETIC ATELIER</span>
             </div>
-            <div className="hidden sm:flex items-center gap-2 text-[6.5px] text-zinc-400">
-              <span className="text-zinc-900 font-bold border-b border-orange-500 pb-0.5">Home</span>
-              <span>Services</span>
-              <span>About</span>
-              <span>Work</span>
+            <div className="hidden sm:flex items-center gap-3 text-zinc-500">
+              <span className="text-zinc-950 font-bold border-b border-zinc-950 pb-0.2">Index</span>
+              <span>Monograph</span>
+              <span>Archive</span>
+              <span>Atelier</span>
             </div>
-            <span className="bg-orange-500 text-white font-bold text-[6.5px] px-2 py-0.5 rounded-full shadow-xs">
-              Explore Work
-            </span>
+            <span className="text-[6.5px] font-mono text-zinc-500">CH-8001 Zürich</span>
           </div>
 
-          {/* Hero Content Split */}
-          <div className="relative z-10 grid grid-cols-12 gap-1 my-auto items-center">
-            {/* Left Column: Copy & Stats */}
-            <div className="col-span-7 flex flex-col gap-0.5 pr-1">
-              <div className="inline-flex items-center gap-1 text-[6.5px] font-bold text-orange-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
-                <span>Creative Digital Agency</span>
+          {/* Editorial Content Split (Zero AI-Slop Fake Stats / Zero Floating Pills) */}
+          <div className="relative z-10 grid grid-cols-12 gap-2 my-auto items-center">
+            {/* Left Column: Monograph Brief & Spatial Manifesto */}
+            <div className="col-span-7 flex flex-col gap-1 pr-1">
+              <div className="text-[6.5px] font-mono text-amber-700 uppercase tracking-widest font-bold">
+                Special Edition // 2026
               </div>
 
-              <h4 className="text-[11px] sm:text-[12px] font-black leading-[1.15] tracking-tight text-zinc-950">
-                We Build Brands <br />
-                <span className="text-orange-500">That Stand Out</span>
+              <h4 className="text-[12px] sm:text-[13px] font-black leading-[1.12] tracking-tight text-zinc-950">
+                Spatial Architecture <br />
+                <span className="text-zinc-600 font-serif italic font-normal">& Monolith Forms</span>
               </h4>
 
-              {/* CTAs */}
-              <div className="flex items-center gap-1.5 mt-1">
+              <p className="text-[7px] text-zinc-600 leading-relaxed line-clamp-2">
+                A 420-page retrospective documenting tactile spatial systems, brutalist typography, and monolithic physical identities across Europe.
+              </p>
+
+              <div className="flex items-center gap-2 pt-0.5">
                 <button
                   onClick={(e) => e.stopPropagation()}
-                  className="px-2.5 py-0.5 bg-orange-500 text-white text-[7px] font-bold rounded-full shadow-xs hover:bg-orange-600 transition flex items-center"
+                  className="px-2.5 py-1 bg-zinc-950 text-white text-[7px] font-bold rounded shadow-xs hover:bg-zinc-800 transition"
                 >
-                  <span>Start Project</span>
+                  View Case Archive
                 </button>
-                <div className="flex items-center gap-0.5 text-[6.5px] text-zinc-600 font-semibold">
-                  <div className="w-3.5 h-3.5 rounded-full bg-white shadow-xs border border-black/5 flex items-center justify-center">
-                    <Play className="w-1.5 h-1.5 text-orange-500 fill-current ml-0.5" />
-                  </div>
-                  <span>Watch Story</span>
-                </div>
-              </div>
-
-              {/* Mini Stats Row */}
-              <div className="grid grid-cols-4 gap-0.5 pt-1 mt-1 border-t border-black/5 text-center">
-                <div>
-                  <div className="font-black text-[7.5px] text-zinc-950">320+</div>
-                  <div className="text-[5px] text-zinc-400">Clients</div>
-                </div>
-                <div>
-                  <div className="font-black text-[7.5px] text-zinc-950">5+</div>
-                  <div className="text-[5px] text-zinc-400">Years</div>
-                </div>
-                <div>
-                  <div className="font-black text-[7.5px] text-zinc-950">150+</div>
-                  <div className="text-[5px] text-zinc-400">Projects</div>
-                </div>
-                <div>
-                  <div className="font-black text-[7.5px] text-zinc-950">98%</div>
-                  <div className="text-[5px] text-zinc-400">Satisfied</div>
-                </div>
+                <span className="text-[6.5px] font-mono text-zinc-500">Fedrigoni 140gsm</span>
               </div>
             </div>
 
-            {/* Right Column: 3D Visual & Floating Glass Cards */}
-            <div className="col-span-5 relative h-26 flex items-center justify-center">
-              {/* 3D Mannequin Silhouette with Neon Visor */}
-              <div className="relative w-18 h-22 flex items-center justify-center">
-                {/* Acoustic Head Fins */}
-                <div className="absolute right-1 top-2 flex flex-col gap-0.5 opacity-70">
-                  <div className="w-2 h-0.5 bg-zinc-400 rounded-full" />
-                  <div className="w-3 h-0.5 bg-zinc-400 rounded-full" />
-                  <div className="w-4 h-0.5 bg-zinc-500 rounded-full" />
-                  <div className="w-3.5 h-0.5 bg-zinc-500 rounded-full" />
-                  <div className="w-2 h-0.5 bg-zinc-400 rounded-full" />
+            {/* Right Column: Physical Monograph Book Artifact */}
+            <div className="col-span-5 flex items-center justify-center">
+              <div className="w-20 h-24 bg-[#14151a] text-zinc-100 rounded-sm shadow-xl border-l-2 border-zinc-700/80 p-2 flex flex-col justify-between relative transform rotate-1 hover:rotate-0 transition-transform">
+                <div className="flex justify-between items-start text-[5.5px] font-mono text-zinc-400">
+                  <span>VOL. VIII</span>
+                  <span className="text-amber-400">№ 08</span>
                 </div>
-
-                {/* Bust Silhouette */}
-                <svg className="w-14 h-20 drop-shadow-md" viewBox="0 0 60 80" fill="none">
-                  {/* Shoulders & Torso */}
-                  <path d="M10 75 Q15 50 25 45 L35 45 Q45 50 50 75 Z" fill="#1e293b" />
-                  {/* Neck */}
-                  <path d="M26 35 L26 48 L34 48 L34 35 Z" fill="#334155" />
-                  {/* Head Shape */}
-                  <ellipse cx="30" cy="25" rx="13" ry="17" fill="#0f172a" />
-                  {/* Glowing Orange Cyber Visor */}
-                  <rect x="14" y="20" width="30" height="9" rx="3.5" fill="#ff5500" filter="drop-shadow(0 0 5px #ff5500)" />
-                  <text x="29" y="26.5" fontSize="3.5" fontFamily="sans-serif" fontWeight="900" fill="#ffffff" textAnchor="middle" letterSpacing="0.4">
-                    TURNOVER
-                  </text>
-                </svg>
-
-                {/* Swirling 3D Orange Ribbon */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 70 80" fill="none">
-                  <path
-                    d="M 5 45 C 10 15, 55 25, 60 55 C 65 72, 20 78, 8 68"
-                    stroke="#ff5500"
-                    strokeWidth="3.2"
-                    strokeLinecap="round"
-                    className="opacity-95 drop-shadow-[0_2px_6px_rgba(255,85,0,0.6)]"
-                  />
-                  <path
-                    d="M 8 46 C 13 18, 52 28, 57 55"
-                    stroke="#ffffff"
-                    strokeWidth="0.6"
-                    strokeDasharray="1.5 1.5"
-                    className="opacity-75"
-                  />
-                </svg>
-              </div>
-
-              {/* Floating Frosted Glass Cards */}
-              <div className="absolute -top-0.5 -right-1 px-1.5 py-0.5 rounded-md bg-white/85 backdrop-blur-md border border-white shadow-xs flex items-center gap-1 text-[5.5px] font-bold text-zinc-800">
-                <span className="w-1 h-1 rounded-full bg-orange-500" />
-                <span>Brand Strategy</span>
-              </div>
-
-              <div className="absolute top-8 -right-1 px-1.5 py-0.5 rounded-md bg-white/85 backdrop-blur-md border border-white shadow-xs flex items-center gap-1 text-[5.5px] font-bold text-zinc-800">
-                <span className="w-1 h-1 rounded-full bg-amber-500" />
-                <span>Creative Design</span>
-              </div>
-
-              <div className="absolute bottom-1 -left-2 px-1.5 py-0.5 rounded-md bg-white/85 backdrop-blur-md border border-white shadow-xs flex items-center gap-1 text-[5.5px] font-bold text-zinc-800">
-                <span className="w-1 h-1 rounded-full bg-emerald-500" />
-                <span>Digital Growth</span>
+                <div>
+                  <div className="text-[10px] font-black font-sans tracking-tight text-white leading-none">
+                    KINETIC
+                  </div>
+                  <div className="text-[5px] font-mono text-zinc-400 mt-0.5">
+                    SPATIAL SYSTEMS
+                  </div>
+                </div>
+                <div className="pt-1 border-t border-white/10 flex justify-between items-center text-[5px] font-mono text-zinc-500">
+                  <span>ZÜRICH</span>
+                  <span>2026</span>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Footer note */}
-          <div className="relative z-10 flex items-center justify-between text-[6px] font-mono text-zinc-400 pt-0.5 border-t border-black/5">
-            <span>Modern 3D Studio Canvas</span>
-            <span>Case Studies</span>
+          {/* Footer Colophon */}
+          <div className="relative z-10 flex items-center justify-between text-[6px] font-mono text-zinc-500 pt-1 border-t border-black/10">
+            <span>Commissioned by Kunsthalle Zürich</span>
+            <span>Edition of 500 copies</span>
           </div>
         </div>
       );
 
-    /* 15. B2B SAAS PRICING & FEATURE MATRIX */
+    /* 15. B2B SAAS PRICING (TRANSPARENT UNIT-ECONOMICS & COMPUTE NODES) */
     case 'saas-pricing-matrix':
       return (
         <div className="w-full h-full p-2 bg-[#090A0F] text-zinc-200 flex flex-col justify-between select-none font-sans overflow-hidden">
-          {/* Header & Toggle */}
+          {/* Header & Architecture Mode Selector */}
           <div className="flex items-center justify-between pb-1 border-b border-white/10">
             <div>
-              <div className="text-[6.5px] font-mono font-bold tracking-wider text-violet-400 uppercase">
-                PLANS & BILLING
+              <div className="text-[6.5px] font-mono font-bold tracking-wider text-zinc-400 uppercase">
+                COMPUTE & EGRESS
               </div>
-              <div className="text-[8px] font-black text-white">
-                Predictable tiers
+              <div className="text-[8.5px] font-bold text-white tracking-tight">
+                Transparent Unit Economics
               </div>
             </div>
 
-            {/* Interactive Billing Frequency Switcher */}
-            <div className="inline-flex p-0.5 rounded-lg bg-zinc-900 border border-white/10 text-[6.5px]">
+            {/* Workload Profile Selector */}
+            <div className="inline-flex p-0.5 rounded bg-zinc-900 border border-white/10 text-[6.5px] font-mono">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsAnnual(false);
                 }}
-                className={`px-1.5 py-0.5 rounded transition-all font-semibold ${
-                  !isAnnual ? 'bg-white/15 text-white shadow-xs' : 'text-zinc-500 hover:text-zinc-300'
+                className={`px-1.5 py-0.5 rounded transition ${
+                  !isAnnual ? 'bg-zinc-800 text-white font-bold' : 'text-zinc-500 hover:text-zinc-300'
                 }`}
               >
-                Monthly
+                Developer
               </button>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsAnnual(true);
                 }}
-                className={`px-1.5 py-0.5 rounded transition-all font-semibold flex items-center gap-1 ${
-                  isAnnual ? 'bg-violet-600 text-white shadow-xs' : 'text-zinc-500 hover:text-zinc-300'
+                className={`px-1.5 py-0.5 rounded transition ${
+                  isAnnual ? 'bg-zinc-100 text-zinc-950 font-bold' : 'text-zinc-500 hover:text-zinc-300'
                 }`}
               >
-                <span>Annual</span>
-                <span className="text-[5.5px] px-1 py-0.2 rounded bg-emerald-500/20 text-emerald-400 font-mono font-bold">
-                  -20%
-                </span>
+                High-Availability
               </button>
             </div>
           </div>
 
-          {/* 3-Tier Grid */}
-          <div className="grid grid-cols-3 gap-1 my-auto">
-            {/* 1. Hobby Tier */}
-            <div className="p-1.5 rounded-lg bg-zinc-900/60 border border-white/5 flex flex-col justify-between">
-              <div>
-                <div className="text-[7px] font-bold text-zinc-300">Hobby</div>
-                <div className="text-[10px] font-black font-mono text-white mt-0.5">$0</div>
-                <div className="text-[5.5px] text-zinc-500">Free forever</div>
+          {/* Unit Economics Comparison Table (Zero AI "Popular" Badges / Zero Glowing Borders) */}
+          <div className="my-auto bg-[#111218] rounded-lg border border-white/10 p-2 font-mono text-[6.5px]">
+            <div className="grid grid-cols-12 gap-1 pb-1 border-b border-white/10 text-zinc-500 font-bold">
+              <span className="col-span-5">RESOURCE</span>
+              <span className="col-span-4 text-right">SPECIFICATION</span>
+              <span className="col-span-3 text-right">UNIT RATE</span>
+            </div>
 
-                <div className="space-y-0.5 mt-1 pt-1 border-t border-white/5 text-[6px] text-zinc-400 font-mono">
-                  <div className="flex items-center gap-1 text-zinc-300">
-                    <span className="text-emerald-400">✓</span> 1 Seat
-                  </div>
-                  <div className="flex items-center gap-1 text-zinc-300">
-                    <span className="text-emerald-400">✓</span> 3 Projects
-                  </div>
-                  <div className="flex items-center gap-1 text-zinc-500">
-                    <span className="text-zinc-600 font-bold">✕</span> No audit log
-                  </div>
-                </div>
+            <div className="space-y-1 py-1 text-zinc-300">
+              <div className="grid grid-cols-12 gap-1 items-center">
+                <span className="col-span-5 font-sans font-semibold text-white">Dedicated vCPU</span>
+                <span className="col-span-4 text-right text-zinc-400">{isAnnual ? '4 Cores (AMD EPYC)' : '1 Shared Core'}</span>
+                <span className="col-span-3 text-right font-bold text-emerald-400">{isAnnual ? '$0.028/hr' : '$0.00/hr'}</span>
               </div>
-
-              <div className="mt-1.5 py-0.5 rounded bg-white/10 text-zinc-300 text-[6.5px] font-bold text-center border border-white/10">
-                Start Free Sandbox
+              <div className="grid grid-cols-12 gap-1 items-center">
+                <span className="col-span-5 font-sans font-semibold text-white">NVMe Memory</span>
+                <span className="col-span-4 text-right text-zinc-400">{isAnnual ? '16 GB DDR5 ECC' : '2 GB RAM'}</span>
+                <span className="col-span-3 text-right font-bold text-zinc-300">{isAnnual ? '$0.004/GB-hr' : 'Included'}</span>
+              </div>
+              <div className="grid grid-cols-12 gap-1 items-center">
+                <span className="col-span-5 font-sans font-semibold text-white">Global Edge Egress</span>
+                <span className="col-span-4 text-right text-zinc-400">{isAnnual ? '10 TB Included' : '100 GB Cap'}</span>
+                <span className="col-span-3 text-right font-bold text-zinc-300">{isAnnual ? '$0.05/GB' : '$0.00'}</span>
               </div>
             </div>
 
-            {/* 2. Team Pro (Featured) */}
-            <div className="p-1.5 rounded-lg bg-[#151722] border border-violet-500/50 shadow-[0_0_12px_rgba(139,92,246,0.15)] flex flex-col justify-between relative">
-              <div className="absolute -top-1.5 right-1 px-1 py-0.2 rounded bg-violet-600 text-white font-mono text-[5px] font-black uppercase tracking-wider">
-                POPULAR
-              </div>
-
-              <div>
-                <div className="text-[7px] font-bold text-violet-300">Team Pro</div>
-                <div className="flex items-baseline gap-0.5 mt-0.5">
-                  <span className="text-[10px] font-black font-mono text-white">
-                    {isAnnual ? '$19' : '$24'}
-                  </span>
-                  <span className="text-[5.5px] font-mono text-zinc-400">/seat/mo</span>
-                </div>
-                <div className="text-[5.5px] text-violet-300/80 font-mono">
-                  {isAnnual ? 'Billed $228/yr' : 'Billed monthly'}
-                </div>
-
-                <div className="space-y-0.5 mt-1 pt-1 border-t border-white/10 text-[6px] text-zinc-300 font-mono">
-                  <div className="flex items-center gap-1">
-                    <span className="text-emerald-400">✓</span> 25 Seats
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span className="text-emerald-400">✓</span> Unlimited Repos
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span className="text-emerald-400">✓</span> 90d Audit Logs
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-1.5 py-0.5 rounded bg-violet-600 text-white text-[6.5px] font-bold text-center shadow-xs">
-                Choose Team Pro
-              </div>
-            </div>
-
-            {/* 3. Enterprise Tier */}
-            <div className="p-1.5 rounded-lg bg-zinc-900/60 border border-white/5 flex flex-col justify-between">
-              <div>
-                <div className="text-[7px] font-bold text-zinc-300">Enterprise</div>
-                <div className="text-[10px] font-black font-mono text-white mt-0.5">Custom</div>
-                <div className="text-[5.5px] text-zinc-500">Dedicated VPC</div>
-
-                <div className="space-y-0.5 mt-1 pt-1 border-t border-white/5 text-[6px] text-zinc-400 font-mono">
-                  <div className="flex items-center gap-1 text-zinc-300">
-                    <span className="text-emerald-400">✓</span> Unlimited
-                  </div>
-                  <div className="flex items-center gap-1 text-zinc-300">
-                    <span className="text-emerald-400">✓</span> 99.99% SLA
-                  </div>
-                  <div className="flex items-center gap-1 text-zinc-300">
-                    <span className="text-emerald-400">✓</span> SAML / SSO
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-1.5 py-0.5 rounded bg-white/5 text-zinc-400 text-[6.5px] font-bold text-center border border-white/10">
-                Contact Sales
-              </div>
+            <div className="pt-1 border-t border-white/10 flex items-center justify-between text-[6px]">
+              <span className="text-zinc-400 font-sans">Estimated Cost</span>
+              <span className="font-bold text-white text-[8px]">{isAnnual ? '$38.20 / node / mo' : '$0.00 / free tier'}</span>
             </div>
           </div>
 
-          {/* Footer assurance */}
-          <div className="pt-0.5 border-t border-white/10 flex items-center justify-between text-[5.5px] font-mono text-zinc-500">
-            <span>14-day risk-free trial</span>
-            <span>Zero credit card required</span>
+          {/* Action & Real Technical Guarantee */}
+          <div className="pt-1 border-t border-white/10 flex items-center justify-between text-[6px] font-mono text-zinc-400">
+            <span>Automated failover • p99 read &lt; 12ms</span>
+            <button
+              onClick={(e) => e.stopPropagation()}
+              className="px-2 py-0.5 rounded bg-zinc-200 text-zinc-950 font-bold hover:bg-white transition"
+            >
+              Provision Node
+            </button>
           </div>
         </div>
       );
@@ -1346,48 +1260,50 @@ export const MiniPreview: React.FC<MiniPreviewProps> = ({ previewId }) => {
               </div>
             </div>
 
-            {/* Right Column (5 cols): Telemetry & Proof Showcase */}
-            <div className="col-span-5 bg-[#0C0D14] border border-white/10 rounded-lg p-2 flex flex-col justify-between relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-xl pointer-events-none" />
-
+            {/* Right Column (5 cols): Cryptographic Handshake Inspector (Zero Fake Testimonials) */}
+            <div className="col-span-5 bg-[#0C0D14] border border-white/10 rounded-lg p-2 flex flex-col justify-between relative overflow-hidden font-mono text-[5.5px]">
               <div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[6px] font-mono text-zinc-400 uppercase tracking-wider">CLUSTER STATE</span>
-                  <div className="flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-[5.5px] font-mono text-emerald-400">99.99%</span>
+                <div className="flex items-center justify-between pb-1 border-b border-white/10">
+                  <span className="text-zinc-400 uppercase tracking-wider font-bold">FIDO2 CEREMONY</span>
+                  <span className="text-emerald-400 font-bold">SECURE</span>
+                </div>
+
+                {/* Cryptographic Handshake Step Inspector */}
+                <div className="mt-1 space-y-0.5 text-zinc-400">
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">challenge:</span>
+                    <span className="text-zinc-300">0x7a8c...91</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">attestation:</span>
+                    <span className="text-zinc-300">direct</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">alg:</span>
+                    <span className="text-indigo-300 font-bold">ES256 (P-256)</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">userPresence:</span>
+                    <span className="text-emerald-400 font-bold">true (biometric)</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">session_ttl:</span>
+                    <span className="text-zinc-300">8h (rolling)</span>
                   </div>
                 </div>
 
-                {/* Mini Telemetry Code Box */}
-                <div className="mt-1.5 p-1 rounded bg-black/60 border border-white/5 font-mono text-[5px] space-y-0.5">
-                  <div className="text-zinc-500">// active region: us-east-1</div>
-                  <div className="flex justify-between text-zinc-300">
-                    <span>p99 latency:</span>
-                    <span className="text-emerald-400 font-bold">14.2ms</span>
-                  </div>
-                  <div className="flex justify-between text-zinc-300">
-                    <span>edge nodes:</span>
-                    <span className="text-indigo-300">48 / 48</span>
-                  </div>
-                  <div className="flex justify-between text-zinc-300">
-                    <span>auth guard:</span>
-                    <span className="text-zinc-400">webauthn-v2</span>
-                  </div>
-                </div>
-
-                {/* Micro Quote */}
-                <div className="mt-2 text-[5.5px] text-zinc-400 italic leading-snug border-l border-indigo-500/50 pl-1">
-                  "Zero auth friction for our 200+ engineers."
+                <div className="mt-1.5 p-1 rounded bg-black/60 border border-white/5 text-[5px] text-zinc-400">
+                  <span className="text-zinc-500">// PKCE Code Verifier validated</span>
+                  <div className="text-emerald-400 font-bold mt-0.5">TLS 1.3 • Strict-Transport</div>
                 </div>
               </div>
 
-              {/* Compliance strip */}
-              <div className="pt-1 border-t border-white/5 flex items-center justify-between text-[5px] font-mono text-zinc-500">
-                <span className="flex items-center gap-0.5">
-                  <ShieldCheck className="w-2 h-2 text-indigo-400" /> SOC2
+              {/* Hardware security key info */}
+              <div className="pt-1 border-t border-white/5 flex items-center justify-between text-[5px] text-zinc-500">
+                <span className="flex items-center gap-0.5 text-zinc-400">
+                  <ShieldCheck className="w-2 h-2 text-indigo-400" /> WebAuthn L3
                 </span>
-                <span>E2E Encrypted</span>
+                <span>FIPS 140-2</span>
               </div>
             </div>
           </div>

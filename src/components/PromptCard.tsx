@@ -3,6 +3,7 @@ import type { UIPrompt, PromptFormat } from '../types';
 import { generateFormattedPrompt, PROMPT_FORMAT_OPTIONS } from '../utils/promptAdapter';
 import { MiniPreview } from './MiniPreviews';
 import { Copy, Check, Eye, Bookmark } from 'lucide-react';
+import { copyText } from '../utils/clipboard';
 
 interface PromptCardProps {
   prompt: UIPrompt;
@@ -21,7 +22,7 @@ export const PromptCard: React.FC<PromptCardProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
 
-  const handleQuickCopy = (e: React.MouseEvent) => {
+  const handleQuickCopy = async (e: React.MouseEvent) => {
     e.stopPropagation();
     let format: PromptFormat = 'agnostic';
     if (typeof window !== 'undefined') {
@@ -36,17 +37,21 @@ export const PromptCard: React.FC<PromptCardProps> = ({
     }
 
     const formattedText = generateFormattedPrompt(prompt, format);
-    navigator.clipboard.writeText(formattedText);
-    setCopied(true);
+    const copiedOk = await copyText(formattedText);
     const formatLabel = PROMPT_FORMAT_OPTIONS.find((f) => f.id === format)?.badge || 'Agnostic';
-    onTriggerToast(`Prompt [${formatLabel}] copied for "${prompt.title}"`);
-    setTimeout(() => setCopied(false), 2000);
+    if (copiedOk) {
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+      onTriggerToast(`Prompt [${formatLabel}] copied for "${prompt.title}"`);
+    } else {
+      onTriggerToast('Clipboard unavailable. Select the prompt text and copy manually.');
+    }
   };
 
-  const handleColorClick = (e: React.MouseEvent, hex: string, name: string) => {
+  const handleColorClick = async (e: React.MouseEvent, hex: string, name: string) => {
     e.stopPropagation();
-    navigator.clipboard.writeText(hex);
-    onTriggerToast(`${name} (${hex}) copied`);
+    const copiedOk = await copyText(hex);
+    onTriggerToast(copiedOk ? `${name} (${hex}) copied` : 'Clipboard unavailable.');
   };
 
   // Distinct outer framing tailored to each aesthetic movement
@@ -76,17 +81,9 @@ export const PromptCard: React.FC<PromptCardProps> = ({
 
   return (
     <article
-      tabIndex={0}
-      role="button"
       onClick={() => onOpenDetail(prompt)}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onOpenDetail(prompt);
-        }
-      }}
-      className={`group relative flex flex-col overflow-hidden cursor-pointer transition-all duration-150 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:outline-none ${cardFrameClass}`}
-      aria-label={`UI Design Spec: ${prompt.title}. Press Enter to view full specification.`}
+      className={`group relative flex flex-col overflow-hidden cursor-pointer transition-all duration-150 ${cardFrameClass}`}
+      aria-label={`UI Design Spec: ${prompt.title}`}
     >
       {/* Component Preview Container */}
       <div className={`relative aspect-[16/10] w-full bg-zinc-950 overflow-hidden ${previewBorderClass}`}>
@@ -178,9 +175,17 @@ export const PromptCard: React.FC<PromptCardProps> = ({
             ))}
           </div>
 
-          <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">
-            {prompt.style}
-          </span>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpenDetail(prompt);
+            }}
+            className="flex items-center gap-1 rounded text-[11px] font-medium text-zinc-500 dark:text-zinc-400 hover:text-violet-600 dark:hover:text-violet-400 focus-visible:ring-2 focus-visible:ring-zinc-400"
+            aria-label={`Inspect full specification for ${prompt.title}`}
+          >
+            <Eye className="w-3 h-3" />
+            <span>{prompt.style}</span>
+          </button>
         </div>
       </div>
     </article>

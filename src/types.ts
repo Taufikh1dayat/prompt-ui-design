@@ -51,7 +51,6 @@ export interface UIPrompt {
   colorPalette: DesignToken[];
   fontStack: string;
   tags: string[];
-  copyCount: number;
   previewId: string;
   antiSlopChecks: string[];
 }
